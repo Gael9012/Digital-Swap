@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Compras - Digital Swap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        .order-card {
+            transition: all 0.3s ease;
+        }
+        .order-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        .status-completed {
+            background-color: #10b981;
+            color: white;
+        }
+        .status-pending {
+            background-color: #f59e0b;
+            color: white;
+        }
+        .status-shipped {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .status-cancelled {
+            background-color: #ef4444;
+            color: white;
+        }
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+        .notification.show {
+            transform: translateX(0);
+        }
+        .notification.success {
+            background: #10b981;
+        }
+        .notification.error {
+            background: #ef4444;
+        }
+        .notification.warning {
+            background: #f59e0b;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-yellow-400 py-4 shadow-lg">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <img src="logo.png" alt="Digital Swap Logo" class="h-10 w-auto">
+                    <h1 class="text-2xl font-bold text-gray-800">Digital Swap - Historial</h1>
+                </div>
+                <a href="productos.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>Volver a Productos
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        <!-- Estadísticas -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center">
+                    <div class="bg-blue-100 p-3 rounded-full">
+                        <i class="fas fa-shopping-bag text-blue-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-600">Total Compras</p>
+                        <p class="text-2xl font-bold text-gray-800" id="totalOrders">0</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center">
+                    <div class="bg-green-100 p-3 rounded-full">
+                        <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-600">Completadas</p>
+                        <p class="text-2xl font-bold text-gray-800" id="completedOrders">0</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center">
+                    <div class="bg-yellow-100 p-3 rounded-full">
+                        <i class="fas fa-clock text-yellow-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-600">Pendientes</p>
+                        <p class="text-2xl font-bold text-gray-800" id="pendingOrders">0</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center">
+                    <div class="bg-purple-100 p-3 rounded-full">
+                        <i class="fas fa-dollar-sign text-purple-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-600">Total Gastado</p>
+                        <p class="text-2xl font-bold text-gray-800" id="totalSpent">$0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <label class="text-sm font-medium text-gray-700">Filtrar por:</label>
+                    <select id="statusFilter" class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Todos los estados</option>
+                        <option value="completado">Completado</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="enviado">Enviado</option>
+                        <option value="cancelado">Cancelado</option>
+                    </select>
+                    
+                    <select id="dateFilter" class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Todas las fechas</option>
+                        <option value="7">Últimos 7 días</option>
+                        <option value="30">Últimos 30 días</option>
+                        <option value="90">Últimos 3 meses</option>
+                        <option value="365">Último año</option>
+                    </select>
+                </div>
+                
+                <div class="flex items-center space-x-2">
+                    <input type="text" id="searchOrders" placeholder="Buscar en compras..." 
+                           class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button onclick="clearFilters()" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-colors">
+                        <i class="fas fa-times mr-2"></i>Limpiar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de Compras -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">
+                    <i class="fas fa-history mr-3"></i>Historial de Compras
+                </h2>
+                <button onclick="addSampleOrder()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                    <i class="fas fa-plus mr-2"></i>Agregar Compra de Prueba
+                </button>
+            </div>
+            
+            <div id="ordersList" class="space-y-4">
+                <!-- Las órdenes se mostrarán aquí dinámicamente -->
+            </div>
+            
+            <!-- Mensaje cuando no hay compras -->
+            <div id="noOrders" class="text-center py-12 hidden">
+                <i class="fas fa-shopping-bag text-6xl text-gray-300 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-600 mb-2">No tienes compras aún</h3>
+                <p class="text-gray-500 mb-4">Cuando hagas tu primera compra, aparecerá aquí</p>
+                <a href="productos.html" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                    <i class="fas fa-shopping-cart mr-2"></i>Ir a Comprar
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Notificación -->
+    <div id="notification" class="notification">
+        <i class="fas fa-check-circle mr-2"></i>
+        <span id="notificationText">Acción completada</span>
+    </div>
+
+    <script>
+        // Variables globales
+        let orders = JSON.parse(localStorage.getItem('userOrders')) || [];
+        let filteredOrders = [];
+
+        // Función para mostrar notificaciones
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            
+            notificationText.textContent = message;
+            notification.className = `notification ${type}`;
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Función para agregar una compra de prueba
+        function addSampleOrder() {
+            const sampleOrders = [
+                {
+                    id: Date.now() + Math.random(),
+                    orderNumber: 'ORD-' + Math.floor(Math.random() * 10000),
+                    date: new Date().toISOString(),
+                    status: 'completado',
+                    total: 5499.00,
+                    items: [
+                        { name: 'Smartwatch Huawei Watch GT 5 Pro', price: 5499.00, quantity: 1, image: 'Imagenes/gt.png' }
+                    ],
+                    shippingAddress: 'Av. Principal 123, Ciudad',
+                    paymentMethod: 'Tarjeta de crédito'
+                },
+                {
+                    id: Date.now() + Math.random() + 1,
+                    orderNumber: 'ORD-' + Math.floor(Math.random() * 10000),
+                    date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+                    status: 'enviado',
+                    total: 899.00,
+                    items: [
+                        { name: 'Smartwatch EVL SW120', price: 899.00, quantity: 1, image: 'Imagenes/ro.png' }
+                    ],
+                    shippingAddress: 'Calle Secundaria 456, Pueblo',
+                    paymentMethod: 'PayPal'
+                },
+                {
+                    id: Date.now() + Math.random() + 2,
+                    orderNumber: 'ORD-' + Math.floor(Math.random() * 10000),
+                    date: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
+                    status: 'pendiente',
+                    total: 4199.00,
+                    items: [
+                        { name: 'Smartwatch Huawei Watch Fit 4 Pro', price: 4199.00, quantity: 1, image: 'Imagenes/wa.png' }
+                    ],
+                    shippingAddress: 'Boulevard Central 789, Metrópolis',
+                    paymentMethod: 'Transferencia bancaria'
+                }
+            ];
+
+            orders.push(...sampleOrders);
+            localStorage.setItem('userOrders', JSON.stringify(orders));
+            displayOrders();
+            updateStats();
+            showNotification('Compras de prueba agregadas');
+        }
+
+        // Función para mostrar las órdenes
+        function displayOrders() {
+            const ordersList = document.getElementById('ordersList');
+            const noOrders = document.getElementById('noOrders');
+            
+            if (filteredOrders.length === 0) {
+                ordersList.innerHTML = '';
+                noOrders.classList.remove('hidden');
+                return;
+            }
+            
+            noOrders.classList.add('hidden');
+            ordersList.innerHTML = '';
+            
+            filteredOrders.forEach(order => {
+                const orderCard = document.createElement('div');
+                orderCard.className = 'order-card bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-all duration-300';
+                
+                const statusClass = getStatusClass(order.status);
+                const statusText = getStatusText(order.status);
+                const formattedDate = new Date(order.date).toLocaleDateString('es-ES', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                orderCard.innerHTML = `
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800">${order.orderNumber}</h3>
+                            <p class="text-sm text-gray-600">${formattedDate}</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                            <p class="text-lg font-bold text-gray-800 mt-1">$${order.total.toFixed(2)}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3 mb-4">
+                        ${order.items.map(item => `
+                            <div class="flex items-center space-x-3">
+                                <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded-lg">
+                                <div class="flex-1">
+                                    <p class="font-medium text-gray-800">${item.name}</p>
+                                    <p class="text-sm text-gray-600">Cantidad: ${item.quantity}</p>
+                                </div>
+                                <p class="font-semibold text-gray-800">$${item.price.toFixed(2)}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="border-t border-gray-200 pt-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <p class="font-medium text-gray-700">Dirección de envío:</p>
+                                <p class="text-gray-600">${order.shippingAddress}</p>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-700">Método de pago:</p>
+                                <p class="text-gray-600">${order.paymentMethod}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-2 mt-4">
+                        <button onclick="viewOrderDetails('${order.id}')" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors text-sm">
+                            <i class="fas fa-eye mr-1"></i>Ver Detalles
+                        </button>
+                        <button onclick="downloadInvoice('${order.id}')" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors text-sm">
+                            <i class="fas fa-download mr-1"></i>Factura
+                        </button>
+                        <button onclick="cancelOrder('${order.id}')" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors text-sm">
+                            <i class="fas fa-times mr-1"></i>Cancelar
+                        </button>
+                    </div>
+                `;
+                
+                ordersList.appendChild(orderCard);
+            });
+        }
+
+        // Función para obtener la clase CSS del estado
+        function getStatusClass(status) {
+            const statusClasses = {
+                'completado': 'status-completed',
+                'pendiente': 'status-pending',
+                'enviado': 'status-shipped',
+                'cancelado': 'status-cancelled'
+            };
+            return statusClasses[status] || 'status-pending';
+        }
+
+        // Función para obtener el texto del estado
+        function getStatusText(status) {
+            const statusTexts = {
+                'completado': 'Completado',
+                'pendiente': 'Pendiente',
+                'enviado': 'Enviado',
+                'cancelado': 'Cancelado'
+            };
+            return statusTexts[status] || 'Pendiente';
+        }
+
+        // Función para filtrar órdenes
+        function filterOrders() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const dateFilter = document.getElementById('dateFilter').value;
+            const searchTerm = document.getElementById('searchOrders').value.toLowerCase();
+            
+            filteredOrders = orders.filter(order => {
+                // Filtro por estado
+                if (statusFilter && order.status !== statusFilter) return false;
+                
+                // Filtro por fecha
+                if (dateFilter) {
+                    const orderDate = new Date(order.date);
+                    const daysAgo = parseInt(dateFilter);
+                    const cutoffDate = new Date();
+                    cutoffDate.setDate(cutoffDate.getDate() - daysAgo);
+                    if (orderDate < cutoffDate) return false;
+                }
+                
+                // Filtro por búsqueda
+                if (searchTerm) {
+                    const searchableText = `${order.orderNumber} ${order.items.map(item => item.name).join(' ')}`.toLowerCase();
+                    if (!searchableText.includes(searchTerm)) return false;
+                }
+                
+                return true;
+            });
+            
+            displayOrders();
+        }
+
+        // Función para limpiar filtros
+        function clearFilters() {
+            document.getElementById('statusFilter').value = '';
+            document.getElementById('dateFilter').value = '';
+            document.getElementById('searchOrders').value = '';
+            filteredOrders = [...orders];
+            displayOrders();
+        }
+
+        // Función para ver detalles de la orden
+        function viewOrderDetails(orderId) {
+            const order = orders.find(o => o.id == orderId);
+            if (order) {
+                showNotification(`Viendo detalles de ${order.orderNumber}`);
+                // Aquí podrías abrir un modal con más detalles
+            }
+        }
+
+        // Función para descargar factura
+        function downloadInvoice(orderId) {
+            const order = orders.find(o => o.id == orderId);
+            if (order) {
+                showNotification(`Descargando factura de ${order.orderNumber}`);
+                // Aquí iría la lógica real de descarga
+            }
+        }
+
+        // Función para cancelar orden
+        function cancelOrder(orderId) {
+            const order = orders.find(o => o.id == orderId);
+            if (order && order.status === 'pendiente') {
+                if (confirm('¿Estás seguro de que quieres cancelar esta orden?')) {
+                    order.status = 'cancelado';
+                    localStorage.setItem('userOrders', JSON.stringify(orders));
+                    filterOrders();
+                    updateStats();
+                    showNotification('Orden cancelada exitosamente');
+                }
+            } else {
+                showNotification('No se puede cancelar esta orden', 'error');
+            }
+        }
+
+        // Función para actualizar estadísticas
+        function updateStats() {
+            const totalOrders = orders.length;
+            const completedOrders = orders.filter(o => o.status === 'completado').length;
+            const pendingOrders = orders.filter(o => o.status === 'pendiente').length;
+            const totalSpent = orders.reduce((sum, order) => sum + order.total, 0);
+            
+            document.getElementById('totalOrders').textContent = totalOrders;
+            document.getElementById('completedOrders').textContent = completedOrders;
+            document.getElementById('pendingOrders').textContent = pendingOrders;
+            document.getElementById('totalSpent').textContent = `$${totalSpent.toFixed(2)}`;
+        }
+
+        // Event listeners
+        document.getElementById('statusFilter').addEventListener('change', filterOrders);
+        document.getElementById('dateFilter').addEventListener('change', filterOrders);
+        document.getElementById('searchOrders').addEventListener('input', filterOrders);
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            filteredOrders = [...orders];
+            displayOrders();
+            updateStats();
+        });
+    </script>
+</body>
+</html> 

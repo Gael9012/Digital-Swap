@@ -1,0 +1,184 @@
+/* Paleta de colores principal */
+:root {
+    --color-primario: #fcb347;
+    --color-secundario: #2d2d2d;
+    --color-fondo: #f9f9f9;
+    --color-acento: #4a90e2;
+    --color-blanco: #fff;
+    --color-gris: #e0e0e0;
+    --color-negro: #222;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--color-fondo);
+    color: var(--color-negro);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-header {
+    background: var(--color-primario);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 0;
+}
+
+.container-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 70px;
+}
+
+.logo {
+    height: 48px;
+}
+
+.nav {
+    display: flex;
+    gap: 24px;
+}
+
+.nav a {
+    color: var(--color-secundario);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.2s;
+}
+
+.nav a:hover {
+    color: var(--color-acento);
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px 0 16px;
+}
+
+.welcome-section {
+    background: var(--color-blanco);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    padding: 40px 32px 32px 32px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.user-icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 24px;
+    filter: hue-rotate(250deg) saturate(200%);
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(74,144,226,0.10);
+    background: var(--color-gris);
+}
+
+.btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 12px 0;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.btn.primary {
+    background: var(--color-primario);
+    color: var(--color-blanco);
+    border: 1px solid var(--color-primario);
+}
+
+.btn.primary:hover {
+    background: var(--color-acento);
+    border-color: var(--color-acento);
+}
+
+.btn.secondary {
+    background: var(--color-blanco);
+    color: var(--color-primario);
+    border: 1px solid var(--color-primario);
+}
+
+.btn.secondary:hover {
+    background: var(--color-primario);
+    color: var(--color-blanco);
+}
+
+.btn.tertiary {
+    background: var(--color-acento);
+    color: var(--color-blanco);
+    border: 1px solid var(--color-acento);
+    margin-top: 8px;
+}
+
+.btn.tertiary:hover {
+    background: var(--color-primario);
+    border-color: var(--color-primario);
+}
+
+.divider {
+    margin: 24px 0 16px 0;
+    color: var(--color-gris);
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.main-footer {
+    background: var(--color-secundario);
+    color: var(--color-blanco);
+    text-align: center;
+    padding: 18px 0;
+    margin-top: 32px;
+}
+
+.container-footer {
+    max-width: 1200px;
+    margin: 0 auto;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 600px) {
+    .container-header {
+        flex-direction: column;
+        height: auto;
+        padding: 12px;
+        gap: 10px;
+    }
+    .main-content {
+        padding: 16px 4px 0 4px;
+    }
+    .welcome-section {
+        padding: 24px 8px 16px 8px;
+    }
+    .logo {
+        height: 36px;
+    }
+    .nav {
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+} 

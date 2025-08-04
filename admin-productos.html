@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrar Productos - Digital Swap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        .drag-area {
+            border: 2px dashed #cbd5e0;
+            transition: all 0.3s ease;
+        }
+        .drag-area.active {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+        .image-preview {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: cover;
+        }
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+        .notification.show {
+            transform: translateX(0);
+        }
+        .notification.success {
+            background: #10b981;
+        }
+        .notification.error {
+            background: #ef4444;
+        }
+        .notification.warning {
+            background: #f59e0b;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-yellow-400 py-4 shadow-lg">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <img src="logo.png" alt="Digital Swap Logo" class="h-10 w-auto">
+                    <h1 class="text-2xl font-bold text-gray-800">Digital Swap - Admin</h1>
+                </div>
+                <a href="productos.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>Volver a Productos
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+                <i class="fas fa-plus-circle text-blue-600 mr-3"></i>
+                Agregar Nuevo Producto
+            </h2>
+
+            <!-- Formulario de Producto -->
+            <form id="productForm" class="space-y-6">
+                <!-- Información Básica -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-tag mr-2"></i>Nombre del Producto
+                        </label>
+                        <input type="text" id="productName" required 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="Ej: iPhone 15 Pro">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-dollar-sign mr-2"></i>Precio
+                        </label>
+                        <input type="number" id="productPrice" required min="0" step="0.01"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="0.00">
+                    </div>
+                </div>
+
+                <!-- Categoría y Marca -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-list mr-2"></i>Categoría
+                        </label>
+                        <select id="productCategory" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">Seleccionar categoría</option>
+                            <option value="telefonos">Teléfonos</option>
+                            <option value="smartwatches">Smartwatches</option>
+                            <option value="auriculares">Auriculares</option>
+                            <option value="juegos">Videojuegos</option>
+                            <option value="consolas">Consolas</option>
+                            <option value="accesorios">Accesorios</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-building mr-2"></i>Marca
+                        </label>
+                        <input type="text" id="productBrand" required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="Ej: Apple, Samsung, Sony">
+                    </div>
+                </div>
+
+                <!-- Descripción -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-align-left mr-2"></i>Descripción del Producto
+                    </label>
+                    <textarea id="productDescription" rows="4" required
+                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                              placeholder="Describe las características, especificaciones y beneficios del producto..."></textarea>
+                </div>
+
+                <!-- Stock y Estado -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-boxes mr-2"></i>Stock Disponible
+                        </label>
+                        <input type="number" id="productStock" required min="0"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="0">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-tag mr-2"></i>Estado
+                        </label>
+                        <select id="productCondition" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">Seleccionar estado</option>
+                            <option value="nuevo">Nuevo</option>
+                            <option value="seminuevo">Seminuevo</option>
+                            <option value="usado">Usado</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-eye mr-2"></i>Visibilidad
+                        </label>
+                        <select id="productVisibility" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="publico">Público</option>
+                            <option value="privado">Privado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Subida de Imágenes -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-images mr-2"></i>Imágenes del Producto
+                    </label>
+                    <div class="drag-area border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-400 transition-colors"
+                         id="dragArea">
+                        <div class="space-y-4">
+                            <i class="fas fa-cloud-upload-alt text-4xl text-gray-400"></i>
+                            <div>
+                                <p class="text-lg font-medium text-gray-700">Arrastra las imágenes aquí</p>
+                                <p class="text-sm text-gray-500">o haz clic para seleccionar archivos</p>
+                            </div>
+                            <input type="file" id="imageInput" multiple accept="image/*" class="hidden">
+                            <button type="button" onclick="document.getElementById('imageInput').click()" 
+                                    class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                <i class="fas fa-folder-open mr-2"></i>Seleccionar Imágenes
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Vista previa de imágenes -->
+                    <div id="imagePreview" class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+                </div>
+
+                <!-- Botones de Acción -->
+                <div class="flex justify-center space-x-4 pt-6">
+                    <button type="submit" 
+                            class="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-colors font-medium">
+                        <i class="fas fa-save mr-2"></i>Guardar Producto
+                    </button>
+                    <button type="button" onclick="resetForm()"
+                            class="bg-gray-500 text-white px-8 py-3 rounded-lg hover:bg-gray-600 transition-colors font-medium">
+                        <i class="fas fa-undo mr-2"></i>Limpiar Formulario
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Lista de Productos -->
+        <div class="bg-white rounded-lg shadow-lg p-8 mt-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">
+                <i class="fas fa-list mr-3"></i>Productos Agregados
+            </h3>
+            <div id="productsList" class="space-y-4">
+                <!-- Los productos se mostrarán aquí dinámicamente -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Notificación -->
+    <div id="notification" class="notification">
+        <i class="fas fa-check-circle mr-2"></i>
+        <span id="notificationText">Producto guardado exitosamente</span>
+    </div>
+
+    <script>
+        // Variables globales
+        let uploadedImages = [];
+        let products = JSON.parse(localStorage.getItem('adminProducts')) || [];
+
+        // Elementos del DOM
+        const dragArea = document.getElementById('dragArea');
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const productForm = document.getElementById('productForm');
+        const productsList = document.getElementById('productsList');
+
+        // Función para mostrar notificaciones
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            
+            notificationText.textContent = message;
+            notification.className = `notification ${type}`;
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Funcionalidad de drag and drop
+        dragArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dragArea.classList.add('active');
+        });
+
+        dragArea.addEventListener('dragleave', () => {
+            dragArea.classList.remove('active');
+        });
+
+        dragArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dragArea.classList.remove('active');
+            const files = e.dataTransfer.files;
+            handleFiles(files);
+        });
+
+        // Manejo de archivos seleccionados
+        imageInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            Array.from(files).forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        uploadedImages.push(e.target.result);
+                        displayImagePreview(e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        function displayImagePreview(imageSrc) {
+            const div = document.createElement('div');
+            div.className = 'relative';
+            div.innerHTML = `
+                <img src="${imageSrc}" alt="Preview" class="image-preview rounded-lg">
+                <button onclick="removeImage(this)" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600">
+                    <i class="fas fa-times text-xs"></i>
+                </button>
+            `;
+            imagePreview.appendChild(div);
+        }
+
+        function removeImage(button) {
+            const div = button.parentElement;
+            const img = div.querySelector('img');
+            const index = uploadedImages.indexOf(img.src);
+            if (index > -1) {
+                uploadedImages.splice(index, 1);
+            }
+            div.remove();
+        }
+
+        // Manejo del formulario
+        productForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const product = {
+                id: Date.now() + Math.random(),
+                name: document.getElementById('productName').value,
+                price: parseFloat(document.getElementById('productPrice').value),
+                category: document.getElementById('productCategory').value,
+                brand: document.getElementById('productBrand').value,
+                description: document.getElementById('productDescription').value,
+                stock: parseInt(document.getElementById('productStock').value),
+                condition: document.getElementById('productCondition').value,
+                visibility: document.getElementById('productVisibility').value,
+                images: uploadedImages,
+                createdAt: new Date().toISOString()
+            };
+
+            products.push(product);
+            localStorage.setItem('adminProducts', JSON.stringify(products));
+            
+            showNotification('Producto guardado exitosamente');
+            resetForm();
+            displayProducts();
+        });
+
+        function resetForm() {
+            productForm.reset();
+            uploadedImages = [];
+            imagePreview.innerHTML = '';
+        }
+
+        function displayProducts() {
+            productsList.innerHTML = '';
+            
+            products.forEach(product => {
+                const div = document.createElement('div');
+                div.className = 'border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow';
+                div.innerHTML = `
+                    <div class="flex items-center space-x-4">
+                        <img src="${product.images[0] || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23f3f4f6"/%3E%3C/svg%3E'}" 
+                             alt="${product.name}" class="w-16 h-16 object-cover rounded-lg">
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-gray-800">${product.name}</h4>
+                            <p class="text-sm text-gray-600">${product.brand} - ${product.category}</p>
+                            <p class="text-lg font-bold text-green-600">$${product.price.toFixed(2)}</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="editProduct('${product.id}')" class="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteProduct('${product.id}')" class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                productsList.appendChild(div);
+            });
+        }
+
+        function editProduct(id) {
+            const product = products.find(p => p.id == id);
+            if (product) {
+                // Llenar el formulario con los datos del producto
+                document.getElementById('productName').value = product.name;
+                document.getElementById('productPrice').value = product.price;
+                document.getElementById('productCategory').value = product.category;
+                document.getElementById('productBrand').value = product.brand;
+                document.getElementById('productDescription').value = product.description;
+                document.getElementById('productStock').value = product.stock;
+                document.getElementById('productCondition').value = product.condition;
+                document.getElementById('productVisibility').value = product.visibility;
+                
+                // Mostrar imágenes
+                uploadedImages = [...product.images];
+                imagePreview.innerHTML = '';
+                product.images.forEach(img => displayImagePreview(img));
+                
+                showNotification('Producto cargado para editar');
+            }
+        }
+
+        function deleteProduct(id) {
+            if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
+                products = products.filter(p => p.id != id);
+                localStorage.setItem('adminProducts', JSON.stringify(products));
+                displayProducts();
+                showNotification('Producto eliminado', 'success');
+            }
+        }
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            displayProducts();
+        });
+    </script>
+</body>
+</html> 

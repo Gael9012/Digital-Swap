@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Correcciones - Digital Swap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .test-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .test-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .test-result {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        
+        .test-success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+        
+        .test-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+        
+        .test-warning {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #f59e0b;
+        }
+    </style>
+</head>
+<body class="py-8 px-4">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-white mb-4">
+                <i class="fas fa-bug mr-3"></i>
+                Test de Correcciones - Digital Swap
+            </h1>
+            <p class="text-white text-lg opacity-90">
+                Verificación completa del sistema de corrección de errores
+            </p>
+        </div>
+
+        <!-- Test Results Container -->
+        <div id="testResults" class="space-y-6">
+            <!-- Los resultados se generarán dinámicamente -->
+        </div>
+
+        <!-- Test Controls -->
+        <div class="text-center mt-8">
+            <button id="runAllTests" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                <i class="fas fa-play mr-2"></i>
+                Ejecutar Todas las Pruebas
+            </button>
+            
+            <button id="clearResults" class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors ml-4">
+                <i class="fas fa-trash mr-2"></i>
+                Limpiar Resultados
+            </button>
+        </div>
+
+        <!-- Summary -->
+        <div id="testSummary" class="mt-8 bg-white rounded-lg p-6 shadow-lg hidden">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">
+                <i class="fas fa-chart-bar mr-2"></i>
+                Resumen de Pruebas
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-green-600" id="successCount">0</div>
+                    <div class="text-sm text-gray-600">Exitosas</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-red-600" id="errorCount">0</div>
+                    <div class="text-sm text-gray-600">Fallidas</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-yellow-600" id="warningCount">0</div>
+                    <div class="text-sm text-gray-600">Advertencias</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="error-fixes.js"></script>
+    <script>
+        // Test Suite
+        const TestSuite = {
+            results: [],
+            
+            // Agregar resultado de prueba
+            addResult(testName, status, message, details = null) {
+                const result = {
+                    name: testName,
+                    status: status, // 'success', 'error', 'warning'
+                    message: message,
+                    details: details,
+                    timestamp: new Date().toISOString()
+                };
+                
+                this.results.push(result);
+                this.displayResult(result);
+                this.updateSummary();
+            },
+            
+            // Mostrar resultado individual
+            displayResult(result) {
+                const container = document.getElementById('testResults');
+                const card = document.createElement('div');
+                card.className = 'test-card p-6';
+                
+                const statusClass = {
+                    'success': 'test-success',
+                    'error': 'test-error',
+                    'warning': 'test-warning'
+                };
+                
+                const statusIcon = {
+                    'success': 'fas fa-check-circle',
+                    'error': 'fas fa-times-circle',
+                    'warning': 'fas fa-exclamation-triangle'
+                };
+                
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">${result.name}</h3>
+                        <span class="test-result ${statusClass[result.status]}">
+                            <i class="${statusIcon[result.status]} mr-2"></i>
+                            ${result.status.toUpperCase()}
+                        </span>
+                    </div>
+                    <p class="text-gray-600 mb-2">${result.message}</p>
+                    ${result.details ? `<pre class="text-sm bg-gray-100 p-2 rounded text-gray-700">${result.details}</pre>` : ''}
+                    <div class="text-xs text-gray-500 mt-2">${new Date(result.timestamp).toLocaleTimeString()}</div>
+                `;
+                
+                container.appendChild(card);
+            },
+            
+            // Actualizar resumen
+            updateSummary() {
+                const summary = document.getElementById('testSummary');
+                const successCount = document.getElementById('successCount');
+                const errorCount = document.getElementById('errorCount');
+                const warningCount = document.getElementById('warningCount');
+                
+                const success = this.results.filter(r => r.status === 'success').length;
+                const errors = this.results.filter(r => r.status === 'error').length;
+                const warnings = this.results.filter(r => r.status === 'warning').length;
+                
+                successCount.textContent = success;
+                errorCount.textContent = errors;
+                warningCount.textContent = warnings;
+                
+                summary.classList.remove('hidden');
+            },
+            
+            // Limpiar resultados
+            clearResults() {
+                this.results = [];
+                document.getElementById('testResults').innerHTML = '';
+                document.getElementById('testSummary').classList.add('hidden');
+            },
+            
+            // Ejecutar todas las pruebas
+            async runAllTests() {
+                this.clearResults();
+                
+                // Test 1: Verificar que ErrorFixes está disponible
+                this.testErrorFixesAvailability();
+                
+                // Test 2: Probar safeQuerySelector
+                this.testSafeQuerySelector();
+                
+                // Test 3: Probar validaciones
+                this.testValidations();
+                
+                // Test 4: Probar notificaciones
+                this.testNotifications();
+                
+                // Test 5: Probar storage
+                this.testStorage();
+                
+                // Test 6: Probar manejo de imágenes
+                this.testImageHandling();
+                
+                // Test 7: Probar navegación
+                this.testNavigation();
+                
+                // Test 8: Probar modales
+                this.testModals();
+                
+                // Test 9: Probar formateo de precios
+                this.testPriceFormatting();
+                
+                // Test 10: Probar funciones de utilidad
+                this.testUtilityFunctions();
+            },
+            
+            // Test 1: Verificar disponibilidad de ErrorFixes
+            testErrorFixesAvailability() {
+                try {
+                    if (typeof ErrorFixes !== 'undefined') {
+                        this.addResult(
+                            'Disponibilidad de ErrorFixes',
+                            'success',
+                            'El sistema de corrección de errores está disponible globalmente',
+                            `Funciones disponibles: ${Object.keys(ErrorFixes).join(', ')}`
+                        );
+                    } else {
+                        this.addResult(
+                            'Disponibilidad de ErrorFixes',
+                            'error',
+                            'ErrorFixes no está disponible globalmente'
+                        );
+                    }
+                } catch (error) {
+                    this.addResult(
+                        'Disponibilidad de ErrorFixes',
+                        'error',
+                        'Error al verificar ErrorFixes',
+                        error.message
+                    );
+                }
+            },
+            
+            // Test 2: Probar safeQuerySelector
+            testSafeQuerySelector() {
+                try {
+                    // Probar con selector válido
+                    const body = ErrorFixes.safeQuerySelector('body');
+                    if (body) {
+                        this.addResult(
+                            'safeQuerySelector - Selector válido',
+                            'success',
+                            'Elemento encontrado correctamente'
+                        );
+                    } else {
+                        this.addResult(
+                            'safeQuerySelector - Selector válido',
+                            'error',
+                            'No se pudo encontrar el elemento body'
+                        );
+                    }
+                    
+                    // Probar con selector inválido
+                    const invalidElement = ErrorFixes.safeQuerySelector('#elemento-que-no-existe');
+                    if (invalidElement === null) {
+                        this.addResult(
+                            'safeQuerySelector - Selector inválido',
+                            'success',
+                            'Manejo correcto de selector inválido'
+                        );
+                    } else {
+                        this.addResult(
+                            'safeQuerySelector - Selector inválido',
+                            'warning',
+                            'Selector inválido no retornó null como esperado'
+                        );
+                    }
+                } catch (error) {
+                    this.addResult(
+                        'safeQuerySelector',
+                        'error',
+                        'Error en safeQuerySelector',
+                        error.message
+                    );
+                }
+            },
+            
+            // Test 3: Probar validaciones
+            testValidations() {
+                try {
+                    // Test validación de email
+                    const validEmail = ErrorFixes.validateEmail('test@example.com');
+                    const invalidEmail = ErrorFixes.validateEmail('invalid-email');
+                    
+                    if (validEmail) {
+                        this.addResult(
+                            'Validación de Email - Válido',
+                            'success',
+                            'Email válido reconocido correctamente'
+                        );
+                    } else {
+                        this.addResult(
+                            'Validación de Email - Válido',
+                            'error',
+                            'Email válido no reconocido'
+                        );
+                    }
+                    
+                    if (!invalidEmail) {
+                        this.addResult(
+                            'Validación de Email - Inválido',
+                            'success',
+                            'Email inválido rechazado correctamente'
+                        );
+                    } else {
+                        this.addResult(
+                            'Validación de Email - Inválido',
+                            'error',
+                            'Email inválido aceptado incorrectamente'
+                        );
+                    }
+                    
+                    // Test validación de contraseña
+                    const validPassword = ErrorFixes.validatePassword('password123', 6);
+                    const invalidPassword = ErrorFixes.validatePassword('123', 6);
+                    
+                    if (validPassword) {
+                        this.addResult(
+                            'Validación de Contraseña - Válida',
+                            'success',
+                            'Contraseña válida reconocida correctamente'
+                        );
+                    } else {
+                        this.addResult(
+                            'Validación de Contraseña - Válida',
+                            'error',
+                            'Contraseña válida no reconocida'
+                        );
+                    }
+                    
+                    if (!invalidPassword) {
+                        this.addResult(
+                            'Validación de Contraseña - Inválida',
+                            'success',
+                            'Contraseña inválida rechazada correctamente'
+                        );
+                    } else {
+                        this.addResult(
+                            'Validación de Contraseña - Inválida',
+                            'error',
+                            'Contraseña inválida aceptada incorrectamente'
+                        );
+                    }
+                } catch (error) {
+                    this.addResult(
+                        'Validaciones',
+                        'error',
+                        'Error en validaciones',
+                        error.message
+                    );
+                }
+            },
+            
+            // Test 4: Probar notificaciones
+            testNotifications() {
+                try {
+                    ErrorFixes.NotificationSystem.show('Prueba de notificación', 'success');
+                    this.addResult(
+                        'Sistema de Notificaciones',
+                        'success',
+                        'Notificación mostrada correctamente'
+                    );
+                    
+                    // Limpiar notificación después de 1 segundo
+                    setTimeout(() => {
+                        ErrorFixes.NotificationSystem.clear();
+                    }, 1000);
+                } catch (error) {
+                    this.addResult(
+                        'Sistema de Notificaciones',
+                        'error',
+                        'Error al mostrar notificación',
+                        error.message
+                    );
+                }
+            },
+            
+            // Test 5: Probar storage
+            testStorage() {
+                try {
+                    // Test localStorage
+                    const testKey = 'test-storage-key';
+                    const testValue = { test: 'data', timestamp: Date.now() };
+                    
+                    const setResult = ErrorFixes.StorageManager.set(testKey, testValue);
+                    const getResult = ErrorFixes.StorageManager.get(testKey);
+                    const removeResult = ErrorFixes.StorageManager.remove(testKey);
+                    
+                    if (setResult && getResult && removeResult) {
+                        this.addResult(
+                            'Storage Manager',
+                            'success',
+                            'Operaciones de storage funcionando correctamente'
+                        );
+                    } else {
+                        this.addResult(
+                            'Storage Manager',
+                            'error',
+                            'Error en operaciones de storage'
+                        );
+                    }
+                    
+                    // Test sessionStorage
+                    const sessionSetResult = ErrorFixes.SessionManager.set(testKey, testValue);
+                    const sessionGetResult = ErrorFixes.SessionManager.get(testKey);
+                    const sessionRemoveResult = ErrorFixes.SessionManager.remove(testKey);
+                    
+                    if (sessionSetResult && sessionGetResult && sessionRemoveResult) {
+                        this.addResult(
+                            'Session Manager',
+                            'success',
+                            'Operaciones de sessionStorage funcionando correctamente'
+                        );
+                    } else {
+                        this.addResult(
+                            'Session Manager',
+                            'error',
+                            'Error en operaciones de sessionStorage'
+                        );
+                    }
+                } catch (error) {
+                    this.addResult(
+                        'Storage',
+                        'error',
+                        'Error en pruebas de storage',
+                        error.message
+                    );
+                }
+            },
+            
+            // Test 6: Probar manejo de imágenes
+            testImageHandling() {
+                try {
+                    const testImg = document.createElement('img');
+                    ErrorFixes.handleImageError(testImg);
+                    
+                    if (typeof testImg.onerror === 'function') {
+                        this.addResult(
+                            'Manejo de Errores de Imagen',
+                            'success',
+                            'Función de manejo de errores de imagen configurada correctamente'
+                        );
+                    } else {
+                        this.addResult(
+                            'Manejo de Errores de Imagen',
+                            'error',
+                            'Función de manejo de errores de imagen no configurada'
+                        );
+                    }
+                } catch (error) {
+                    this.addResult(
+                        'Manejo de Imágenes',
+                        'error',
+                        'Error en manejo de imágenes',
+                        error.message
+                    );
+                }
+            },
+            
+            // Test 7: Probar navegación
+            testNavigation() {
+                try {
+                    const urlParam = ErrorFixes.getUrlParameter('test');
+                    if (urlParam === null) {
+                        this.addResult(
+                            'Navegación - Parámetros URL',
+                            'success',
+                            'Función getUrlParameter funciona correctamente'
+                        );
+                    } else {
+                        this.addResult(
+                            'Navegación - Parámetros URL',
+                            'warning',
+                            'getUrlParameter retornó valor inesperado'
+                        );
+                    }
+                } catch (error) {
+                    this.addResult(
+                        'Navegación',
+                        'error',
+                        'Error en funciones de navegación',
+                        error.message
+                    );
+                }
+            },
+            
+            // Test 8: Probar modales
+            testModals() {
+                try {
+                    // Crear modal de prueba
+                    const testModal = document.createElement('div');
+                    testModal.id = 'test-modal';
+                    testModal.className = 'hidden';
+                    document.body.appendChild(testModal);
+                    
+                    // Probar showModal
+                    ErrorFixes.showModal('#test-modal');
+                    if (testModal.classList.contains('flex')) {
+                        this.addResult(
+                            'Modales - Mostrar',
+                            'success',
+                            'Modal mostrado correctamente'
+                        );
+                    } else {
+                        this.addResult(
+                            'Modales - Mostrar',
+                            'error',
+                            'Modal no se mostró correctamente'
+                        );
+                    }
+                    
+                    // Probar hideModal
+                    ErrorFixes.hideModal('#test-modal');
+                    if (testModal.classList.contains('hidden')) {
+                        this.addResult(
+                            'Modales - Ocultar',
+                            'success',
+                            'Modal ocultado correctamente'
+                        );
+                    } else {
+                        this.addResult(
+                            'Modales - Ocultar',
+                            'error',
+                            'Modal no se ocultó correctamente'
+                        );
+                    }
+                    
+                    // Limpiar
+                    document.body.removeChild(testModal);
+                } catch (error) {
+                    this.addResult(
+                        'Modales',
+                        'error',
+                        'Error en funciones de modales',
+                        error.message
+                    );
+                }
+            },
+            
+            // Test 9: Probar formateo de precios
+            testPriceFormatting() {
+                try {
+                    const formattedPrice = ErrorFixes.formatPrice(1234.56);
+                    if (formattedPrice && formattedPrice.includes('$')) {
+                        this.addResult(
+                            'Formateo de Precios',
+                            'success',
+                            'Precio formateado correctamente',
+                            `Resultado: ${formattedPrice}`
+                        );
+                    } else {
+                        this.addResult(
+                            'Formateo de Precios',
+                            'error',
+                            'Precio no se formateó correctamente',
+                            `Resultado: ${formattedPrice}`
+                        );
+                    }
+                } catch (error) {
+                    this.addResult(
+                        'Formateo de Precios',
+                        'error',
+                        'Error en formateo de precios',
+                        error.message
+                    );
+                }
+            },
+            
+            // Test 10: Probar funciones de utilidad
+            testUtilityFunctions() {
+                try {
+                    // Test isValidNumber
+                    const validNumber = ErrorFixes.isValidNumber('123.45');
+                    const invalidNumber = ErrorFixes.isValidNumber('not-a-number');
+                    
+                    if (validNumber && !invalidNumber) {
+                        this.addResult(
+                            'Funciones de Utilidad - Validación de Números',
+                            'success',
+                            'Validación de números funciona correctamente'
+                        );
+                    } else {
+                        this.addResult(
+                            'Funciones de Utilidad - Validación de Números',
+                            'error',
+                            'Validación de números no funciona correctamente'
+                        );
+                    }
+                    
+                    // Test debounce
+                    let debounceCount = 0;
+                    const debouncedFunction = ErrorFixes.debounce(() => {
+                        debounceCount++;
+                    }, 100);
+                    
+                    debouncedFunction();
+                    debouncedFunction();
+                    debouncedFunction();
+                    
+                    setTimeout(() => {
+                        if (debounceCount === 1) {
+                            this.addResult(
+                                'Funciones de Utilidad - Debounce',
+                                'success',
+                                'Función debounce funciona correctamente'
+                            );
+                        } else {
+                            this.addResult(
+                                'Funciones de Utilidad - Debounce',
+                                'error',
+                                'Función debounce no funciona correctamente',
+                                `Contador: ${debounceCount}`
+                            );
+                        }
+                    }, 200);
+                    
+                } catch (error) {
+                    this.addResult(
+                        'Funciones de Utilidad',
+                        'error',
+                        'Error en funciones de utilidad',
+                        error.message
+                    );
+                }
+            }
+        };
+        
+        // Event Listeners
+        document.getElementById('runAllTests').addEventListener('click', () => {
+            TestSuite.runAllTests();
+        });
+        
+        document.getElementById('clearResults').addEventListener('click', () => {
+            TestSuite.clearResults();
+        });
+        
+        // Ejecutar pruebas automáticamente al cargar
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                TestSuite.runAllTests();
+            }, 1000);
+        });
+    </script>
+</body>
+</html> 

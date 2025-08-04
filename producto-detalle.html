@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Producto</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-image: url('https://img.freepik.com/vector-premium/fondo-vector-monocromo-blanco-abstracto-folleto-diseno-folleto-sitio-web-fondo-pantalla-blanco-geometrico-pagina-inicio-presentacion-certificado_249611-5879.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        
+        .btn-primary {
+            background: #3483fa;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #2968c8;
+        }
+
+        .btn-secondary {
+            background: #fff;
+            border: 1px solid #3483fa;
+            color: #3483fa;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f9fa;
+        }
+
+        .thumbnail {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .thumbnail:hover {
+            transform: scale(1.02);
+        }
+
+        .thumbnail.active {
+            border: 2px solid #3483fa;
+        }
+
+        .price-badge {
+            background: #39b54a;
+        }
+
+        .star-rating {
+            color: #3483fa;
+        }
+
+        .mercado-libre-blue {
+            color: #3483fa;
+        }
+
+        .mercado-libre-green {
+            color: #39b54a;
+        }
+
+        .mercado-libre-gray {
+            color: #666;
+        }
+
+        .mercado-libre-light-gray {
+            color: #999;
+        }
+
+        .mercado-libre-bg {
+            background: #f5f5f5;
+        }
+
+        .mercado-libre-card {
+            background: #fff;
+            border: 1px solid #e6e6e6;
+            border-radius: 8px;
+        }
+
+        .mercado-libre-price {
+            font-family: 'Proxima Nova', -apple-system, 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+        }
+
+        .mercado-libre-sticky {
+            position: sticky;
+            top: 20px;
+        }
+
+        .product-image {
+            object-fit: contain;
+        }
+
+        .related-product-card {
+            background: #fff;
+            border: 1px solid #e6e6e6;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .related-product-card:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .related-product-image {
+            object-fit: contain;
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+
+<body class="mercado-libre-bg">
+    <div class="min-h-screen">
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-blue-600 to-purple-600 py-6 shadow-lg sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 py-3">
+                <div class="flex items-center justify-between">
+                    <!-- Logo y título -->
+                    <div class="flex items-center space-x-4">
+                        <img src="logo.png" alt="Digital Swap Logo" class="h-8 w-auto">
+                        <h1 class="text-2xl font-bold text-white">Digital Swap</h1>
+                    </div>
+                    
+                    <!-- Navegación -->
+                    <nav class="hidden md:flex items-center space-x-6">
+                                        <a href="audifonos.html" class="text-white hover:text-blue-200 transition-colors">
+                    <i class="fas fa-headphones mr-1"></i>Audífonos
+                </a>
+                        <a href="Juegosv.html" class="text-white hover:text-blue-200 transition-colors">
+                            <i class="fas fa-gamepad mr-1"></i>Juegos
+                        </a>
+                        <a href="consilaju.html" class="text-white hover:text-blue-200 transition-colors">
+                            <i class="fas fa-tv mr-1"></i>Consolas
+                        </a>
+                        <a href="Smartwat.html" class="text-white hover:text-blue-200 transition-colors">
+                            <i class="fas fa-clock mr-1"></i>Smartwatches
+                        </a>
+                    </nav>
+
+                    <div class="flex items-center space-x-4">
+                        <button id="shareBtn" class="text-white hover:text-blue-200 transition-colors">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                        <button id="favoriteBtn" class="text-white hover:text-red-200 transition-colors">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                        <button id="cartBtn" class="relative text-white hover:text-blue-200 transition-colors">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span id="cartCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto py-4 px-4">
+            <!-- Breadcrumb -->
+            <div class="text-gray-600 text-sm mb-4">
+                <span>Inicio > </span>
+                <a href="#" class="text-blue-600 hover:underline">Celulares y Teléfonos > </a>
+                <a href="#" class="text-blue-600 hover:underline">Smartphones > </a>
+                <span id="product-breadcrumb" class="text-gray-900">iPhone 15 Pro Max</span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                <!-- Left Column: Product Gallery -->
+                <div class="lg:col-span-1">
+                    <div class="space-y-4">
+                        <!-- Main Image Gallery -->
+                        <div class="mercado-libre-card p-4">
+                            <!-- Main Image Container -->
+                            <div class="relative mb-4">
+                                <img id="main-image" src="" alt="Producto" class="w-full h-80 product-image rounded">
+                                <div class="absolute top-2 right-2">
+                                    <button class="bg-white rounded-full p-2 shadow-md hover:shadow-lg transition-all">
+                                        <i class="fas fa-expand-arrows-alt text-gray-600 text-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Thumbnail Gallery (Vertical) -->
+                            <div class="flex space-x-2 overflow-x-auto">
+                                <div id="thumbnail-container" class="flex space-x-2">
+                                    <!-- Thumbnails will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Related Products -->
+                        <div class="mercado-libre-card p-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h3 class="text-lg font-medium text-gray-900">Productos relacionados</h3>
+                                    <p class="text-sm mercado-libre-gray">Promocionado</p>
+                                </div>
+                                <button class="bg-white rounded-full p-3 shadow-md hover:shadow-lg transition-all">
+                                    <i class="fas fa-chevron-right text-blue-600"></i>
+                                </button>
+                            </div>
+
+                            <div class="flex space-x-3 overflow-x-auto">
+                                <div id="related-products-container" class="flex space-x-3">
+                                    <!-- Related products will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Center Column: Product Details -->
+                <div class="lg:col-span-1">
+                    <div class="space-y-4">
+                        <!-- Product Status & Sales -->
+                        <div class="mercado-libre-card p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-sm mercado-libre-gray">Nuevo | +5mil vendidos</span>
+                                </div>
+                            </div>
+
+                            <!-- Product Title -->
+                            <h1 id="product-title" class="text-xl font-normal text-gray-900 mb-2"></h1>
+
+                            <!-- Rating -->
+                            <div class="flex items-center space-x-2 mb-3">
+                                <div class="flex items-center">
+                                    <span class="star-rating text-sm">★★★★☆</span>
+                                    <span class="mercado-libre-blue font-medium ml-1 text-sm">4.6</span>
+                                </div>
+                                <span class="mercado-libre-light-gray text-sm">(668)</span>
+                            </div>
+                        </div>
+
+                        <!-- Pricing -->
+                        <div class="mercado-libre-card p-4">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <span id="original-price" class="text-lg mercado-libre-light-gray line-through"></span>
+                                <span id="current-price"
+                                    class="text-3xl mercado-libre-price font-light text-gray-900"></span>
+                                <span class="price-badge text-white px-2 py-1 rounded text-xs font-medium">24%
+                                    OFF</span>
+                            </div>
+                            <div class="space-y-1">
+                                <p class="text-sm mercado-libre-gray">24 meses de $128.99</p>
+                                <p class="text-sm mercado-libre-gray">IVA incluido</p>
+                                <a href="#" class="text-sm mercado-libre-blue hover:underline">Ver los medios de
+                                    pago</a>
+                            </div>
+                        </div>
+
+                        <!-- Color Selection -->
+                        <div class="mercado-libre-card p-4">
+                            <label class="block text-sm font-medium mercado-libre-gray mb-2">Color: <span
+                                    id="selected-color" class="mercado-libre-blue">Verde claro</span></label>
+                            <div class="flex items-center space-x-3">
+                                <img id="color-thumbnail" src="" alt="Color seleccionado"
+                                    class="w-16 h-16 object-cover rounded border-2 border-blue-500">
+                            </div>
+                        </div>
+
+                        <!-- Product Specifications -->
+                        <div class="mercado-libre-card p-4">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Lo que tienes que saber de este producto
+                            </h3>
+                            <div id="product-features" class="space-y-2">
+                                <!-- Features will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Purchase Options (Sticky) -->
+                <div class="lg:col-span-1">
+                    <div class="mercado-libre-sticky">
+                        <div class="space-y-4">
+                            <!-- Delivery Information -->
+                            <div class="mercado-libre-card p-4">
+                                <div class="space-y-3">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-truck mercado-libre-green text-sm"></i>
+                                        <span class="mercado-libre-green font-medium text-sm">Llega gratis mañana</span>
+                                    </div>
+                                    <p class="text-xs mercado-libre-gray">Comprando dentro de las próximas 10 h 11 min
+                                    </p>
+                                    <a href="#" class="text-xs mercado-libre-blue hover:underline">Más formas de
+                                        entrega</a>
+
+                                    <div class="flex items-center space-x-2 mt-3">
+                                        <i class="fas fa-map-marker-alt mercado-libre-green text-sm"></i>
+                                        <span class="mercado-libre-green font-medium text-sm">Retira gratis a partir de
+                                            mañana en correos y otros puntos</span>
+                                    </div>
+                                    <p class="text-xs mercado-libre-gray">Comprando dentro de las próximas 3 h 41 min
+                                    </p>
+                                    <a href="#" class="text-xs mercado-libre-blue hover:underline">Ver en el mapa</a>
+                                </div>
+                            </div>
+
+                            <!-- Stock Availability -->
+                            <div class="mercado-libre-card p-4">
+                                <div class="space-y-3">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-check-circle mercado-libre-green text-sm"></i>
+                                        <span class="mercado-libre-green font-medium text-sm">Stock disponible</span>
+                                    </div>
+                                    <p class="text-xs mercado-libre-gray">Almacenado y enviado por <i
+                                            class="fas fa-bolt mercado-libre-green"></i> FULL</p>
+
+                                    <div class="flex items-center justify-between">
+                                        <label class="text-sm mercado-libre-gray">
+                                            Cantidad: <span id="quantity-display" class="mercado-libre-blue">1
+                                                unidad</span> (+50 disponibles)
+                                        </label>
+                                        <div class="flex items-center space-x-2">
+                                            <button id="quantity-minus"
+                                                class="w-6 h-6 bg-gray-200 rounded flex items-center justify-center hover:bg-gray-300">
+                                                <i class="fas fa-minus text-gray-600 text-xs"></i>
+                                            </button>
+                                            <span id="quantity-value" class="w-8 text-center font-medium">1</span>
+                                            <button id="quantity-plus"
+                                                class="w-6 h-6 bg-gray-200 rounded flex items-center justify-center hover:bg-gray-300">
+                                                <i class="fas fa-plus text-gray-600 text-xs"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="mercado-libre-card p-4">
+                                <div class="space-y-3">
+                                    <button id="buy-now-btn"
+                                        class="btn-primary w-full py-3 px-6 text-white font-medium rounded text-sm">
+                                        Comprar ahora
+                                    </button>
+                                    <button id="add-to-cart-btn"
+                                        class="btn-secondary w-full py-3 px-6 font-medium rounded text-sm">
+                                        Agregar al carrito
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Seller Info -->
+                            <div class="mercado-libre-card p-4">
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <span class="text-sm mercado-libre-gray">Vendido por</span>
+                                    <a href="#" class="text-sm mercado-libre-blue hover:underline"
+                                        id="seller-name-bottom"></a>
+                                </div>
+                                <p class="text-xs mercado-libre-gray">MercadoLíder | +100mil ventas</p>
+                            </div>
+
+                            <!-- Guarantees -->
+                            <div class="mercado-libre-card p-4">
+                                <div class="space-y-2">
+                                    <div class="flex items-start space-x-2">
+                                        <i class="fas fa-undo text-green-500 text-xs mt-1"></i>
+                                        <p class="text-xs mercado-libre-gray">
+                                            <span class="font-medium">Devolución gratis.</span> Tienes 30 días desde que
+                                            lo recibes.
+                                        </p>
+                                    </div>
+                                    <div class="flex items-start space-x-2">
+                                        <i class="fas fa-shield-alt text-green-500 text-xs mt-1"></i>
+                                        <p class="text-xs mercado-libre-gray">
+                                            <span class="font-medium">Compra Protegida,</span> recibe el producto que
+                                            esperabas o te devolvemos tu dinero.
+                                        </p>
+                                    </div>
+                                    <div class="flex items-start space-x-2">
+                                        <i class="fas fa-medal text-green-500 text-xs mt-1"></i>
+                                        <p class="text-xs mercado-libre-gray">
+                                            <span class="font-medium">12 meses de garantía de fábrica.</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Product data
+        const products = [
+            {
+                id: 1,
+                name: "iPhone 15 Pro Max",
+                subtitle: "Apple - 256GB - Titanio Natural",
+                price: 29999,
+                originalPrice: 32999,
+                image: "Imagenes/Telefonia.png",
+                images: [
+                    "Imagenes/car.png",
+                    "Imagenes/trt.png",
+                    "Imagenes/nett.png",
+                    "Imagenes/azil.png"
+                ],
+                color: "Titanio Natural",
+                features: [
+                    "Memoria RAM de 8 GB.",
+                    "Pantalla Super Retina XDR OLED de 6.7” con ProMotion hasta 120 Hz.",
+                    "Triple cámara trasera: 48Mpx principal, 12Mpx ultra gran angular y 12Mpx telefoto con zoom 5x.",
+                    "Cámara frontal de 12Mpx con modo retrato mejorado.",
+                    "Procesador Apple A17 Pro (3 nm).",
+                    "Batería de larga duración con carga rápida USB-C y MagSafe.",
+                    "Memoria interna de 256GB a 1TB.",
+                    "Face ID, botón personalizable y resistencia al agua IP68.",
+                    "Dispositivo liberado para cualquier compañía telefónica."
+                ],
+                seller: "Apple Store",
+                type: "phone"
+            },
+            {
+                id: 2,
+                name: "Samsung Galaxy S24 Ultra",
+                subtitle: "Samsung - 256GB - Negro",
+                price: 24999,
+                originalPrice: 27999,
+                image: "Imagenes/samsu.png",
+                images: [
+                    "Imagenes/black.png",
+                    "Imagenes/sam.png",
+                    "Imagenes/ultra.png",
+                    "Imagenes/lnl.png"
+                ],
+                color: "Negro",
+                features: [
+                    "12 GB RAM.",
+                    "Pantalla Dynamic AMOLED 6.8” 120 Hz.",
+                    "Cámara trasera principal 200Mpx.",
+                    "Cámara frontal 12Mpx.",
+                    "Procesador Snapdragon 8 Gen 3.",
+                    "Batería con carga rápida e inalámbrica.",
+                    "Memoria interna 256GB a 1TB.",
+                    "Sensor de huellas, reconocimiento facial, IP68.",
+                    "Desbloqueado para cualquier compañía."
+                ],
+                seller: "Samsung Store",
+                type: "phone"
+            },
+            {
+                id: 3,
+                name: "Xiaomi 14 Pro",
+                subtitle: "Xiaomi - 256GB - Verde",
+                price: 18999,
+                originalPrice: 21999,
+                image: "Imagenes/xiover.png",
+                images: [
+                    "Imagenes/xioa.png",
+                    "Imagenes/color.png",
+                    "Imagenes/jade.png",
+                    "Imagenes/seer.png"
+                ],
+                color: "Verde",
+                features: [
+                    "Xiaomi 14 Pro color verde.",
+                    "12 GB de RAM.",
+                    "Pantalla AMOLED de 6.73” con 120 Hz.",
+                    "Cámara principal de 50Mpx con estabilización óptica.",
+                    "Cámaras ultra gran angular y telefoto.",
+                    "Cámara frontal de 32Mpx.",
+                    "Procesador Snapdragon 8 Gen 2.",
+                    "Batería con carga rápida por cable e inalámbrica.",
+                    "Memoria interna de 256GB a 1TB.",
+                    "Desbloqueo facial y sensor de huellas bajo pantalla."
+                ],
+                seller: "Xiaomi Store",
+                type: "phone"
+            },
+            {
+                id: 4,
+                name: "Google Pixel 8 Pro",
+                subtitle: "Google - 128GB - Azul",
+                price: 15999,
+                originalPrice: 18999,
+                image: "Imagenes/gloazul.png",
+                images: [
+                    "Imagenes/az.png",
+                    "Imagenes/gog.png",
+                    "Imagenes/coffe.png",
+                    "Imagenes/azulp.png"
+                ],
+                color: "Azul",
+                features: [
+                    "12 GB de RAM.",
+                    "Pantalla OLED de 6.7” con tasa de refresco de 120 Hz.",
+                    "Cámara trasera triple con sensor principal de 50Mpx.",
+                    "Cámara frontal de 11.1Mpx.",
+                    "Procesador Google Tensor G3.",
+                    "Batería con carga rápida y carga inalámbrica.",
+                    "Memoria interna de 128GB a 512GB.",
+                    "Desbloqueo facial y sensor de huellas bajo pantalla.",
+                    "Resistencia al agua IP68."
+                ],
+                seller: "Google Store",
+                type: "phone"
+            },
+            {
+                id: 5,
+                name: "OnePlus 12",
+                subtitle: "OnePlus - 256GB - Negro",
+                price: 17999,
+                originalPrice: 17999,
+                image: "Imagenes/one.png",
+                images: [
+                    "Imagenes/on.png",
+                    "Imagenes/mnm.png",
+                    "Imagenes/never.png",
+                    "Imagenes/nen.png"
+                ],
+                color: "Negro",
+                features: [
+                    "Memoria RAM: 16 GB.",
+                    "Dispositivo liberado para que elijas la compañía telefónica que prefieras.",
+                    "Pantalla AMOLED de 6.82\".",
+                    "Tiene 3 cámaras traseras de 50Mpx/48Mpx/64Mpx.",
+                    "Cámara delantera de 32Mpx.",
+                    "Procesador Snapdragon 8 Gen 3 de 3.3GHz con 16GB de RAM.",
+                    "Batería de 5400mAh.",
+                    "Memoria interna de 256GB.",
+                    "Con sensor de huella dactilar."
+                ],
+                seller: "OnePlus Store",
+                type: "phone"
+            },
+            {
+                id: 6,
+                name: "Huawei P60 Pro",
+                subtitle: "Huawei - 512GB - Blanco",
+                price: 21999,
+                originalPrice: 21999,
+                image: "Imagenes/blanco.png",
+                images: [
+                    "Imagenes/des.png",
+                    "Imagenes/hu.png",
+                    "Imagenes/verr.png",
+                    "Imagenes/bla.png"
+                ],
+                color: "Blanco",
+                features: [
+                    "Memoria RAM: 8 GB.",
+                    "Dispositivo liberado para que elijas la compañía telefónica que prefieras.",
+                    "Pantalla OLED de 6.67\".",
+                    "Tiene 3 cámaras traseras de 48Mpx/13Mpx/48Mpx.",
+                    "Cámara delantera de 13Mpx.",
+                    "Procesador Snapdragon 8+ Gen 1 de 3.2GHz con 8GB de RAM.",
+                    "Batería de 4815mAh.",
+                    "Memoria interna de 512GB.",
+                    "Con sensor de huella dactilar."
+                ],
+                seller: "Huawei Store",
+                type: "phone"
+            },
+            {
+                id: 7,
+                name: "iPhone 15",
+                subtitle: "Apple - 128GB - Azul",
+                price: 19999,
+                originalPrice: 22999,
+                image: "Imagenes/phazul.png",
+                images: [
+                    "Imagenes/app.png",
+                    "Imagenes/ul.png",
+                    "Imagenes/cm.png",
+                    "Imagenes/prt.png"
+                ],
+                color: "Azul",
+                features: [
+                    "Memoria RAM: 6 GB.",
+                    "Dispositivo liberado para que elijas la compañía telefónica que prefieras.",
+                    "Pantalla OLED de 6.1\".",
+                    "Tiene 2 cámaras traseras de 48Mpx/12Mpx.",
+                    "Cámara delantera de 12Mpx.",
+                    "Procesador Apple A16 Bionic con 6GB de RAM.",
+                    "Batería de 3349mAh.",
+                    "Memoria interna de 128GB.",
+                    "Con Face ID."
+                ],
+                seller: "Apple Store",
+                type: "phone"
+            },
+            {
+                id: 8,
+                name: "Samsung Galaxy A55",
+                subtitle: "Samsung - 128GB - Verde",
+                price: 8999,
+                originalPrice: 8999,
+                image: "Imagenes/tever.png",
+                images: [
+                    "Imagenes/tele.png",
+                    "Imagenes/pal.png",
+                    "Imagenes/gala.png",
+                    "Imagenes/tui.png"
+                ],
+                color: "Verde",
+                features: [
+                    "Memoria RAM: 8 GB.",
+                    "Dispositivo liberado para que elijas la compañía telefónica que prefieras.",
+                    "Pantalla AMOLED de 6.6\".",
+                    "Tiene 3 cámaras traseras de 50Mpx/12Mpx/5Mpx.",
+                    "Cámara delantera de 32Mpx.",
+                    "Procesador Exynos 1480 de 2.75GHz con 8GB de RAM.",
+                    "Batería de 5000mAh.",
+                    "Memoria interna de 128GB.",
+                    "Con sensor de huella dactilar."
+                ],
+                seller: "Samsung Store",
+                type: "phone"
+            }
+        ];
+
+                 // Global variables
+         let currentProduct = null;
+         let currentQuantity = 1;
+         let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+         let favoriteItems = JSON.parse(localStorage.getItem('favoriteItems')) || [];
+         let activeNotifications = [];
+
+                 // Initialize page
+         document.addEventListener('DOMContentLoaded', function () {
+             loadProductDetails();
+             initializeEventListeners();
+             updateCartCount();
+             updateFavoriteStatus();
+         });
+
+        function loadProductDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+
+            if (!productId) {
+                showNotification('Producto no encontrado', 'error');
+                return;
+            }
+
+            currentProduct = products.find(p => p.id == productId);
+            if (!currentProduct) {
+                showNotification('Producto no encontrado', 'error');
+                return;
+            }
+
+            populateProductDetails();
+            loadThumbnails();
+            loadRelatedProducts();
+        }
+
+        function populateProductDetails() {
+            // Main product info
+            document.getElementById('product-title').textContent = currentProduct.name;
+            document.getElementById('main-image').src = currentProduct.image;
+            document.getElementById('main-image').alt = currentProduct.name;
+
+            // Breadcrumb
+            document.getElementById('product-breadcrumb').textContent = currentProduct.name;
+
+            // Pricing
+            document.getElementById('current-price').textContent = formatPrice(currentProduct.price);
+            document.getElementById('original-price').textContent = formatPrice(currentProduct.originalPrice);
+
+            // Color
+            document.getElementById('selected-color').textContent = currentProduct.color;
+            document.getElementById('color-thumbnail').src = currentProduct.image;
+
+            // Seller
+            document.getElementById('seller-name-bottom').textContent = currentProduct.seller;
+
+            // Features
+            const featuresContainer = document.getElementById('product-features');
+            featuresContainer.innerHTML = currentProduct.features.map(feature =>
+                `<p class="text-sm mercado-libre-gray">• ${feature}</p>`
+            ).join('');
+
+            // Update page title
+            document.title = `${currentProduct.name} - Detalles del Producto`;
+        }
+
+        function loadThumbnails() {
+            const container = document.getElementById('thumbnail-container');
+            container.innerHTML = '';
+
+            // Add main image as first thumbnail
+            const thumbnails = [currentProduct.image, ...currentProduct.images];
+
+            thumbnails.forEach((image, index) => {
+                const thumbnail = document.createElement('div');
+                thumbnail.className = `thumbnail w-16 h-16 rounded border ${index === 0 ? 'active' : 'border-gray-300'}`;
+                thumbnail.onclick = () => selectThumbnail(image, thumbnail);
+
+                const img = document.createElement('img');
+                img.src = image;
+                img.alt = `${currentProduct.name} ${index + 1}`;
+                img.className = 'w-full h-full object-cover rounded';
+
+                thumbnail.appendChild(img);
+                container.appendChild(thumbnail);
+            });
+        }
+
+        function selectThumbnail(imageSrc, thumbnailElement) {
+            // Update main image
+            document.getElementById('main-image').src = imageSrc;
+
+            // Update active thumbnail
+            document.querySelectorAll('.thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+                thumb.classList.add('border-gray-300');
+            });
+            thumbnailElement.classList.add('active');
+            thumbnailElement.classList.remove('border-gray-300');
+        }
+
+        function loadRelatedProducts() {
+            const container = document.getElementById('related-products-container');
+            container.innerHTML = '';
+
+            // Get related products (excluding current product)
+            const relatedProducts = products.filter(p => p.id !== currentProduct.id).slice(0, 4);
+
+            relatedProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'related-product-card p-3 flex-shrink-0 w-48';
+                productCard.onclick = () => openProductDetails(product.id, product.name, product.price, product.image);
+
+                const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+                const monthlyPayment = Math.round(product.price / 24);
+
+                productCard.innerHTML = `
+                    <div class="flex flex-col space-y-2">
+                        <div class="w-full h-32 bg-gray-50 rounded flex items-center justify-center">
+                            <img src="${product.image}" alt="${product.name}" class="related-product-image w-full h-full rounded">
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="text-sm font-medium text-gray-900 line-clamp-2">${product.name}</h4>
+                            <div class="space-y-1">
+                                <p class="text-base font-bold text-gray-900">${formatPrice(product.price)}</p>
+                                <p class="text-xs mercado-libre-light-gray line-through">${formatPrice(product.originalPrice)}</p>
+                                <p class="text-xs mercado-libre-green">${discount}% OFF</p>
+                                <p class="text-xs mercado-libre-gray">24 meses de $${monthlyPayment}</p>
+                                <p class="text-xs mercado-libre-green"><i class="fas fa-bolt"></i> Envío gratis FULL</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(productCard);
+            });
+        }
+
+        function openProductDetails(productId, productName, productPrice, productImage) {
+            try {
+                // Redirect directly to the details page with the product ID
+                const detailUrl = `producto-detalle.html?id=${productId}`;
+
+                // Redirect to the details page
+                window.location.href = detailUrl;
+            } catch (error) {
+                console.error('Error opening product details:', error);
+            }
+        }
+
+                 function initializeEventListeners() {
+             // Quantity buttons
+             document.getElementById('quantity-minus').addEventListener('click', () => updateQuantity(-1));
+             document.getElementById('quantity-plus').addEventListener('click', () => updateQuantity(1));
+ 
+             // Action buttons
+             document.getElementById('buy-now-btn').addEventListener('click', buyNow);
+             document.getElementById('add-to-cart-btn').addEventListener('click', addToCart);
+             
+             // Header buttons
+             document.getElementById('shareBtn').addEventListener('click', shareProduct);
+             document.getElementById('favoriteBtn').addEventListener('click', toggleFavorite);
+             document.getElementById('cartBtn').addEventListener('click', showCart);
+         }
+
+        function updateQuantity(change) {
+            const newQuantity = Math.max(1, currentQuantity + change);
+            currentQuantity = newQuantity;
+
+            document.getElementById('quantity-value').textContent = newQuantity;
+            document.getElementById('quantity-display').textContent = `${newQuantity} unidad${newQuantity > 1 ? 'es' : ''}`;
+        }
+
+                 function addToCart() {
+             if (!currentProduct) return;
+             
+             const existingItem = cartItems.find(item => item.id === currentProduct.id);
+             if (existingItem) {
+                 existingItem.quantity += currentQuantity;
+             } else {
+                 cartItems.push({
+                     id: currentProduct.id,
+                     name: currentProduct.name,
+                     price: currentProduct.price,
+                     image: currentProduct.image,
+                     quantity: currentQuantity
+                 });
+             }
+             
+             localStorage.setItem('cartItems', JSON.stringify(cartItems));
+             updateCartCount();
+             showNotification('Producto agregado al carrito', 'success');
+         }
+
+        function buyNow() {
+            if (!currentProduct) return;
+
+            // Agregar al carrito primero
+            addToCart();
+            
+            // Agregar al historial de compras
+            agregarAlHistorialCompras();
+            
+            // Simular proceso de compra
+            showNotification('Procesando compra...', 'info');
+            
+            setTimeout(() => {
+                showNotification('¡Compra realizada con éxito!', 'success');
+                
+                // Redirigir a la página de productos después de un breve delay
+                setTimeout(() => {
+                    window.location.href = 'productos.html';
+                }, 2000);
+            }, 1500);
+        }
+
+        function agregarAlHistorialCompras() {
+            try {
+                // Obtener historial existente
+                const historial = JSON.parse(localStorage.getItem('historialCompras') || '[]');
+                
+                // Crear nueva compra
+                const nuevaCompra = {
+                    fecha: new Date().toLocaleDateString('es-ES', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }),
+                    total: currentProduct.price * currentQuantity,
+                    productos: [{
+                        nombre: currentProduct.name,
+                        precio: currentProduct.price,
+                        imagen: currentProduct.image,
+                        cantidad: currentQuantity
+                    }]
+                };
+                
+                // Agregar al inicio del historial
+                historial.unshift(nuevaCompra);
+                
+                // Limitar a 10 compras más recientes
+                if (historial.length > 10) {
+                    historial.splice(10);
+                }
+                
+                // Guardar en localStorage
+                localStorage.setItem('historialCompras', JSON.stringify(historial));
+                
+            } catch (error) {
+                console.error('Error al agregar al historial:', error);
+            }
+        }
+
+        function formatPrice(price) {
+            return new Intl.NumberFormat('es-MX', {
+                style: 'currency',
+                currency: 'MXN'
+            }).format(price);
+        }
+
+                 function showNotification(message, type = 'info') {
+             // Remove existing notifications to prevent overlapping
+             activeNotifications.forEach(notification => {
+                 if (notification && notification.parentNode) {
+                     notification.remove();
+                 }
+             });
+             activeNotifications = [];
+             
+             // Create notification element
+             const notification = document.createElement('div');
+             notification.className = `fixed top-4 right-4 z-50 p-4 rounded shadow-lg transform transition-all duration-300 ${
+                 type === 'success' ? 'bg-green-500 text-white' :
+                 type === 'error' ? 'bg-red-500 text-white' :
+                 'bg-blue-500 text-white'
+             }`;
+             notification.textContent = message;
+             
+             // Add to active notifications array
+             activeNotifications.push(notification);
+             document.body.appendChild(notification);
+             
+             // Remove after 3 seconds
+             setTimeout(() => {
+                 if (notification && notification.parentNode) {
+                     notification.remove();
+                     activeNotifications = activeNotifications.filter(n => n !== notification);
+                 }
+             }, 3000);
+         }
+
+                 function goBack() {
+             window.history.back();
+         }
+         
+         // Header button functions
+         function shareProduct() {
+             if (!currentProduct) return;
+             
+             if (navigator.share) {
+                 navigator.share({
+                     title: currentProduct.name,
+                     text: `Mira este producto: ${currentProduct.name} - ${formatPrice(currentProduct.price)}`,
+                     url: window.location.href
+                 }).catch(err => {
+                     console.log('Error sharing:', err);
+                     copyToClipboard(window.location.href);
+                 });
+             } else {
+                 copyToClipboard(window.location.href);
+             }
+         }
+         
+         function copyToClipboard(text) {
+             navigator.clipboard.writeText(text).then(() => {
+                 showNotification('Enlace copiado al portapapeles', 'success');
+             }).catch(() => {
+                 showNotification('Error al copiar enlace', 'error');
+             });
+         }
+         
+         function toggleFavorite() {
+             if (!currentProduct) return;
+             
+             const isFavorite = favoriteItems.some(item => item.id === currentProduct.id);
+             
+             if (isFavorite) {
+                 favoriteItems = favoriteItems.filter(item => item.id !== currentProduct.id);
+                 showNotification('Producto removido de favoritos', 'info');
+             } else {
+                 favoriteItems.push({
+                     id: currentProduct.id,
+                     name: currentProduct.name,
+                     price: currentProduct.price,
+                     image: currentProduct.image
+                 });
+                 showNotification('Producto agregado a favoritos', 'success');
+             }
+             
+             localStorage.setItem('favoriteItems', JSON.stringify(favoriteItems));
+             updateFavoriteStatus();
+         }
+         
+         function updateFavoriteStatus() {
+             if (!currentProduct) return;
+             
+             const favoriteBtn = document.getElementById('favoriteBtn');
+             const isFavorite = favoriteItems.some(item => item.id === currentProduct.id);
+             
+             if (isFavorite) {
+                 favoriteBtn.classList.add('text-red-500');
+                 favoriteBtn.classList.remove('text-gray-600');
+             } else {
+                 favoriteBtn.classList.remove('text-red-500');
+                 favoriteBtn.classList.add('text-gray-600');
+             }
+         }
+         
+         function updateCartCount() {
+             const cartCount = document.getElementById('cartCount');
+             const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+             
+             if (totalItems > 0) {
+                 cartCount.textContent = totalItems;
+                 cartCount.classList.remove('hidden');
+             } else {
+                 cartCount.classList.add('hidden');
+             }
+         }
+         
+         function showCart() {
+             if (cartItems.length === 0) {
+                 showNotification('Tu carrito está vacío', 'info');
+                 return;
+             }
+             
+             const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+             const totalPrice = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+             
+             showNotification(`Carrito: ${totalItems} productos - Total: ${formatPrice(totalPrice)}`, 'info');
+         }
+    </script>
+</body>
+
+</html>

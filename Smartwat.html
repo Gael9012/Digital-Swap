@@ -1,0 +1,1932 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Catálogo de smartwatches en Digital Swap: encuentra las mejores ofertas en wearables y relojes inteligentes de marcas como Huawei, Apple, Samsung, EVL, STF y más.">
+  <meta name="keywords" content="smartwatches, wearables, relojes inteligentes, Digital Swap, tecnología, huawei, apple, samsung, evl, stf, amazfit, garmin, fitbit, xiaomi, honor">
+  <meta name="author" content="Digital Swap">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#3b82f6">
+  <meta property="og:title" content="Smartwatches - Digital Swap">
+  <meta property="og:description" content="Catálogo de smartwatches en Digital Swap: encuentra las mejores ofertas en wearables y relojes inteligentes.">
+  <meta property="og:type" content="website">
+  <title>Smartwatches - Digital Swap</title>
+  <link rel="icon" type="image/x-icon" href="logo.png">
+  <link rel="apple-touch-icon" href="logo.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="config.js"></script>
+  <style>
+    body {
+      background-image: url('https://img.freepik.com/vector-premium/fondo-vector-monocromo-blanco-abstracto-folleto-diseno-folleto-sitio-web-fondo-pantalla-blanco-geometrico-pagina-inicio-presentacion-certificado_249611-5879.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .product-card {
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .filter-active {
+      background-color: #3b82f6 !important;
+      color: white !important;
+    }
+
+    .price-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: linear-gradient(45deg, #ef4444, #dc2626);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: bold;
+      z-index: 10;
+    }
+
+    .wishlist-btn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(255,255,255,0.9);
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      z-index: 10;
+    }
+
+    .wishlist-btn:hover {
+      background: #ef4444;
+      color: white;
+    }
+
+    .wishlist-btn.active {
+      background: #ef4444;
+      color: white;
+    }
+
+    .product-card.selected {
+      border: 2px solid #3b82f6;
+      box-shadow: 0 0 0 1px #3b82f6;
+    }
+
+    .select-checkbox {
+      position: absolute;
+      top: 10px;
+      right: 50px;
+      width: 20px;
+      height: 20px;
+      z-index: 15;
+      cursor: pointer;
+      accent-color: #3b82f6;
+    }
+
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #10b981;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      z-index: 10000;
+      transform: translateX(100%);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .notification.show { transform: translateX(0); }
+    .notification.error { background: #ef4444; }
+    .notification.warning { background: #f59e0b; }
+    .notification.info { background: #3b82f6; }
+    
+
+
+    .color-filter {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid #e5e7eb;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .color-filter:hover {
+      transform: scale(1.1);
+      border-color: #3b82f6;
+    }
+
+    .color-filter.active {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px #3b82f6;
+    }
+
+    .modal-open {
+      overflow: hidden;
+    }
+
+    #modalComparacion {
+      transition: opacity 0.3s ease;
+    }
+
+    #modalComparacion.show {
+      display: flex !important;
+    }
+
+    .tabla-comparacion {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .tabla-comparacion th,
+    .tabla-comparacion td {
+      border: 1px solid #e5e7eb;
+      padding: 12px;
+      text-align: left;
+    }
+
+    .tabla-comparacion th {
+      background-color: #f3f4f6;
+      font-weight: bold;
+    }
+
+    .producto-nuevo {
+      animation: fadeInUp 0.5s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .flex.max-w-7xl {
+        flex-direction: column;
+      }
+      
+      aside {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      
+      main {
+        margin-left: 0 !important;
+      }
+      
+      .product-card {
+        width: 100% !important;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+    }
+
+    /* Estilos para modales */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 0;
+      border: none;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      animation: modalSlideIn 0.3s ease-out;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-header {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 15px 15px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .close {
+      color: white;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .close:hover {
+      transform: scale(1.1);
+    }
+
+    .cart-item, .wishlist-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      border-bottom: 1px solid #e5e7eb;
+      transition: background-color 0.2s;
+    }
+
+    .cart-item:hover, .wishlist-item:hover {
+      background-color: #f9fafb;
+    }
+
+    .cart-item img, .wishlist-item img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      border-radius: 8px;
+      margin-right: 1rem;
+    }
+
+    .item-details {
+      flex: 1;
+    }
+
+    .item-title {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .item-price {
+      color: #3b82f6;
+      font-weight: bold;
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-left: 1rem;
+    }
+
+    .quantity-btn {
+      background: #e5e7eb;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quantity-btn:hover {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .remove-btn {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-left: 1rem;
+    }
+
+    .remove-btn:hover {
+      background: #dc2626;
+    }
+
+    .modal-footer {
+      padding: 1.5rem;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .total {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #3b82f6;
+    }
+
+    .checkout-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .checkout-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #6b7280;
+    }
+
+    .empty-state i {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    /* Menú móvil */
+    .mobile-menu {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .desktop-menu {
+        display: none;
+      }
+      .mobile-menu {
+        display: block;
+      }
+    }
+
+    .mobile-menu-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #6b7280;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .mobile-menu-content {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 80%;
+      height: 100vh;
+      background: white;
+      z-index: 1001;
+      transition: left 0.3s ease;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .mobile-menu-content.show {
+      left: 0;
+    }
+
+    .mobile-menu-header {
+      background: #3b82f6;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mobile-menu-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .mobile-menu-body {
+      padding: 1rem;
+    }
+
+    .mobile-menu-item {
+      display: block;
+      padding: 1rem;
+      color: #374151;
+      text-decoration: none;
+      border-bottom: 1px solid #e5e7eb;
+      transition: background-color 0.2s;
+    }
+
+    .mobile-menu-item:hover {
+      background-color: #f3f4f6;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-blue-600 to-purple-600 py-6 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+          <img src="logo.png" alt="Digital Swap Logo" class="h-10">
+          <h1 class="text-2xl font-bold text-white">Digital Swap</h1>
+        </div>
+        
+        <!-- Menú de escritorio -->
+        <div class="desktop-menu flex items-center space-x-4">
+          <div class="relative">
+            <input type="text" id="searchInput" placeholder="Buscar smartwatches..." class="pl-10 pr-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" aria-label="Buscar smartwatches">
+            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
+          </div>
+          <button class="relative p-2 text-white hover:text-blue-200 transition" aria-label="Ver carrito de compras" onclick="openCartModal()">
+            <i class="fas fa-shopping-cart text-lg" aria-hidden="true"></i>
+            <span id="cartCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+          </button>
+          <button class="relative p-2 text-white hover:text-blue-200 transition" aria-label="Ver favoritos" onclick="openWishlistModal()">
+            <i class="fas fa-heart text-lg" aria-hidden="true"></i>
+            <span id="wishlistCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+          </button>
+        </div>
+
+        <!-- Menú móvil -->
+        <div class="mobile-menu">
+          <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Menú móvil -->
+  <div class="mobile-menu-content" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <h3>Menú</h3>
+      <button class="mobile-menu-close" onclick="toggleMobileMenu()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="mobile-menu-body">
+      <a href="index.html" class="mobile-menu-item">
+        <i class="fas fa-home mr-2"></i>Inicio
+      </a>
+      <a href="catalogo.html" class="mobile-menu-item">
+        <i class="fas fa-th-large mr-2"></i>Catálogo
+      </a>
+      <a href="productos.html" class="mobile-menu-item">
+        <i class="fas fa-box mr-2"></i>Productos
+      </a>
+      <a href="login.html" class="mobile-menu-item">
+        <i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión
+      </a>
+      <a href="crear_cuenta.html" class="mobile-menu-item">
+        <i class="fas fa-user-plus mr-2"></i>Crear Cuenta
+      </a>
+    </div>
+  </div>
+
+  <!-- Modal del Carrito -->
+  <div id="cartModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-shopping-cart mr-2"></i>Carrito de Compras</h2>
+        <span class="close" onclick="closeCartModal()">&times;</span>
+      </div>
+      <div class="modal-body" id="cartItems">
+        <!-- Los items del carrito se agregarán aquí dinámicamente -->
+      </div>
+      <div class="modal-footer">
+        <div class="total">Total: $<span id="cartTotal">0</span></div>
+        <button class="checkout-btn" onclick="checkout()">
+          <i class="fas fa-credit-card mr-2"></i>Proceder al Pago
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Favoritos -->
+  <div id="wishlistModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-heart mr-2"></i>Mis Favoritos</h2>
+        <span class="close" onclick="closeWishlistModal()">&times;</span>
+      </div>
+      <div class="modal-body" id="wishlistItems">
+        <!-- Los items de favoritos se agregarán aquí dinámicamente -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Comparación -->
+  <div id="modalComparacion" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-balance-scale mr-2"></i>Comparar Productos</h2>
+        <span class="close" onclick="cerrarModalComparacion()">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div id="comparacionContent">
+          <!-- Contenido de comparación -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notificación -->
+  <div id="notification" class="notification">
+    <i class="fas fa-check-circle"></i>
+    <span id="notificationText">Producto agregado al carrito</span>
+  </div>
+
+  <div class="max-w-7xl mx-auto py-8 px-4">
+    <!-- Breadcrumb -->
+    <nav class="text-sm text-gray-500 mb-6">
+      <ol class="flex items-center space-x-2">
+        <li><a href="index.html" class="hover:text-blue-600">Inicio</a></li>
+        <li><i class="fas fa-chevron-right text-xs"></i></li>
+        <li class="text-gray-800">Smartwatches</li>
+      </ol>
+    </nav>
+
+    <!-- Toolbar -->
+    <div class="bg-white rounded-lg shadow p-4 mb-6">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div class="flex items-center space-x-4">
+          <span class="text-sm text-gray-600">Mostrando <span id="productCount">6</span> productos</span>
+          <div class="flex items-center space-x-2">
+            <button class="p-2 text-gray-600 hover:text-gray-800 active" id="gridView">
+              <i class="fas fa-th"></i>
+            </button>
+            <button class="p-2 text-gray-400 hover:text-gray-600" id="listView">
+              <i class="fas fa-list"></i>
+            </button>
+          </div>
+        </div>
+        <div class="flex items-center space-x-4">
+          <div class="flex items-center space-x-2">
+                    <button id="selectAllBtn" class="px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm rounded hover:from-blue-700 hover:to-purple-700 transition">
+          <i class="fas fa-check-square mr-1"></i>Seleccionar Todo
+        </button>
+        <button id="deselectAllBtn" class="px-3 py-1 bg-gradient-to-r from-gray-500 to-gray-600 text-white text-sm rounded hover:from-gray-600 hover:to-gray-700 transition hidden">
+          <i class="fas fa-square mr-1"></i>Deseleccionar Todo
+        </button>
+            <span id="selectedCount" class="text-sm text-blue-600 font-medium hidden">
+              <i class="fas fa-check-circle mr-1"></i><span id="selectedNumber">0</span> seleccionados
+            </span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <label class="text-sm text-gray-600">Ordenar por:</label>
+            <select class="border rounded p-2 text-sm" id="sortSelect">
+              <option value="relevance">Relevancia</option>
+              <option value="price-low">Precio: Menor a Mayor</option>
+              <option value="price-high">Precio: Mayor a Menor</option>
+              <option value="name">Nombre A-Z</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-6">
+      <!-- Sidebar filtros -->
+      <aside class="lg:w-64 bg-white rounded-lg shadow p-4 h-fit">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-semibold">Filtros</h2>
+          <div class="flex items-center space-x-2">
+            <span id="activeFiltersCount" class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full hidden">0</span>
+            <button id="clearFilters" class="text-sm text-blue-600 hover:text-blue-800">Limpiar</button>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <h3 class="font-medium mb-2">Precio</h3>
+          <div class="flex gap-2 mb-2">
+            <input type="number" placeholder="$ Mínimo" class="border w-full p-2 rounded text-sm" id="minPrice" min="0" max="15000" aria-label="Precio mínimo" oninput="validatePriceInput(this)">
+            <input type="number" placeholder="$ Máximo" class="border w-full p-2 rounded text-sm" id="maxPrice" min="0" max="15000" aria-label="Precio máximo" oninput="validatePriceInput(this)">
+          </div>
+          <div class="flex justify-between text-xs text-gray-500">
+            <span>$0</span>
+            <span>$15,000</span>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <h3 class="font-medium mb-2">Color</h3>
+          <div class="grid grid-cols-5 gap-2">
+            <button class="color-filter bg-black border-2 border-transparent hover:border-white" data-color="negro" onclick="toggleColorFilter(this)" aria-label="Filtrar por color negro"></button>
+            <button class="color-filter bg-pink-300 border-2 border-transparent hover:border-white" data-color="rosa" onclick="toggleColorFilter(this)" aria-label="Filtrar por color rosa"></button>
+            <button class="color-filter bg-white border-2 border-gray-300 hover:border-blue-500" data-color="blanco" onclick="toggleColorFilter(this)" aria-label="Filtrar por color blanco"></button>
+            <button class="color-filter bg-gray-300 border-2 border-transparent hover:border-white" data-color="gris" onclick="toggleColorFilter(this)" aria-label="Filtrar por color gris"></button>
+            <button class="color-filter bg-blue-500 border-2 border-transparent hover:border-white" data-color="azul" onclick="toggleColorFilter(this)" aria-label="Filtrar por color azul"></button>
+            <button class="color-filter bg-green-500 border-2 border-transparent hover:border-white" data-color="verde" onclick="toggleColorFilter(this)" aria-label="Filtrar por color verde"></button>
+            <button class="color-filter bg-yellow-400 border-2 border-transparent hover:border-white" data-color="amarillo" onclick="toggleColorFilter(this)" aria-label="Filtrar por color amarillo"></button>
+            <button class="color-filter bg-orange-400 border-2 border-transparent hover:border-white" data-color="naranja" onclick="toggleColorFilter(this)" aria-label="Filtrar por color naranja"></button>
+            <button class="color-filter bg-purple-500 border-2 border-transparent hover:border-white" data-color="morado" onclick="toggleColorFilter(this)" aria-label="Filtrar por color morado"></button>
+            <button class="color-filter bg-red-500 border-2 border-transparent hover:border-white" data-color="rojo" onclick="toggleColorFilter(this)" aria-label="Filtrar por color rojo"></button>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <h3 class="font-medium mb-2">Marca</h3>
+          <div class="max-h-48 overflow-y-auto border rounded p-3 text-sm space-y-2" role="group" aria-label="Filtros de marca">
+            <label class="flex items-center hover:bg-blue-50 p-1 rounded transition"><input type="checkbox" class="mr-2 brand-filter accent-blue-600" value="huawei" aria-label="Filtrar por marca Huawei"> <span class="text-sm">Huawei</span></label>
+            <label class="flex items-center hover:bg-blue-50 p-1 rounded transition"><input type="checkbox" class="mr-2 brand-filter accent-blue-600" value="evl" aria-label="Filtrar por marca EVL"> <span class="text-sm">EVL</span></label>
+            <label class="flex items-center hover:bg-blue-50 p-1 rounded transition"><input type="checkbox" class="mr-2 brand-filter accent-blue-600" value="stf" aria-label="Filtrar por marca STF"> <span class="text-sm">STF</span></label>
+            <label class="flex items-center hover:bg-blue-50 p-1 rounded transition"><input type="checkbox" class="mr-2 brand-filter accent-blue-600" value="apple" aria-label="Filtrar por marca Apple"> <span class="text-sm">Apple</span></label>
+            <label class="flex items-center hover:bg-blue-50 p-1 rounded transition"><input type="checkbox" class="mr-2 brand-filter accent-blue-600" value="samsung" aria-label="Filtrar por marca Samsung"> <span class="text-sm">Samsung</span></label>
+            <label class="flex items-center hover:bg-blue-50 p-1 rounded transition"><input type="checkbox" class="mr-2 brand-filter accent-blue-600" value="amazfit" aria-label="Filtrar por marca Amazfit"> <span class="text-sm">Amazfit</span></label>
+            <label class="flex items-center hover:bg-blue-50 p-1 rounded transition"><input type="checkbox" class="mr-2 brand-filter accent-blue-600" value="garmin" aria-label="Filtrar por marca Garmin"> <span class="text-sm">Garmin</span></label>
+            <label class="flex items-center hover:bg-blue-50 p-1 rounded transition"><input type="checkbox" class="mr-2 brand-filter accent-blue-600" value="fitbit" aria-label="Filtrar por marca Fitbit"> <span class="text-sm">Fitbit</span></label>
+            <label class="flex items-center hover:bg-blue-50 p-1 rounded transition"><input type="checkbox" class="mr-2 brand-filter accent-blue-600" value="xiaomi" aria-label="Filtrar por marca Xiaomi"> <span class="text-sm">Xiaomi</span></label>
+            <label class="flex items-center hover:bg-blue-50 p-1 rounded transition"><input type="checkbox" class="mr-2 brand-filter accent-blue-600" value="honor" aria-label="Filtrar por marca Honor"> <span class="text-sm">Honor</span></label>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <h3 class="font-medium mb-2">Ofertas</h3>
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-2" id="ofertasFilter">
+            <span class="text-sm">Solo productos en oferta</span>
+          </label>
+        </div>
+
+        <div class="mb-6">
+          <h3 class="font-medium mb-2">Comparar</h3>
+          <button id="compareBtn" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-2 rounded hover:from-purple-700 hover:to-pink-700 transition text-sm font-medium" onclick="abrirModalComparacion()">
+            <i class="fas fa-balance-scale mr-1"></i>Comparar Seleccionados
+          </button>
+        </div>
+      </aside>
+
+      <!-- Productos -->
+      <main class="flex-1">
+        <!-- Grid de productos -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="productsGrid">
+          <!-- Producto 1 -->
+          <div class="product-card bg-white rounded-lg shadow p-4 relative" data-price="5499" data-brand="huawei" data-color="negro" data-name="Smartwatch Huawei Watch GT 5" data-oferta="false">
+            <input type="checkbox" class="select-checkbox" onchange="toggleProductSelection(this)">
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+              <i class="far fa-heart"></i>
+            </button>
+            <img src="Imagenes/gt.png" alt="Smartwatch Huawei Watch GT 5" class="w-full h-48 object-contain rounded mb-4 cursor-pointer hover:opacity-90 transition-opacity" onclick="redirectToProduct('Smartwatch Huawei Watch GT 5')">
+            <h4 class="text-sm font-semibold mb-2 line-clamp-2">Smartwatch Huawei Watch GT 5 Pro</h4>
+            <p class="text-xs text-gray-600 mb-2 line-clamp-2">Pro 46 mm Negro con GPS y monitoreo de salud</p>
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-gray-500 text-xs">Desde $275 quincenales</p>
+                <p class="text-lg font-bold text-gray-800">$5,499</p>
+              </div>
+              <div class="flex items-center text-yellow-400 text-xs">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <span class="text-gray-500 ml-1">(89)</span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm font-medium" onclick="addToCart(this)">
+                <i class="fas fa-shopping-cart mr-1"></i>Agregar
+              </button>
+              <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <i class="fas fa-heart text-gray-400"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Producto 2 -->
+          <div class="product-card bg-white rounded-lg shadow p-4 relative" data-price="599" data-brand="evl" data-color="negro" data-name="Smartwatch EVL SW160" data-oferta="false">
+            <input type="checkbox" class="select-checkbox" onchange="toggleProductSelection(this)">
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+              <i class="far fa-heart"></i>
+            </button>
+            <img src="Imagenes/gae.png" alt="Smartwatch EVL SW160" class="w-full h-48 object-contain rounded mb-4 cursor-pointer hover:opacity-90 transition-opacity" onclick="redirectToProduct('Smartwatch EVL SW160')">
+            <h4 class="text-sm font-semibold mb-2 line-clamp-2">Smartwatch EVL SW160</h4>
+            <p class="text-xs text-gray-600 mb-2 line-clamp-2">Reloj inteligente económico con funciones básicas</p>
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-gray-500 text-xs">Desde $30 quincenales</p>
+                <p class="text-lg font-bold text-gray-800">$599</p>
+              </div>
+              <div class="flex items-center text-yellow-400 text-xs">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+                <span class="text-gray-500 ml-1">(45)</span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm font-medium" onclick="addToCart(this)">
+                <i class="fas fa-shopping-cart mr-1"></i>Agregar
+              </button>
+              <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <i class="fas fa-heart text-gray-400"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Producto 3 -->
+          <div class="product-card bg-white rounded-lg shadow p-4 relative" data-price="4199" data-brand="huawei" data-color="negro" data-name="Smartwatch Huawei Watch Fit 4 Pro" data-oferta="true">
+            <input type="checkbox" class="select-checkbox" onchange="toggleProductSelection(this)">
+            <div class="price-badge">-58%</div>
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+              <i class="far fa-heart"></i>
+            </button>
+            <img src="Imagenes/wa.png" alt="Smartwatch Huawei Watch Fit 4 Pro" class="w-full h-48 object-contain rounded mb-4 cursor-pointer hover:opacity-90 transition-opacity" onclick="redirectToProduct('Smartwatch Huawei Watch Fit 4 Pro')">
+            <h4 class="text-sm font-semibold mb-2 line-clamp-2">Smartwatch Huawei Watch Fit 4 Pro</h4>
+            <p class="text-xs text-gray-600 mb-2 line-clamp-2">44 mm Negro con pantalla AMOLED y GPS</p>
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-gray-500 text-xs">Desde $210 quincenales</p>
+                <p class="text-lg font-bold text-gray-800">$4,199</p>
+                <p class="text-sm text-gray-400 line-through">$9,999</p>
+              </div>
+              <div class="flex items-center text-yellow-400 text-xs">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <span class="text-gray-500 ml-1">(156)</span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm font-medium" onclick="addToCart(this)">
+                <i class="fas fa-shopping-cart mr-1"></i>Agregar
+              </button>
+              <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <i class="fas fa-heart text-gray-400"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Producto 4 -->
+          <div class="product-card bg-white rounded-lg shadow p-4 relative" data-price="499" data-brand="stf" data-color="negro" data-name="Smartwatch STF Kronos Blaze" data-oferta="false">
+            <input type="checkbox" class="select-checkbox" onchange="toggleProductSelection(this)">
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+              <i class="far fa-heart"></i>
+            </button>
+            <img src="Imagenes/negp.png" alt="Smartwatch STF Kronos Blaze" class="w-full h-48 object-contain rounded mb-4 cursor-pointer hover:opacity-90 transition-opacity" onclick="redirectToProduct('Smartwatch STF Kronos Blaze')">
+            <h4 class="text-sm font-semibold mb-2 line-clamp-2">Smartwatch STF Kronos Blaze Negro</h4>
+            <p class="text-xs text-gray-600 mb-2 line-clamp-2">Reloj deportivo resistente al agua</p>
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-gray-500 text-xs">Desde $25 quincenales</p>
+                <p class="text-lg font-bold text-gray-800">$499</p>
+              </div>
+              <div class="flex items-center text-yellow-400 text-xs">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+                <span class="text-gray-500 ml-1">(67)</span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm font-medium" onclick="addToCart(this)">
+                <i class="fas fa-shopping-cart mr-1"></i>Agregar
+              </button>
+              <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <i class="fas fa-heart text-gray-400"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Producto 5 -->
+          <div class="product-card bg-white rounded-lg shadow p-4 relative" data-price="899" data-brand="evl" data-color="rosa" data-name="Smartwatch EVL SW120" data-oferta="false">
+            <input type="checkbox" class="select-checkbox" onchange="toggleProductSelection(this)">
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+              <i class="far fa-heart"></i>
+            </button>
+            <img src="Imagenes/ro.png" alt="Smartwatch EVL SW120" class="w-full h-48 object-contain rounded mb-4 cursor-pointer hover:opacity-90 transition-opacity" onclick="redirectToProduct('Smartwatch EVL SW120')">
+            <h4 class="text-sm font-semibold mb-2 line-clamp-2">Smartwatch EVL SW120 Rosa</h4>
+            <p class="text-xs text-gray-600 mb-2 line-clamp-2">Reloj elegante con diseño femenino</p>
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-gray-500 text-xs">Desde $45 quincenales</p>
+                <p class="text-lg font-bold text-gray-800">$899</p>
+              </div>
+              <div class="flex items-center text-yellow-400 text-xs">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <span class="text-gray-500 ml-1">(78)</span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm font-medium" onclick="addToCart(this)">
+                <i class="fas fa-shopping-cart mr-1"></i>Agregar
+              </button>
+              <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <i class="fas fa-heart text-gray-400"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Producto 6 -->
+          <div class="product-card bg-white rounded-lg shadow p-4 relative" data-price="859" data-brand="evl" data-color="negro" data-name="Smartwatch EVL SW170" data-oferta="false">
+            <input type="checkbox" class="select-checkbox" onchange="toggleProductSelection(this)">
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+              <i class="far fa-heart"></i>
+            </button>
+            <img src="Imagenes/ney.png" alt="Smartwatch EVL SW170" class="w-full h-48 object-contain rounded mb-4 cursor-pointer hover:opacity-90 transition-opacity" onclick="redirectToProduct('Smartwatch EVL SW170')">
+            <h4 class="text-sm font-semibold mb-2 line-clamp-2">Smartwatch EVL SW170 46 mm</h4>
+            <p class="text-xs text-gray-600 mb-2 line-clamp-2">Resistente al agua con GPS integrado</p>
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-gray-500 text-xs">Desde $43 quincenales</p>
+                <p class="text-lg font-bold text-gray-800">$859</p>
+              </div>
+              <div class="flex items-center text-yellow-400 text-xs">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+                <span class="text-gray-500 ml-1">(92)</span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm font-medium" onclick="addToCart(this)">
+                <i class="fas fa-shopping-cart mr-1"></i>Agregar
+              </button>
+              <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <i class="fas fa-heart text-gray-400"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal de Detalles del Producto -->
+  <div id="modalDetalles" class="modal" style="display:none;z-index:2000;">
+    <div class="modal-content" style="max-width:400px;text-align:center;">
+      <div class="modal-header" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:white;justify-content:flex-end;">
+        <span class="close" id="cerrarModalDetalles" style="color:white;font-size:28px;font-weight:bold;cursor:pointer;">&times;</span>
+      </div>
+      <div class="modal-body">
+        <img id="modalImg" src="" alt="Imagen del producto" style="width:100%;max-width:200px;margin:auto;display:block;" class="mb-4 rounded">
+        <h2 id="modalNombre" class="text-xl font-bold mb-2"></h2>
+        <p id="modalDescripcion" class="text-gray-600 mb-2"></p>
+        <p id="modalPrecio" class="text-lg font-bold text-blue-600 mb-2"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Variables globales
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    let selectedProducts = [];
+
+
+
+    // Configuración
+    const CONFIG = {
+      maxPrice: 15000,
+      maxCompareItems: 3
+    };
+
+    // Inicialización
+    document.addEventListener('DOMContentLoaded', function() {
+      try {
+        initializeCarousel();
+        updateCartCount();
+        updateWishlistCount();
+        loadWishlistState();
+        setupEventListeners();
+
+      } catch (error) {
+        console.error('Error durante la inicialización:', error);
+
+      }
+    });
+
+    // Configurar event listeners
+    function setupEventListeners() {
+      // Búsqueda
+      const searchInput = document.getElementById('searchInput');
+      if (searchInput) {
+        searchInput.addEventListener('input', debounce(handleSearch, 300));
+      }
+
+      // Ordenamiento
+      const sortSelect = document.getElementById('sortSelect');
+      if (sortSelect) {
+        sortSelect.addEventListener('change', handleSort);
+      }
+
+      // Filtros de precio
+      const minPriceInput = document.getElementById('minPrice');
+      const maxPriceInput = document.getElementById('maxPrice');
+      if (minPriceInput) minPriceInput.addEventListener('input', debounce(applyFilters, 300));
+      if (maxPriceInput) maxPriceInput.addEventListener('input', debounce(applyFilters, 300));
+
+      // Filtros de marca
+      const brandFilters = document.querySelectorAll('.brand-filter');
+      brandFilters.forEach(filter => {
+        filter.addEventListener('change', applyFilters);
+      });
+
+      // Filtro de ofertas
+      const ofertasFilter = document.getElementById('ofertasFilter');
+      if (ofertasFilter) {
+        ofertasFilter.addEventListener('change', applyFilters);
+      }
+
+      // Botones de selección
+      const selectAllBtn = document.getElementById('selectAllBtn');
+      const deselectAllBtn = document.getElementById('deselectAllBtn');
+      if (selectAllBtn) selectAllBtn.addEventListener('click', selectAllProducts);
+      if (deselectAllBtn) deselectAllBtn.addEventListener('click', deselectAllProducts);
+
+      // Botón limpiar filtros
+      const clearFiltersBtn = document.getElementById('clearFilters');
+      if (clearFiltersBtn) clearFiltersBtn.addEventListener('click', clearAllFilters);
+
+      // Vista de productos
+      const gridViewBtn = document.getElementById('gridView');
+      const listViewBtn = document.getElementById('listView');
+      if (gridViewBtn) gridViewBtn.addEventListener('click', () => setViewMode('grid'));
+      if (listViewBtn) listViewBtn.addEventListener('click', () => setViewMode('list'));
+    }
+
+    // Función para mostrar notificaciones
+    function showNotification(message, type = 'success') {
+      try {
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notificationText');
+        
+        if (!notification || !notificationText) {
+          console.warn('Elementos de notificación no encontrados');
+          return;
+        }
+        
+        // Configurar el mensaje y tipo
+        notificationText.textContent = message;
+        notification.className = `notification ${type}`;
+        
+        // Mostrar la notificación
+        notification.classList.add('show');
+        
+        // Ocultar después de 3 segundos
+        setTimeout(() => {
+          notification.classList.remove('show');
+        }, 3000);
+      } catch (error) {
+        console.error('Error al mostrar notificación:', error);
+      }
+    }
+
+    // Función para agregar al carrito
+    function addToCart(button) {
+      const productCard = button.closest('.product-card');
+      if (!productCard) {
+        showNotification('Error: No se pudo identificar el producto', 'error');
+        return;
+      }
+
+      const productName = productCard.dataset.name;
+      if (!productName) {
+        showNotification('Error: No se pudo obtener el nombre del producto', 'error');
+        return;
+      }
+
+      const product = {
+        id: Date.now() + Math.random(),
+        name: productName,
+        price: parseFloat(productCard.dataset.price),
+        image: productCard.querySelector('img').src,
+        quantity: 1
+      };
+
+      // Verificar si el producto ya está en el carrito
+      const existingIndex = cart.findIndex(item => item.name === product.name);
+      
+      if (existingIndex !== -1) {
+        cart[existingIndex].quantity += 1;
+        showNotification(`${productName} (cantidad actualizada en carrito)`);
+      } else {
+        cart.push(product);
+        showNotification(`${productName} agregado al carrito`);
+      }
+
+      // Guardar en localStorage
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartCount();
+      updateCartModal();
+    }
+
+    // Función para alternar favoritos
+    function toggleWishlist(button) {
+      const productCard = button.closest('.product-card');
+      if (!productCard) {
+        showNotification('Error: No se pudo identificar el producto', 'error');
+        return;
+      }
+
+      const productName = productCard.dataset.name;
+      if (!productName) {
+        showNotification('Error: No se pudo obtener el nombre del producto', 'error');
+        return;
+      }
+
+      const product = {
+        id: Date.now() + Math.random(),
+        name: productName,
+        price: parseFloat(productCard.dataset.price),
+        image: productCard.querySelector('img').src
+      };
+
+      // Verificar si ya está en favoritos
+      const existingIndex = wishlist.findIndex(item => item.name === product.name);
+      
+      if (existingIndex !== -1) {
+        wishlist.splice(existingIndex, 1);
+        button.innerHTML = '<i class="far fa-heart"></i>';
+        showNotification(`${productName} removido de favoritos`);
+      } else {
+        wishlist.push(product);
+        button.innerHTML = '<i class="fas fa-heart"></i>';
+        showNotification(`${productName} agregado a favoritos`);
+      }
+
+      // Guardar en localStorage
+      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      updateWishlistCount();
+      updateWishlistModal();
+    }
+
+    // Función para alternar selección de productos
+    function toggleProductSelection(checkbox) {
+      const productCard = checkbox.closest('.product-card');
+      if (!productCard) return;
+
+      const productName = productCard.dataset.name;
+      
+      if (checkbox.checked) {
+        if (selectedProducts.length >= CONFIG.maxCompareItems) {
+          checkbox.checked = false;
+          showNotification(`Máximo ${CONFIG.maxCompareItems} productos para comparar`, 'error');
+          return;
+        }
+        selectedProducts.push(productName);
+        productCard.classList.add('selected');
+        showNotification(`${productName} seleccionado`);
+      } else {
+        const index = selectedProducts.indexOf(productName);
+        if (index > -1) {
+          selectedProducts.splice(index, 1);
+        }
+        productCard.classList.remove('selected');
+        showNotification(`${productName} deseleccionado`);
+      }
+
+      updateSelectionUI();
+    }
+
+    // Función para seleccionar todos los productos
+    function selectAllProducts() {
+      const checkboxes = document.querySelectorAll('.select-checkbox');
+      const visibleCheckboxes = Array.from(checkboxes).filter(checkbox => {
+        const productCard = checkbox.closest('.product-card');
+        return productCard && !productCard.classList.contains('hidden');
+      });
+
+      if (visibleCheckboxes.length > CONFIG.maxCompareItems) {
+        showNotification(`Máximo ${CONFIG.maxCompareItems} productos para comparar`, 'error');
+        return;
+      }
+
+      visibleCheckboxes.forEach(checkbox => {
+        if (!checkbox.checked) {
+          checkbox.checked = true;
+          toggleProductSelection(checkbox);
+        }
+      });
+    }
+
+    // Función para deseleccionar todos los productos
+    function deselectAllProducts() {
+      const checkboxes = document.querySelectorAll('.select-checkbox');
+      checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+          checkbox.checked = false;
+          toggleProductSelection(checkbox);
+        }
+      });
+    }
+
+    // Función para actualizar la UI de selección
+    function updateSelectionUI() {
+      const selectAllBtn = document.getElementById('selectAllBtn');
+      const deselectAllBtn = document.getElementById('deselectAllBtn');
+      const selectedCount = document.getElementById('selectedCount');
+      const selectedNumber = document.getElementById('selectedNumber');
+      const compareBtn = document.getElementById('compareBtn');
+
+      if (selectedProducts.length > 0) {
+        if (selectAllBtn) selectAllBtn.classList.add('hidden');
+        if (deselectAllBtn) deselectAllBtn.classList.remove('hidden');
+        if (selectedCount) {
+          selectedCount.classList.remove('hidden');
+          if (selectedNumber) selectedNumber.textContent = selectedProducts.length;
+        }
+        if (compareBtn) compareBtn.disabled = false;
+      } else {
+        if (selectAllBtn) selectAllBtn.classList.remove('hidden');
+        if (deselectAllBtn) deselectAllBtn.classList.add('hidden');
+        if (selectedCount) selectedCount.classList.add('hidden');
+        if (compareBtn) compareBtn.disabled = true;
+      }
+    }
+
+    // Función para manejar búsqueda
+    function handleSearch() {
+      try {
+        const searchInput = document.getElementById('searchInput');
+        if (!searchInput) return;
+        
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        const productCards = document.querySelectorAll('.product-card');
+        let visibleCount = 0;
+        
+        productCards.forEach(card => {
+          const productName = card.dataset.name?.toLowerCase() || '';
+          const productDescription = card.querySelector('p')?.textContent?.toLowerCase() || '';
+          
+          if (productName.includes(searchTerm) || productDescription.includes(searchTerm)) {
+            card.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        updateProductCount();
+        
+        if (searchTerm && visibleCount === 0) {
+          showNotification('No se encontraron productos con tu búsqueda', 'warning');
+        }
+      } catch (error) {
+        console.error('Error en búsqueda:', error);
+        showNotification('Error al realizar la búsqueda', 'error');
+      }
+    }
+
+    // Función para manejar ordenamiento
+    function handleSort() {
+      try {
+        const sortSelect = document.getElementById('sortSelect');
+        const productsGrid = document.getElementById('productsGrid');
+        
+        if (!sortSelect || !productsGrid) {
+          console.warn('Elementos de ordenamiento no encontrados');
+          return;
+        }
+        
+        const sortValue = sortSelect.value;
+        const productCards = Array.from(productsGrid.children);
+
+        productCards.sort((a, b) => {
+          const priceA = parseFloat(a.dataset.price) || 0;
+          const priceB = parseFloat(b.dataset.price) || 0;
+          const nameA = (a.dataset.name || '').toLowerCase();
+          const nameB = (b.dataset.name || '').toLowerCase();
+
+          switch (sortValue) {
+            case 'price-low':
+              return priceA - priceB;
+            case 'price-high':
+              return priceB - priceA;
+            case 'name':
+              return nameA.localeCompare(nameB);
+            default:
+              return 0;
+          }
+        });
+
+        // Reordenar en el DOM
+        productCards.forEach(card => productsGrid.appendChild(card));
+      } catch (error) {
+        console.error('Error en ordenamiento:', error);
+        showNotification('Error al ordenar productos', 'error');
+      }
+    }
+
+    // Función para aplicar filtros
+    function applyFilters() {
+      try {
+        const minPriceInput = document.getElementById('minPrice');
+        const maxPriceInput = document.getElementById('maxPrice');
+        const ofertasFilter = document.getElementById('ofertasFilter');
+        
+        if (!minPriceInput || !maxPriceInput || !ofertasFilter) {
+          console.warn('Elementos de filtro no encontrados');
+          return;
+        }
+        
+        const minPrice = parseFloat(minPriceInput.value) || 0;
+        const maxPrice = parseFloat(maxPriceInput.value) || CONFIG.maxPrice;
+        const selectedBrands = Array.from(document.querySelectorAll('.brand-filter:checked')).map(cb => cb.value);
+        const selectedColors = Array.from(document.querySelectorAll('.color-filter.active')).map(btn => btn.dataset.color);
+        const onlyOffers = ofertasFilter.checked;
+
+        const productCards = document.querySelectorAll('.product-card');
+        let visibleCount = 0;
+
+        productCards.forEach(card => {
+          const price = parseFloat(card.dataset.price) || 0;
+          const brand = card.dataset.brand || '';
+          const color = card.dataset.color || '';
+          const isOferta = card.dataset.oferta === 'true';
+
+          let shouldShow = true;
+
+          // Filtro de precio
+          if (price < minPrice || price > maxPrice) {
+            shouldShow = false;
+          }
+
+          // Filtro de marca
+          if (selectedBrands.length > 0 && !selectedBrands.includes(brand)) {
+            shouldShow = false;
+          }
+
+          // Filtro de color
+          if (selectedColors.length > 0 && !selectedColors.includes(color)) {
+            shouldShow = false;
+          }
+
+          // Filtro de ofertas
+          if (onlyOffers && !isOferta) {
+            shouldShow = false;
+          }
+
+          if (shouldShow) {
+            card.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        updateProductCount();
+        updateActiveFiltersCount();
+      } catch (error) {
+        console.error('Error al aplicar filtros:', error);
+        showNotification('Error al aplicar filtros', 'error');
+      }
+    }
+
+    // Función para validar inputs de precio
+    function validatePriceInput(input) {
+      try {
+        const value = parseFloat(input.value);
+        const min = parseFloat(input.min) || 0;
+        const max = parseFloat(input.max) || CONFIG.maxPrice;
+        
+        if (input.value && (value < min || value > max)) {
+          input.classList.add('border-red-500');
+          showNotification(`El precio debe estar entre $${min} y $${max}`, 'error');
+          return false;
+        } else {
+          input.classList.remove('border-red-500');
+        }
+        
+        // Validar que el precio mínimo no sea mayor que el máximo
+        const minPriceInput = document.getElementById('minPrice');
+        const maxPriceInput = document.getElementById('maxPrice');
+        
+        if (minPriceInput.value && maxPriceInput.value) {
+          const minPrice = parseFloat(minPriceInput.value);
+          const maxPrice = parseFloat(maxPriceInput.value);
+          
+          if (minPrice > maxPrice) {
+            showNotification('El precio mínimo no puede ser mayor que el máximo', 'error');
+            return false;
+          }
+        }
+        
+        return true;
+      } catch (error) {
+        console.error('Error al validar precio:', error);
+        return false;
+      }
+    }
+
+    // Función para alternar filtro de color
+    function toggleColorFilter(button) {
+      try {
+        button.classList.toggle('active');
+        applyFilters();
+      } catch (error) {
+        console.error('Error al alternar filtro de color:', error);
+        showNotification('Error al aplicar filtro de color', 'error');
+      }
+    }
+
+    // Función para limpiar todos los filtros
+    function clearAllFilters() {
+      try {
+        // Limpiar precio
+        const minPriceInput = document.getElementById('minPrice');
+        const maxPriceInput = document.getElementById('maxPrice');
+        if (minPriceInput) minPriceInput.value = '';
+        if (maxPriceInput) maxPriceInput.value = '';
+
+        // Limpiar marcas
+        document.querySelectorAll('.brand-filter').forEach(cb => cb.checked = false);
+
+        // Limpiar colores
+        document.querySelectorAll('.color-filter').forEach(btn => btn.classList.remove('active'));
+
+        // Limpiar ofertas
+        const ofertasFilter = document.getElementById('ofertasFilter');
+        if (ofertasFilter) ofertasFilter.checked = false;
+
+        // Limpiar selecciones
+        selectedProducts = [];
+        document.querySelectorAll('.select-checkbox').forEach(cb => {
+          cb.checked = false;
+          const productCard = cb.closest('.product-card');
+          if (productCard) productCard.classList.remove('selected');
+        });
+
+        // Aplicar filtros
+        applyFilters();
+        updateSelectionUI();
+        showNotification('Filtros y selecciones limpiados', 'info');
+      } catch (error) {
+        console.error('Error al limpiar filtros:', error);
+        showNotification('Error al limpiar filtros', 'error');
+      }
+    }
+
+    // Función para actualizar contador de productos
+    function updateProductCount() {
+      const visibleProducts = document.querySelectorAll('.product-card:not(.hidden)');
+      const productCount = document.getElementById('productCount');
+      if (productCount) {
+        productCount.textContent = visibleProducts.length;
+      }
+    }
+
+    // Función para actualizar contador de filtros activos
+    function updateActiveFiltersCount() {
+      const minPrice = document.getElementById('minPrice').value;
+      const maxPrice = document.getElementById('maxPrice').value;
+      const selectedBrands = document.querySelectorAll('.brand-filter:checked').length;
+      const selectedColors = document.querySelectorAll('.color-filter.active').length;
+      const onlyOffers = document.getElementById('ofertasFilter').checked;
+
+      const activeCount = (minPrice ? 1 : 0) + (maxPrice ? 1 : 0) + selectedBrands + selectedColors + (onlyOffers ? 1 : 0);
+      
+      const activeFiltersCount = document.getElementById('activeFiltersCount');
+      if (activeFiltersCount) {
+        if (activeCount > 0) {
+          activeFiltersCount.textContent = activeCount;
+          activeFiltersCount.classList.remove('hidden');
+        } else {
+          activeFiltersCount.classList.add('hidden');
+        }
+      }
+    }
+
+    // Función para establecer modo de vista
+    function setViewMode(mode) {
+      const productsGrid = document.getElementById('productsGrid');
+      const gridViewBtn = document.getElementById('gridView');
+      const listViewBtn = document.getElementById('listView');
+
+      if (mode === 'list') {
+        productsGrid.classList.remove('grid-cols-1', 'sm:grid-cols-2', 'lg:grid-cols-3', 'xl:grid-cols-4');
+        productsGrid.classList.add('grid-cols-1');
+        gridViewBtn.classList.remove('active');
+        listViewBtn.classList.add('active');
+      } else {
+        productsGrid.classList.remove('grid-cols-1');
+        productsGrid.classList.add('grid-cols-1', 'sm:grid-cols-2', 'lg:grid-cols-3', 'xl:grid-cols-4');
+        gridViewBtn.classList.add('active');
+        listViewBtn.classList.remove('active');
+      }
+    }
+
+    // Función para actualizar contador del carrito
+    function updateCartCount() {
+      const cartCount = document.getElementById('cartCount');
+      if (cartCount) {
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCount.textContent = totalItems;
+        cartCount.classList.toggle('hidden', totalItems === 0);
+      }
+    }
+
+    // Función para actualizar contador de favoritos
+    function updateWishlistCount() {
+      const wishlistCount = document.getElementById('wishlistCount');
+      if (wishlistCount) {
+        wishlistCount.textContent = wishlist.length;
+        wishlistCount.classList.toggle('hidden', wishlist.length === 0);
+      }
+    }
+
+    // Función para cargar estado de favoritos
+    function loadWishlistState() {
+      const wishlistButtons = document.querySelectorAll('.wishlist-btn');
+      wishlistButtons.forEach(button => {
+        const productCard = button.closest('.product-card');
+        const productName = productCard.dataset.name;
+        
+        if (wishlist.some(item => item.name === productName)) {
+          button.innerHTML = '<i class="fas fa-heart"></i>';
+        }
+      });
+    }
+
+    // Funciones de modales
+    function openCartModal() {
+      try {
+        const modal = document.getElementById('cartModal');
+        if (!modal) {
+          console.warn('Modal del carrito no encontrado');
+          return;
+        }
+        
+        modal.style.display = 'block';
+        document.body.classList.add('modal-open');
+        updateCartModal();
+        
+        // Enfoque en el modal para accesibilidad
+        setTimeout(() => {
+          const closeBtn = modal.querySelector('.close');
+          if (closeBtn) closeBtn.focus();
+        }, 100);
+      } catch (error) {
+        console.error('Error al abrir modal del carrito:', error);
+        showNotification('Error al abrir el carrito', 'error');
+      }
+    }
+
+    function closeCartModal() {
+      try {
+        const modal = document.getElementById('cartModal');
+        if (!modal) return;
+        
+        modal.style.display = 'none';
+        document.body.classList.remove('modal-open');
+      } catch (error) {
+        console.error('Error al cerrar modal del carrito:', error);
+      }
+    }
+
+    function openWishlistModal() {
+      try {
+        const modal = document.getElementById('wishlistModal');
+        if (!modal) {
+          console.warn('Modal de favoritos no encontrado');
+          return;
+        }
+        
+        modal.style.display = 'block';
+        document.body.classList.add('modal-open');
+        updateWishlistModal();
+        
+        // Enfoque en el modal para accesibilidad
+        setTimeout(() => {
+          const closeBtn = modal.querySelector('.close');
+          if (closeBtn) closeBtn.focus();
+        }, 100);
+      } catch (error) {
+        console.error('Error al abrir modal de favoritos:', error);
+        showNotification('Error al abrir favoritos', 'error');
+      }
+    }
+
+    function closeWishlistModal() {
+      try {
+        const modal = document.getElementById('wishlistModal');
+        if (!modal) return;
+        
+        modal.style.display = 'none';
+        document.body.classList.remove('modal-open');
+      } catch (error) {
+        console.error('Error al cerrar modal de favoritos:', error);
+      }
+    }
+
+    function updateCartModal() {
+      const cartItems = document.getElementById('cartItems');
+      const cartTotal = document.getElementById('cartTotal');
+      
+      if (!cartItems || !cartTotal) return;
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = '<div class="empty-state"><i class="fas fa-shopping-cart"></i><p>Tu carrito está vacío</p></div>';
+        cartTotal.textContent = '0';
+        return;
+      }
+
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      cartTotal.textContent = total.toLocaleString();
+
+      cartItems.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+          <div class="cart-item-details">
+            <h4>${item.name}</h4>
+            <p>$${item.price.toLocaleString()}</p>
+            <div class="quantity-controls">
+              <button onclick="updateQuantity(${item.id}, -1)">-</button>
+              <span>${item.quantity}</span>
+              <button onclick="updateQuantity(${item.id}, 1)">+</button>
+            </div>
+          </div>
+          <button onclick="removeFromCart(${item.id})" class="remove-btn">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function updateWishlistModal() {
+      const wishlistItems = document.getElementById('wishlistItems');
+      
+      if (!wishlistItems) return;
+
+      if (wishlist.length === 0) {
+        wishlistItems.innerHTML = '<div class="empty-state"><i class="fas fa-heart"></i><p>No tienes favoritos</p></div>';
+        return;
+      }
+
+      wishlistItems.innerHTML = wishlist.map(item => `
+        <div class="wishlist-item">
+          <img src="${item.image}" alt="${item.name}" class="wishlist-item-image">
+          <div class="wishlist-item-details">
+            <h4>${item.name}</h4>
+            <p>$${item.price.toLocaleString()}</p>
+          </div>
+          <button onclick="removeFromWishlist('${item.name}')" class="remove-btn">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function updateQuantity(itemId, change) {
+      try {
+        const item = cart.find(item => item.id === itemId);
+        if (item) {
+          item.quantity += change;
+          if (item.quantity <= 0) {
+            removeFromCart(itemId);
+          } else {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            updateCartModal();
+          }
+        }
+      } catch (error) {
+        console.error('Error al actualizar cantidad:', error);
+        showNotification('Error al actualizar cantidad', 'error');
+      }
+    }
+
+    function removeFromCart(itemId) {
+      try {
+        cart = cart.filter(item => item.id !== itemId);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        updateCartModal();
+        showNotification('Producto removido del carrito');
+      } catch (error) {
+        console.error('Error al remover del carrito:', error);
+        showNotification('Error al remover producto del carrito', 'error');
+      }
+    }
+
+    function removeFromWishlist(productName) {
+      try {
+        wishlist = wishlist.filter(item => item.name !== productName);
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        updateWishlistCount();
+        updateWishlistModal();
+        loadWishlistState();
+        showNotification('Producto removido de favoritos');
+      } catch (error) {
+        console.error('Error al remover de favoritos:', error);
+        showNotification('Error al remover producto de favoritos', 'error');
+      }
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        showNotification('Tu carrito está vacío', 'error');
+        return;
+      }
+      
+      showNotification('¡Gracias por tu compra! Redirigiendo al pago...', 'success');
+      setTimeout(() => {
+        cart = [];
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        updateCartModal();
+        closeCartModal();
+      }, 2000);
+    }
+
+    // Funciones de comparación
+    function abrirModalComparacion() {
+      if (selectedProducts.length < 2) {
+        showNotification('Selecciona al menos 2 productos para comparar', 'error');
+        return;
+      }
+
+      const modal = document.getElementById('modalComparacion');
+      const content = document.getElementById('comparacionContent');
+      
+      if (!modal || !content) return;
+
+      const selectedCards = selectedProducts.map(name => 
+        document.querySelector(`[data-name="${name}"]`)
+      ).filter(card => card);
+
+      if (selectedCards.length < 2) {
+        showNotification('Error al obtener productos seleccionados', 'error');
+        return;
+      }
+
+      content.innerHTML = `
+        <div class="comparison-grid">
+          ${selectedCards.map(card => `
+            <div class="comparison-item">
+              <img src="${card.querySelector('img').src}" alt="${card.dataset.name}">
+              <h4>${card.dataset.name}</h4>
+              <p class="price">$${parseFloat(card.dataset.price).toLocaleString()}</p>
+              <p class="description">${card.querySelector('p').textContent}</p>
+              <div class="features">
+                <span class="brand">Marca: ${card.dataset.brand}</span>
+                <span class="color">Color: ${card.dataset.color}</span>
+                ${card.dataset.oferta === 'true' ? '<span class="offer">¡En oferta!</span>' : ''}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      modal.style.display = 'block';
+    }
+
+    function cerrarModalComparacion() {
+      try {
+        const modal = document.getElementById('modalComparacion');
+        if (modal) {
+          modal.style.display = 'none';
+          document.body.classList.remove('modal-open');
+        }
+      } catch (error) {
+        console.error('Error al cerrar modal de comparación:', error);
+      }
+    }
+
+    // Función para menú móvil
+    function toggleMobileMenu() {
+      try {
+        const menu = document.getElementById('mobileMenu');
+        if (!menu) {
+          console.warn('Menú móvil no encontrado');
+          return;
+        }
+        
+        const isOpen = menu.classList.contains('show');
+        menu.classList.toggle('show');
+        
+        // Prevenir scroll del body cuando el menú está abierto
+        document.body.classList.toggle('modal-open', !isOpen);
+        
+        // Enfoque en el primer elemento del menú cuando se abre
+        if (!isOpen) {
+          const firstMenuItem = menu.querySelector('.mobile-menu-item');
+          if (firstMenuItem) {
+            setTimeout(() => firstMenuItem.focus(), 100);
+          }
+        }
+      } catch (error) {
+        console.error('Error al alternar menú móvil:', error);
+        showNotification('Error al abrir el menú', 'error');
+      }
+    }
+
+    // Función debounce para optimizar búsqueda
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    // Cerrar modales al hacer clic fuera
+    window.onclick = function(event) {
+      const cartModal = document.getElementById('cartModal');
+      const wishlistModal = document.getElementById('wishlistModal');
+      const comparacionModal = document.getElementById('modalComparacion');
+      
+      if (event.target === cartModal) {
+        closeCartModal();
+      }
+      if (event.target === wishlistModal) {
+        closeWishlistModal();
+      }
+      if (event.target === comparacionModal) {
+        cerrarModalComparacion();
+      }
+    }
+
+    // Manejo de errores global para imágenes
+    window.addEventListener('error', function(e) {
+      if (e.target.tagName === 'IMG') {
+        console.warn('Error al cargar imagen:', e.target.src);
+        e.target.src = 'https://via.placeholder.com/300x200?text=Imagen+no+disponible';
+        e.target.alt = 'Imagen no disponible';
+      }
+    }, true);
+
+    // Manejo de errores de recursos
+    document.addEventListener('DOMContentLoaded', function() {
+      try {
+        const images = document.querySelectorAll('img');
+        images.forEach(img => {
+          img.addEventListener('error', function() {
+            console.warn('Imagen no encontrada:', this.src);
+            this.src = 'https://via.placeholder.com/300x200?text=Imagen+no+disponible';
+            this.alt = 'Imagen no disponible';
+          });
+          
+          // Lazy loading para imágenes
+          if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  const img = entry.target;
+                  img.src = img.dataset.src || img.src;
+                  observer.unobserve(img);
+                }
+              });
+            });
+            
+            imageObserver.observe(img);
+          }
+        });
+      } catch (error) {
+        console.error('Error al configurar manejo de imágenes:', error);
+      }
+    });
+
+    // Manejo de errores no capturados
+    window.addEventListener('unhandledrejection', function(event) {
+      console.error('Error no manejado:', event.reason);
+      showNotification('Ocurrió un error inesperado. Por favor, recarga la página.', 'error');
+    });
+
+    // Manejo de errores de JavaScript
+    window.addEventListener('error', function(event) {
+      console.error('Error de JavaScript:', event.error);
+      if (event.error && event.error.message) {
+        showNotification('Error: ' + event.error.message, 'error');
+      }
+    });
+
+    // --- MODAL DETALLES PRODUCTO ---
+    // Añadir data-id y cursor-pointer a las imágenes de productos
+    Array.from(document.querySelectorAll('.product-card img')).forEach(function(img) {
+      img.classList.add('cursor-pointer');
+      var card = img.closest('.product-card');
+      if (card && card.dataset.name) {
+        img.setAttribute('data-id', card.dataset.name);
+      }
+    });
+    // Mostrar detalles al hacer clic en la imagen
+    function mostrarDetallesProductoPorId(id) {
+      var card = Array.from(document.querySelectorAll('.product-card')).find(c => c.dataset.name === id);
+      if (!card) return;
+      var nombre = card.querySelector('h4') ? card.querySelector('h4').textContent : '';
+      var descripcion = card.querySelector('p') ? card.querySelector('p').textContent : '';
+      var precio = card.dataset.price ? '$' + card.dataset.price : '';
+      var imagen = card.querySelector('img') ? card.querySelector('img').src : '';
+      document.getElementById('modalNombre').textContent = nombre;
+      document.getElementById('modalDescripcion').textContent = descripcion;
+      document.getElementById('modalPrecio').textContent = 'Precio: ' + precio;
+      document.getElementById('modalImg').src = imagen;
+      document.getElementById('modalDetalles').style.display = 'block';
+    }
+    document.addEventListener('click', function(e) {
+      if (e.target.tagName === 'IMG' && e.target.dataset.id) {
+        mostrarDetallesProductoPorId(e.target.dataset.id);
+      }
+    });
+    const cerrarModalDetalles = document.getElementById('cerrarModalDetalles');
+    if (cerrarModalDetalles) {
+      cerrarModalDetalles.onclick = function() {
+        document.getElementById('modalDetalles').style.display = 'none';
+      }
+    }
+    document.getElementById('modalDetalles').addEventListener('click', function(e) {
+      if (e.target === this) {
+        this.style.display = 'none';
+      }
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.getElementById('modalDetalles').style.display = 'none';
+      }
+    });
+    // --- FIN MODAL DETALLES PRODUCTO ---
+
+    // Función para redirigir a página de detalles
+    function redirectToProduct(productName) {
+        try {
+            // Mapear nombres de productos a IDs
+            const productMap = {
+                'Smartwatch Huawei Watch GT 5': 1,
+                'Smartwatch EVL SW160': 2,
+                'Smartwatch Huawei Watch Fit 4 Pro': 3,
+                'Smartwatch STF Kronos Blaze': 4,
+                'Smartwatch EVL SW120': 5,
+                'Smartwatch EVL SW170': 6
+            };
+            
+            const productId = productMap[productName];
+            
+            if (productId) {
+                // Redirigir a la página de detalles
+                window.location.href = `smartwatch-detalle.html?id=${productId}`;
+            } else {
+                // Fallback si no se encuentra el producto
+                showNotification('Producto no encontrado', 'error');
+            }
+        } catch (error) {
+            console.error('Error al redirigir:', error);
+            showNotification('Error al abrir detalles del producto', 'error');
+        }
+    }
+  </script>
+</body>
+</html>

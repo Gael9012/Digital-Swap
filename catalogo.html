@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Catálogo completo de productos tecnológicos en Digital Swap - Encuentra las mejores ofertas en laptops, consolas y más">
+  <meta name="keywords" content="catálogo, laptops, tecnología, ofertas, Digital Swap">
+  <title>Catálogo de Productos - Digital Swap</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      background-image: url('https://img.freepik.com/vector-premium/fondo-vector-monocromo-blanco-abstracto-folleto-diseno-folleto-sitio-web-fondo-pantalla-blanco-geometrico-pagina-inicio-presentacion-certificado_249611-5879.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+    
+    .product-card {
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    .filter-active {
+      background-color: #3b82f6 !important;
+      color: white !important;
+    }
+    
+    .price-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: linear-gradient(45deg, #ef4444, #dc2626);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: bold;
+      z-index: 10;
+    }
+    
+    .wishlist-btn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(255,255,255,0.9);
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      z-index: 10;
+    }
+    
+    .wishlist-btn:hover {
+      background: #ef4444;
+      color: white;
+    }
+    
+    .wishlist-btn.active {
+      background: #ef4444;
+      color: white;
+    }
+
+    .product-card.selected {
+      border: 2px solid #3b82f6;
+      box-shadow: 0 0 0 1px #3b82f6;
+    }
+
+    .select-checkbox {
+      position: absolute;
+      top: 10px;
+      right: 50px;
+      width: 20px;
+      height: 20px;
+      z-index: 15;
+      cursor: pointer;
+      accent-color: #3b82f6;
+    }
+
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .notification {
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 font-sans">
+  <!-- Header simplificado -->
+  <header class="bg-white shadow-sm border-b">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+          <img src="logo.png" alt="Digital Swap Logo" class="h-10">
+          <h1 class="text-xl font-bold text-gray-800">Digital Swap</h1>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button class="relative p-2 text-gray-600 hover:text-blue-600 transition">
+            <i class="fas fa-shopping-cart text-lg"></i>
+            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+          </button>
+          <button class="relative p-2 text-gray-600 hover:text-blue-600 transition">
+            <i class="fas fa-heart text-lg"></i>
+            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto py-8 px-4">
+    <!-- Breadcrumb -->
+    <nav class="text-sm text-gray-500 mb-6">
+      <ol class="flex items-center space-x-2">
+        <li><a href="index.html" class="hover:text-blue-600">Inicio</a></li>
+        <li><i class="fas fa-chevron-right text-xs"></i></li>
+        <li class="text-gray-800">Catálogo</li>
+      </ol>
+    </nav>
+
+    <div class="flex flex-col lg:flex-row gap-6">
+    <!-- Sidebar filtros -->
+      <aside class="lg:w-64 bg-white rounded-lg shadow p-4 h-fit">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-semibold">Filtros</h2>
+          <div class="flex items-center space-x-2">
+            <span id="activeFiltersCount" class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full hidden">0</span>
+            <button id="clearFilters" class="text-sm text-blue-600 hover:text-blue-800">Limpiar</button>
+          </div>
+        </div>
+
+      <div class="mb-6">
+        <h3 class="font-medium mb-2">Precio</h3>
+        <div class="flex gap-2 mb-2">
+            <input type="number" placeholder="$ Mínimo" class="border w-full p-2 rounded text-sm" id="minPrice" min="0">
+            <input type="number" placeholder="$ Máximo" class="border w-full p-2 rounded text-sm" id="maxPrice" min="0">
+          </div>
+          <div class="flex justify-between text-xs text-gray-500">
+            <span>$0</span>
+            <span>$25,000</span>
+          </div>
+        </div>
+
+
+      <div class="mb-6">
+          <h3 class="font-medium mb-2">Rango de Precio</h3>
+          <div class="space-y-2">
+            <label class="flex items-center">
+              <input type="radio" name="priceRange" value="0-5000" class="mr-2 price-range-filter">
+              <span class="text-sm">Hasta $5,000</span>
+            </label>
+            <label class="flex items-center">
+              <input type="radio" name="priceRange" value="5000-10000" class="mr-2 price-range-filter">
+              <span class="text-sm">$5,000 - $10,000</span>
+            </label>
+            <label class="flex items-center">
+              <input type="radio" name="priceRange" value="10000-15000" class="mr-2 price-range-filter">
+              <span class="text-sm">$10,000 - $15,000</span>
+            </label>
+            <label class="flex items-center">
+              <input type="radio" name="priceRange" value="15000-25000" class="mr-2 price-range-filter">
+              <span class="text-sm">Más de $15,000</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <h3 class="font-medium mb-2">Procesador</h3>
+          <div class="space-y-2">
+            <label class="flex items-center">
+              <input type="checkbox" class="mr-2 processor-filter" value="intel">
+              <span class="text-sm">Intel</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="mr-2 processor-filter" value="amd">
+              <span class="text-sm">AMD</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="mr-2 processor-filter" value="celeron">
+              <span class="text-sm">Celeron</span>
+            </label>
+        </div>
+      </div>
+
+        <div class="mb-6">
+        <h3 class="font-medium mb-2">Marca</h3>
+          <div class="max-h-48 overflow-y-auto border rounded p-3 text-sm space-y-2">
+            <label class="flex items-center"><input type="checkbox" class="mr-2 brand-filter" value="asus"> Asus</label>
+            <label class="flex items-center"><input type="checkbox" class="mr-2 brand-filter" value="hp"> HP</label>
+            <label class="flex items-center"><input type="checkbox" class="mr-2 brand-filter" value="lenovo"> Lenovo</label>
+            <label class="flex items-center"><input type="checkbox" class="mr-2 brand-filter" value="huawei"> Huawei</label>
+            <label class="flex items-center"><input type="checkbox" class="mr-2 brand-filter" value="acer"> Acer</label>
+            <label class="flex items-center"><input type="checkbox" class="mr-2 brand-filter" value="dell"> Dell</label>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <h3 class="font-medium mb-2">Ofertas</h3>
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-2" id="ofertasFilter">
+            <span class="text-sm">Solo productos en oferta</span>
+          </label>
+      </div>
+    </aside>
+
+    <!-- Productos -->
+      <main class="flex-1">
+        <!-- Toolbar -->
+        <div class="bg-white rounded-lg shadow p-4 mb-6">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div class="flex items-center space-x-4">
+              <div class="relative">
+                <input type="text" id="searchInput" placeholder="Buscar productos..." class="pl-10 pr-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              </div>
+              <span class="text-sm text-gray-600">Mostrando <span id="productCount">6</span> productos</span>
+              <div class="flex items-center space-x-2">
+                <button class="p-2 text-gray-600 hover:text-gray-800 active" id="gridView">
+                  <i class="fas fa-th"></i>
+                </button>
+                <button class="p-2 text-gray-400 hover:text-gray-600" id="listView">
+                  <i class="fas fa-list"></i>
+                </button>
+              </div>
+            </div>
+            <div class="flex items-center space-x-4">
+              <div class="flex items-center space-x-2">
+                <button id="selectAllBtn" class="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition">
+                  <i class="fas fa-check-square mr-1"></i>Seleccionar Todo
+                </button>
+                <button id="deselectAllBtn" class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition hidden">
+                  <i class="fas fa-square mr-1"></i>Deseleccionar Todo
+                </button>
+                <span id="selectedCount" class="text-sm text-blue-600 font-medium hidden">
+                  <i class="fas fa-check-circle mr-1"></i><span id="selectedNumber">0</span> seleccionados
+                </span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <label class="text-sm text-gray-600">Ordenar por:</label>
+                <select class="border rounded p-2 text-sm" id="sortSelect">
+                  <option value="relevance">Relevancia</option>
+                  <option value="price-low">Precio: Menor a Mayor</option>
+                  <option value="price-high">Precio: Mayor a Menor</option>
+                  <option value="name">Nombre A-Z</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grid de productos -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="productsGrid">
+      <!-- Producto 1 -->
+          <div class="product-card bg-white rounded-lg shadow p-4 relative" data-price="15999" data-brand="asus" data-category="gaming" data-name="Laptop Gamer Asus" data-oferta="true" data-processor="amd" data-premium="true">
+            <input type="checkbox" class="select-checkbox" onchange="toggleProductSelection(this)">
+            <div class="price-badge">-24%</div>
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+              <i class="far fa-heart"></i>
+            </button>
+            <img src="Imagenes/gamer.png" alt="Laptop Gamer Asus" class="w-full h-48 object-contain rounded mb-4">
+            <h4 class="text-sm font-semibold mb-2 line-clamp-2">Laptop Gamer Asus 15.6" AMD Ryzen 7 NVIDIA GeForce RTX 20</h4>
+            <p class="text-xs text-gray-600 mb-2 line-clamp-2">Potente laptop gaming con gráficos RTX y procesador AMD Ryzen 7</p>
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-gray-500 text-xs">Desde $894 quincenales</p>
+                <p class="text-lg font-bold text-gray-800">$15,999</p>
+                <p class="text-sm text-gray-400 line-through">$20,999</p>
+              </div>
+              <div class="flex items-center text-yellow-400 text-xs">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <span class="text-gray-500 ml-1">(156)</span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm font-medium" onclick="addToCart(this)">
+                <i class="fas fa-shopping-cart mr-1"></i>Agregar
+              </button>
+              <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <i class="fas fa-heart text-gray-400"></i>
+              </button>
+            </div>
+      </div>
+
+      <!-- Producto 2 -->
+          <div class="product-card bg-white rounded-lg shadow p-4 relative" data-price="8999" data-brand="asus" data-category="business" data-name="Laptop Asus x1404ZA" data-oferta="true" data-processor="intel">
+            <input type="checkbox" class="select-checkbox" onchange="toggleProductSelection(this)">
+            <div class="price-badge">-18%</div>
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+              <i class="far fa-heart"></i>
+            </button>
+            <img src="Imagenes/as.png" alt="Laptop Asus x1404ZA" class="w-full h-48 object-contain rounded mb-4">
+            <h4 class="text-sm font-semibold mb-2 line-clamp-2">Laptop Asus x1404ZA-NK148W 14" Intel Core i5 8 GB RAM</h4>
+            <p class="text-xs text-gray-600 mb-2 line-clamp-2">Laptop compacta ideal para trabajo y estudio</p>
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-gray-500 text-xs">Desde $503 quincenales</p>
+                <p class="text-lg font-bold text-gray-800">$8,999</p>
+                <p class="text-sm text-gray-400 line-through">$10,999</p>
+              </div>
+              <div class="flex items-center text-yellow-400 text-xs">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+                <span class="text-gray-500 ml-1">(89)</span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm font-medium" onclick="addToCart(this)">
+                <i class="fas fa-shopping-cart mr-1"></i>Agregar
+              </button>
+              <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <i class="fas fa-heart text-gray-400"></i>
+              </button>
+            </div>
+      </div>
+
+      <!-- Producto 3 -->
+          <div class="product-card bg-white rounded-lg shadow p-4 relative" data-price="5499" data-brand="lenovo" data-category="business" data-name="Laptop Lenovo Ideapad 1" data-oferta="true" data-processor="celeron">
+            <input type="checkbox" class="select-checkbox" onchange="toggleProductSelection(this)">
+            <div class="price-badge">-37%</div>
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+              <i class="far fa-heart"></i>
+            </button>
+            <img src="Imagenes/id.png" alt="Laptop Lenovo Ideapad 1" class="w-full h-48 object-contain rounded mb-4">
+            <h4 class="text-sm font-semibold mb-2 line-clamp-2">Laptop Lenovo Ideapad 1 15.6" Windows 11 Intel Celeron</h4>
+            <p class="text-xs text-gray-600 mb-2 line-clamp-2">Laptop económica perfecta para tareas básicas</p>
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-gray-500 text-xs">Desde $308 quincenales</p>
+                <p class="text-lg font-bold text-gray-800">$5,499</p>
+                <p class="text-sm text-gray-400 line-through">$8,699</p>
+              </div>
+              <div class="flex items-center text-yellow-400 text-xs">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+                <span class="text-gray-500 ml-1">(67)</span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm font-medium" onclick="addToCart(this)">
+                <i class="fas fa-shopping-cart mr-1"></i>Agregar
+              </button>
+              <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <i class="fas fa-heart text-gray-400"></i>
+              </button>
+            </div>
+      </div>
+
+      <!-- Producto 4 -->
+          <div class="product-card bg-white rounded-lg shadow p-4 relative" data-price="11309" data-brand="hp" data-category="business" data-name="Laptop HP 14-ep1001la" data-oferta="true" data-processor="intel" data-premium="true">
+            <input type="checkbox" class="select-checkbox" onchange="toggleProductSelection(this)">
+            <div class="price-badge">-45%</div>
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+              <i class="far fa-heart"></i>
+            </button>
+            <img src="Imagenes/pla.png" alt="Laptop HP 14-ep1001la" class="w-full h-48 object-contain rounded mb-4">
+            <h4 class="text-sm font-semibold mb-2 line-clamp-2">Laptop HP 14-ep1001la 14" Windows 11 Intel Core Ultra 5</h4>
+            <p class="text-xs text-gray-600 mb-2 line-clamp-2">Laptop moderna con procesador Intel Core Ultra 5</p>
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-gray-500 text-xs">Desde $632 quincenales</p>
+                <p class="text-lg font-bold text-gray-800">$11,309</p>
+                <p class="text-sm text-gray-400 line-through">$20,499</p>
+              </div>
+              <div class="flex items-center text-yellow-400 text-xs">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <span class="text-gray-500 ml-1">(124)</span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm font-medium" onclick="addToCart(this)">
+                <i class="fas fa-shopping-cart mr-1"></i>Agregar
+              </button>
+              <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <i class="fas fa-heart text-gray-400"></i>
+              </button>
+            </div>
+      </div>
+
+      <!-- Producto 5 -->
+          <div class="product-card bg-white rounded-lg shadow p-4 relative" data-price="15999" data-brand="huawei" data-category="business" data-name="Laptop Huawei MateBook D16" data-oferta="true" data-processor="intel" data-premium="true">
+            <input type="checkbox" class="select-checkbox" onchange="toggleProductSelection(this)">
+            <div class="price-badge">-16%</div>
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+              <i class="far fa-heart"></i>
+            </button>
+            <img src="Imagenes/pulga.png" alt="Laptop Huawei MateBook D16" class="w-full h-48 object-contain rounded mb-4">
+            <h4 class="text-sm font-semibold mb-2 line-clamp-2">Laptop Huawei MateBook D16 16" Windows 11 Intel Core i5</h4>
+            <p class="text-xs text-gray-600 mb-2 line-clamp-2">Laptop premium con pantalla de 16 pulgadas</p>
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-gray-500 text-xs">Desde $894 quincenales</p>
+                <p class="text-lg font-bold text-gray-800">$15,999</p>
+                <p class="text-sm text-gray-400 line-through">$18,999</p>
+              </div>
+              <div class="flex items-center text-yellow-400 text-xs">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <span class="text-gray-500 ml-1">(203)</span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm font-medium" onclick="addToCart(this)">
+                <i class="fas fa-shopping-cart mr-1"></i>Agregar
+              </button>
+              <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <i class="fas fa-heart text-gray-400"></i>
+              </button>
+            </div>
+      </div>
+
+      <!-- Producto 6 -->
+          <div class="product-card bg-white rounded-lg shadow p-4 relative" data-price="9999" data-brand="hp" data-category="business" data-name="Laptop HP 15-fd0026la" data-oferta="true" data-processor="intel">
+            <input type="checkbox" class="select-checkbox" onchange="toggleProductSelection(this)">
+            <div class="price-badge">-25%</div>
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+              <i class="far fa-heart"></i>
+            </button>
+            <img src="Imagenes/hp.png" alt="Laptop HP 15-fd0026la" class="w-full h-48 object-contain rounded mb-4">
+            <h4 class="text-sm font-semibold mb-2 line-clamp-2">Laptop HP 15-fd0026la 15.6" Windows 11 Intel Core i3</h4>
+            <p class="text-xs text-gray-600 mb-2 line-clamp-2">Laptop confiable para trabajo y estudio</p>
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-gray-500 text-xs">Desde $559 quincenales</p>
+                <p class="text-lg font-bold text-gray-800">$9,999</p>
+                <p class="text-sm text-gray-400 line-through">$13,299</p>
+              </div>
+              <div class="flex items-center text-yellow-400 text-xs">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+                <span class="text-gray-500 ml-1">(98)</span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm font-medium" onclick="addToCart(this)">
+                <i class="fas fa-shopping-cart mr-1"></i>Agregar
+              </button>
+              <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <i class="fas fa-heart text-gray-400"></i>
+              </button>
+            </div>
+          </div>
+
+      </div>
+    </main>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white mt-16">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Digital Swap</h3>
+          <p class="text-gray-300 text-sm">Tu tienda de confianza para tecnología de vanguardia.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Productos</h4>
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li><a href="#" class="hover:text-white">Laptops</a></li>
+            <li><a href="#" class="hover:text-white">Consolas</a></li>
+            <li><a href="#" class="hover:text-white">Audífonos</a></li>
+            <li><a href="#" class="hover:text-white">Ofertas</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Soporte</h4>
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li><a href="#" class="hover:text-white">Contacto</a></li>
+            <li><a href="#" class="hover:text-white">Garantía</a></li>
+            <li><a href="#" class="hover:text-white">Devoluciones</a></li>
+            <li><a href="#" class="hover:text-white">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Síguenos</h4>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-300">
+        <p>&copy; 2024 Digital Swap. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Configuración global
+    const CONFIG = {
+      animationDuration: 300,
+      notificationDuration: 3000,
+      maxPrice: 25000
+    };
+
+    // Clase para manejar el catálogo
+    class ProductCatalog {
+      constructor() {
+        this.initializeElements();
+        this.bindEvents();
+        this.applyFilters();
+        this.selectedProducts = new Set();
+      }
+
+      initializeElements() {
+        this.filterBtns = document.querySelectorAll('.filter-btn');
+        this.brandFilters = document.querySelectorAll('.brand-filter');
+        this.processorFilters = document.querySelectorAll('.processor-filter');
+        this.priceRangeFilters = document.querySelectorAll('.price-range-filter');
+        this.ofertasFilter = document.getElementById('ofertasFilter');
+        this.minPrice = document.getElementById('minPrice');
+        this.maxPrice = document.getElementById('maxPrice');
+        this.clearFilters = document.getElementById('clearFilters');
+        this.sortSelect = document.getElementById('sortSelect');
+        this.productsGrid = document.getElementById('productsGrid');
+        this.productCount = document.getElementById('productCount');
+        this.gridView = document.getElementById('gridView');
+        this.listView = document.getElementById('listView');
+        this.products = document.querySelectorAll('.product-card');
+        this.selectAllBtn = document.getElementById('selectAllBtn');
+        this.deselectAllBtn = document.getElementById('deselectAllBtn');
+        this.selectedCount = document.getElementById('selectedCount');
+        this.selectedNumber = document.getElementById('selectedNumber');
+        this.searchInput = document.getElementById('searchInput');
+        this.activeFiltersCount = document.getElementById('activeFiltersCount');
+      }
+
+      bindEvents() {
+        // Filtros de categoría
+        this.filterBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            btn.classList.toggle('filter-active');
+            this.applyFilters();
+          });
+        });
+
+        // Filtros de marca
+        this.brandFilters.forEach(filter => {
+          filter.addEventListener('change', () => this.applyFilters());
+        });
+
+        // Filtros de procesador
+        this.processorFilters.forEach(filter => {
+          filter.addEventListener('change', () => this.applyFilters());
+        });
+
+        // Filtros de rango de precio
+        this.priceRangeFilters.forEach(filter => {
+          filter.addEventListener('change', () => this.applyFilters());
+        });
+
+        // Filtro de ofertas
+        if (this.ofertasFilter) {
+          this.ofertasFilter.addEventListener('change', () => this.applyFilters());
+        }
+
+        // Filtros de precio con debounce
+        if (this.minPrice) {
+          this.minPrice.addEventListener('input', this.debounce(() => {
+            this.validatePriceInput(this.minPrice);
+            this.applyFilters();
+          }, 300));
+        }
+        if (this.maxPrice) {
+          this.maxPrice.addEventListener('input', this.debounce(() => {
+            this.validatePriceInput(this.maxPrice);
+            this.applyFilters();
+          }, 300));
+        }
+
+        // Limpiar filtros
+        if (this.clearFilters) {
+          this.clearFilters.addEventListener('click', () => this.clearAllFilters());
+        }
+
+        // Ordenamiento
+        if (this.sortSelect) {
+          this.sortSelect.addEventListener('change', () => this.applyFilters());
+        }
+
+        // Vista de productos
+        if (this.gridView) {
+          this.gridView.addEventListener('click', () => this.setGridView());
+        }
+        if (this.listView) {
+          this.listView.addEventListener('click', () => this.setListView());
+        }
+
+        // Búsqueda
+        if (this.searchInput) {
+          this.searchInput.addEventListener('input', this.debounce(() => {
+            this.applyFilters();
+          }, 300));
+        }
+
+        // Botones de selección
+        if (this.selectAllBtn) {
+          this.selectAllBtn.addEventListener('click', () => this.selectAllProducts());
+        }
+        if (this.deselectAllBtn) {
+          this.deselectAllBtn.addEventListener('click', () => this.deselectAllProducts());
+        }
+      }
+
+      applyFilters() {
+        let visibleCount = 0;
+        const visibleProducts = [];
+
+        this.products.forEach(product => {
+          let show = true;
+
+          // Filtro por categoría
+          const activeCategoryFilters = document.querySelectorAll('.filter-btn.filter-active');
+          if (activeCategoryFilters.length > 0) {
+            const productCategory = product.dataset.category;
+            const hasMatchingCategory = Array.from(activeCategoryFilters).some(btn => 
+              btn.dataset.filter === productCategory
+            );
+            if (!hasMatchingCategory) show = false;
+          }
+
+          // Filtro por marca
+          const activeBrandFilters = document.querySelectorAll('.brand-filter:checked');
+          if (activeBrandFilters.length > 0) {
+            const productBrand = product.dataset.brand;
+            const hasMatchingBrand = Array.from(activeBrandFilters).some(filter => 
+              filter.value === productBrand
+            );
+            if (!hasMatchingBrand) show = false;
+          }
+
+          // Filtro por procesador
+          const activeProcessorFilters = document.querySelectorAll('.processor-filter:checked');
+          if (activeProcessorFilters.length > 0) {
+            const productProcessor = product.dataset.processor;
+            const hasMatchingProcessor = Array.from(activeProcessorFilters).some(filter => 
+              filter.value === productProcessor
+            );
+            if (!hasMatchingProcessor) show = false;
+          }
+
+          // Filtro por rango de precio
+          const activePriceRangeFilter = document.querySelector('input[name="priceRange"]:checked');
+          if (activePriceRangeFilter) {
+            const price = parseInt(product.dataset.price);
+            const [min, max] = activePriceRangeFilter.value.split('-').map(Number);
+            if (price < min || (max && price > max)) show = false;
+          }
+
+          // Filtro por ofertas
+          if (this.ofertasFilter && this.ofertasFilter.checked && !product.dataset.oferta) {
+            show = false;
+          }
+
+          // Filtro por precio personalizado
+          const price = parseInt(product.dataset.price);
+          if (this.minPrice && this.minPrice.value && price < parseInt(this.minPrice.value)) show = false;
+          if (this.maxPrice && this.maxPrice.value && price > parseInt(this.maxPrice.value)) show = false;
+
+          // Filtro de búsqueda por texto
+          if (this.searchInput && this.searchInput.value.trim()) {
+            const searchTerm = this.searchInput.value.toLowerCase().trim();
+            const productName = product.dataset.name.toLowerCase();
+            const productDescription = product.querySelector('p')?.textContent.toLowerCase() || '';
+            
+            if (!productName.includes(searchTerm) && !productDescription.includes(searchTerm)) {
+              show = false;
+            }
+          }
+
+          product.style.display = show ? 'block' : 'none';
+          if (show) {
+            visibleCount++;
+            visibleProducts.push(product);
+          }
+        });
+
+        // Ordenamiento
+        if (this.sortSelect && this.sortSelect.value !== 'relevance') {
+          this.sortProducts(visibleProducts, this.sortSelect.value);
+        }
+
+        if (this.productCount) {
+          this.productCount.textContent = visibleCount;
+        }
+
+        this.updateSelectionUI();
+        this.updateActiveFiltersCount();
+        this.showNoProductsMessage(visibleCount);
+      }
+
+      sortProducts(products, sortType) {
+        const productsArray = Array.from(products);
+        
+        productsArray.sort((a, b) => {
+          switch(sortType) {
+            case 'price-low':
+              return parseInt(a.dataset.price) - parseInt(b.dataset.price);
+            case 'price-high':
+              return parseInt(b.dataset.price) - parseInt(a.dataset.price);
+            case 'name':
+              return a.dataset.name.localeCompare(b.dataset.name);
+            default:
+              return 0;
+          }
+        });
+
+        productsArray.forEach((product, index) => {
+          setTimeout(() => {
+            if (this.productsGrid) {
+              this.productsGrid.appendChild(product);
+            }
+          }, index * 50);
+        });
+      }
+
+      clearAllFilters() {
+        this.filterBtns.forEach(btn => btn.classList.remove('filter-active'));
+        this.brandFilters.forEach(filter => filter.checked = false);
+        this.processorFilters.forEach(filter => filter.checked = false);
+        this.priceRangeFilters.forEach(filter => filter.checked = false);
+        if (this.ofertasFilter) this.ofertasFilter.checked = false;
+        if (this.minPrice) this.minPrice.value = '';
+        if (this.maxPrice) this.maxPrice.value = '';
+        if (this.searchInput) this.searchInput.value = '';
+        if (this.sortSelect) this.sortSelect.value = 'relevance';
+        
+        this.deselectAllProducts();
+        this.applyFilters();
+        showNotification('Filtros y selecciones limpiados', 'info');
+      }
+
+      setGridView() {
+        if (this.productsGrid) {
+          this.productsGrid.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6';
+        }
+        this.gridView.classList.add('text-gray-600');
+        this.listView.classList.remove('text-gray-600');
+      }
+
+      setListView() {
+        if (this.productsGrid) {
+          this.productsGrid.className = 'grid grid-cols-1 gap-6';
+        }
+        this.listView.classList.add('text-gray-600');
+        this.gridView.classList.remove('text-gray-600');
+      }
+
+      showNoProductsMessage(count) {
+        let noProductsMsg = document.getElementById('noProductsMessage');
+        
+        if (count === 0) {
+          if (!noProductsMsg) {
+            noProductsMsg = document.createElement('div');
+            noProductsMsg.id = 'noProductsMessage';
+            noProductsMsg.className = 'text-center py-12 text-gray-500';
+            noProductsMsg.innerHTML = `
+              <i class="fas fa-search text-4xl mb-4 text-gray-300"></i>
+              <h3 class="text-lg font-medium mb-2">No se encontraron productos</h3>
+              <p class="text-sm">Intenta ajustar los filtros de búsqueda</p>
+            `;
+            this.productsGrid.appendChild(noProductsMsg);
+          }
+        } else if (noProductsMsg) {
+          noProductsMsg.remove();
+        }
+      }
+
+      validatePriceInput(input) {
+        if (!input || !input.value) return;
+        
+        const value = parseInt(input.value);
+        if (isNaN(value)) {
+          input.value = '';
+          showNotification('Por favor, ingresa un número válido', 'warning');
+        } else if (value < 0) {
+          input.value = 0;
+          showNotification('El precio no puede ser negativo', 'warning');
+        } else if (value > CONFIG.maxPrice) {
+          input.value = CONFIG.maxPrice;
+          showNotification(`El precio máximo es $${CONFIG.maxPrice.toLocaleString()}`, 'warning');
+        }
+      }
+
+      debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+        };
+      }
+
+      selectAllProducts() {
+        let selectedCount = 0;
+        this.products.forEach(product => {
+          const checkbox = product.querySelector('.select-checkbox');
+          if (checkbox && product.style.display !== 'none') {
+            checkbox.checked = true;
+            product.classList.add('selected');
+            this.selectedProducts.add(product.dataset.name);
+            selectedCount++;
+          }
+        });
+        this.updateSelectionUI();
+        showNotification(`${selectedCount} productos seleccionados`, 'success');
+      }
+
+      deselectAllProducts() {
+        this.products.forEach(product => {
+          const checkbox = product.querySelector('.select-checkbox');
+          if (checkbox) {
+            checkbox.checked = false;
+            product.classList.remove('selected');
+            this.selectedProducts.delete(product.dataset.name);
+          }
+        });
+        this.updateSelectionUI();
+        showNotification('Todos los productos deseleccionados', 'info');
+      }
+
+      updateSelectionUI() {
+        const selectedCount = this.selectedProducts.size;
+        
+        if (selectedCount > 0) {
+          if (this.selectAllBtn) this.selectAllBtn.classList.add('hidden');
+          if (this.deselectAllBtn) this.deselectAllBtn.classList.remove('hidden');
+          if (this.selectedCount) this.selectedCount.classList.remove('hidden');
+          if (this.selectedNumber) this.selectedNumber.textContent = selectedCount;
+                 } else {
+           if (this.selectAllBtn) this.selectAllBtn.classList.remove('hidden');
+           if (this.deselectAllBtn) this.deselectAllBtn.classList.add('hidden');
+           if (this.selectedCount) this.selectedCount.classList.add('hidden');
+         }
+       }
+
+       updateActiveFiltersCount() {
+         let activeCount = 0;
+         
+         // Contar filtros de categoría activos
+         activeCount += document.querySelectorAll('.filter-btn.filter-active').length;
+         
+         // Contar filtros de marca activos
+         activeCount += document.querySelectorAll('.brand-filter:checked').length;
+         
+         // Contar filtros de procesador activos
+         activeCount += document.querySelectorAll('.processor-filter:checked').length;
+         
+         // Contar filtro de rango de precio activo
+         if (document.querySelector('input[name="priceRange"]:checked')) {
+           activeCount++;
+         }
+         
+         // Contar filtro de ofertas activo
+         if (this.ofertasFilter && this.ofertasFilter.checked) {
+           activeCount++;
+         }
+         
+         // Contar filtros de precio personalizado
+         if (this.minPrice && this.minPrice.value) activeCount++;
+         if (this.maxPrice && this.maxPrice.value) activeCount++;
+         
+         // Contar filtro de búsqueda
+         if (this.searchInput && this.searchInput.value.trim()) {
+           activeCount++;
+         }
+         
+         if (activeCount > 0) {
+           if (this.activeFiltersCount) {
+             this.activeFiltersCount.textContent = activeCount;
+             this.activeFiltersCount.classList.remove('hidden');
+           }
+         } else {
+           if (this.activeFiltersCount) {
+             this.activeFiltersCount.classList.add('hidden');
+           }
+         }
+       }
+    }
+
+    // Funcionalidad de selección de productos
+    function toggleProductSelection(checkbox) {
+      try {
+        if (!checkbox) return;
+
+        const productCard = checkbox.closest('.product-card');
+        if (!productCard) return;
+
+        const productName = productCard.dataset.name;
+        if (!productName) return;
+        
+        if (checkbox.checked) {
+          productCard.classList.add('selected');
+          if (window.productCatalog) {
+            window.productCatalog.selectedProducts.add(productName);
+            window.productCatalog.updateSelectionUI();
+          }
+          showNotification(`${productName} seleccionado`, 'success');
+        } else {
+          productCard.classList.remove('selected');
+          if (window.productCatalog) {
+            window.productCatalog.selectedProducts.delete(productName);
+            window.productCatalog.updateSelectionUI();
+          }
+          showNotification(`${productName} deseleccionado`, 'info');
+        }
+      } catch (error) {
+        console.error('Error en toggleProductSelection:', error);
+        showNotification('Error al seleccionar el producto', 'error');
+      }
+    }
+
+    // Funcionalidad de wishlist
+    function toggleWishlist(button) {
+      try {
+        if (!button) return;
+        
+        const productCard = button.closest('.product-card');
+        if (!productCard) return;
+
+        const productName = productCard.dataset.name || 'Producto';
+        
+        button.classList.toggle('active');
+        const icon = button.querySelector('i');
+        if (icon) {
+          if (button.classList.contains('active')) {
+            icon.className = 'fas fa-heart';
+            showNotification(`${productName} agregado a favoritos`, 'success');
+            
+            const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+            const productData = {
+              id: Date.now(),
+              name: productName,
+              price: productCard.dataset.price,
+              image: productCard.querySelector('img').src,
+              addedAt: new Date().toISOString()
+            };
+            wishlist.push(productData);
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+          } else {
+            icon.className = 'far fa-heart';
+            showNotification(`${productName} removido de favoritos`, 'info');
+            
+            const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+            const updatedWishlist = wishlist.filter(item => item.name !== productName);
+            localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+          }
+        }
+      } catch (error) {
+        console.error('Error en toggleWishlist:', error);
+        showNotification('Error al actualizar favoritos', 'error');
+      }
+    }
+
+    // Funcionalidad de carrito
+    function addToCart(button) {
+      try {
+        const productCard = button.closest('.product-card');
+        if (!productCard) {
+          showNotification('Error: No se pudo identificar el producto', 'error');
+          return;
+        }
+        
+        const productNameElement = productCard.querySelector('h4');
+        if (!productNameElement) {
+          showNotification('Error: No se pudo obtener el nombre del producto', 'error');
+          return;
+        }
+        
+        const productName = productNameElement.textContent;
+        showNotification(`${productName} agregado al carrito`, 'success');
+        
+        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const productData = {
+          id: Date.now(),
+          name: productName,
+          price: productCard.dataset.price,
+          image: productCard.querySelector('img').src,
+          addedAt: new Date().toISOString()
+        };
+        cart.push(productData);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        
+      } catch (error) {
+        console.error('Error al agregar al carrito:', error);
+        showNotification('Error al agregar el producto al carrito', 'error');
+      }
+    }
+
+    // Sistema de notificaciones
+    function showNotification(message, type = 'success') {
+      const existingNotifications = document.querySelectorAll('.notification');
+      existingNotifications.forEach(notification => {
+        notification.remove();
+      });
+
+      const colors = {
+        success: 'bg-green-500',
+        error: 'bg-red-500',
+        warning: 'bg-yellow-500',
+        info: 'bg-blue-500'
+      };
+
+      const icons = {
+        success: 'fas fa-check-circle',
+        error: 'fas fa-exclamation-circle',
+        warning: 'fas fa-exclamation-triangle',
+        info: 'fas fa-info-circle'
+      };
+
+      const notification = document.createElement('div');
+      notification.className = `fixed top-4 right-4 ${colors[type]} text-white px-6 py-3 rounded shadow-lg z-50 notification flex items-center space-x-2`;
+      notification.innerHTML = `
+        <i class="${icons[type]}"></i>
+        <span>${message}</span>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.style.transform = 'translateX(100%)';
+          notification.style.opacity = '0';
+          setTimeout(() => notification.remove(), 300);
+        }
+      }, CONFIG.notificationDuration);
+    }
+
+    // Cargar estado de wishlist
+    function loadWishlistState() {
+      try {
+        const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+        const wishlistNames = wishlist.map(item => item.name);
+        
+        document.querySelectorAll('.product-card').forEach(card => {
+          const productName = card.dataset.name;
+          if (wishlistNames.includes(productName)) {
+            const wishlistBtn = card.querySelector('.wishlist-btn');
+            const icon = wishlistBtn.querySelector('i');
+            if (wishlistBtn && icon) {
+              wishlistBtn.classList.add('active');
+              icon.className = 'fas fa-heart';
+            }
+          }
+        });
+      } catch (error) {
+        console.error('Error al cargar estado de wishlist:', error);
+      }
+    }
+
+    // Inicializar cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+      window.productCatalog = new ProductCatalog();
+      
+      // Inicializar estado de botones de vista
+      const gridView = document.getElementById('gridView');
+      const listView = document.getElementById('listView');
+      
+      if (gridView && listView) {
+        gridView.classList.add('text-gray-600');
+        listView.classList.remove('text-gray-600');
+      }
+      
+      // Cargar estado de wishlist
+      loadWishlistState();
+    });
+  </script>
+</body>
+</html>

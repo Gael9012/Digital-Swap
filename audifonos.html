@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Audífonos y auriculares de alta calidad en Digital Swap. Encuentra True Wireless, con cable, over-ear, in-ear de las mejores marcas como Huawei, Samsung, JBL, Sony y más.">
+  <meta name="keywords" content="audífonos, auriculares, true wireless, bluetooth, cancelación de ruido, huawei, samsung, jbl, sony, apple, bose, sennheiser">
+  <meta name="author" content="Digital Swap">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#3b82f6">
+  <meta property="og:title" content="Audífonos y Auriculares - Digital Swap">
+  <meta property="og:description" content="Encuentra los mejores audífonos y auriculares de alta calidad con las mejores marcas y precios.">
+  <meta property="og:type" content="website">
+  <title>Audífonos y Auriculares - Digital Swap</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      background-image: url('https://img.freepik.com/vector-premium/fondo-vector-monocromo-blanco-abstracto-folleto-diseno-folleto-sitio-web-fondo-pantalla-blanco-geometrico-pagina-inicio-presentacion-certificado_249611-5879.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .product-card {
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+
+
+    .filter-active {
+      background-color: #3b82f6 !important;
+      color: white !important;
+    }
+
+    .price-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: linear-gradient(45deg, #ef4444, #dc2626);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: bold;
+      z-index: 10;
+    }
+    
+    .wishlist-btn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(255,255,255,0.9);
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      z-index: 10;
+    }
+    
+    .wishlist-btn:hover {
+      background: #ef4444;
+      color: white;
+    }
+    
+    .wishlist-btn.active {
+      background: #ef4444;
+      color: white;
+    }
+
+    .product-card.selected {
+      border: 2px solid #3b82f6;
+      box-shadow: 0 0 0 1px #3b82f6;
+    }
+
+    .select-checkbox {
+      position: absolute;
+      top: 10px;
+      right: 50px;
+      width: 20px;
+      height: 20px;
+      z-index: 15;
+      cursor: pointer;
+      accent-color: #3b82f6;
+    }
+
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #10b981;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      z-index: 10000;
+      transform: translateX(100%);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .notification.show { transform: translateX(0); }
+    .notification.error { background: #ef4444; }
+    .notification.warning { background: #f59e0b; }
+    .notification.info { background: #3b82f6; }
+    
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #3b82f6;
+      border: none;
+      padding: 0.75rem 1rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+      z-index: 1001;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    .back-btn:hover {
+      transform: translateX(-3px);
+      background: white;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+    @media (max-width: 768px) {
+      .back-btn {
+        top: 10px;
+        left: 10px;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 font-sans">
+  <!-- Header con navegación -->
+  <header class="bg-gradient-to-r from-blue-600 to-purple-600 py-6 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+      <div class="flex items-center justify-between">
+        <!-- Logo y título -->
+        <div class="flex items-center space-x-4">
+          <img src="logo.png" alt="Digital Swap Logo" class="h-12 w-auto">
+          <h1 class="text-2xl font-bold text-white">Digital Swap</h1>
+        </div>
+        
+
+        
+        <!-- Carrito y favoritos -->
+        <div class="flex items-center space-x-4">
+          <!-- Favoritos -->
+          <button id="wishlistBtn" class="relative p-2 text-white hover:text-red-200 transition-colors" onclick="showWishlist()" aria-label="Ver favoritos">
+            <i class="fas fa-heart" aria-hidden="true"></i>
+            <span id="wishlistCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden" aria-label="Número de favoritos">0</span>
+          </button>
+          
+          <!-- Carrito -->
+          <button id="cartBtn" class="relative p-2 text-white hover:text-blue-200 transition-colors" onclick="showCart()" aria-label="Ver carrito de compras">
+            <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+            <span id="cartCount" class="absolute -top-1 -right-1 bg-blue-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden" aria-label="Número de productos en el carrito">0</span>
+          </button>
+          
+
+        </div>
+      </div>
+      
+
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto py-8 px-4">
+
+
+    <div class="flex flex-col lg:flex-row gap-6">
+      <!-- Sidebar filtros -->
+      <aside class="lg:w-64 bg-white rounded-lg shadow p-4 h-fit">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-semibold">Filtros</h2>
+          <button id="clearFilters" class="text-sm text-blue-600 hover:text-blue-800">Limpiar</button>
+        </div>
+
+        <div class="mb-6">
+          <h3 class="font-medium mb-2">Precio</h3>
+          <div class="flex gap-2 mb-2">
+            <input type="number" placeholder="$ Mínimo" class="border w-full p-2 rounded text-sm" id="minPrice" min="0" max="15000" aria-label="Precio mínimo">
+            <input type="number" placeholder="$ Máximo" class="border w-full p-2 rounded text-sm" id="maxPrice" min="0" max="15000" aria-label="Precio máximo">
+          </div>
+          <div class="flex justify-between text-xs text-gray-500">
+            <span>$0</span>
+            <span>$15,000</span>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <h3 class="font-medium mb-2">Tipo de Audífonos</h3>
+          <div class="flex flex-wrap gap-2" role="group" aria-label="Filtros por tipo de audífonos">
+            <button class="filter-btn px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 text-gray-700 text-xs border border-blue-200 hover:from-blue-200 hover:to-purple-200 hover:text-blue-800 transition" data-filter="true-wireless" aria-label="Filtrar por True Wireless">True Wireless</button>
+            <button class="filter-btn px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 text-gray-700 text-xs border border-blue-200 hover:from-blue-200 hover:to-purple-200 hover:text-blue-800 transition" data-filter="con-cable" aria-label="Filtrar por audífonos con cable">Con Cable</button>
+            <button class="filter-btn px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 text-gray-700 text-xs border border-blue-200 hover:from-blue-200 hover:to-purple-200 hover:text-blue-800 transition" data-filter="over-ear" aria-label="Filtrar por audífonos over-ear">Over-Ear</button>
+            <button class="filter-btn px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 text-gray-700 text-xs border border-blue-200 hover:from-blue-200 hover:to-purple-200 hover:text-blue-800 transition" data-filter="in-ear" aria-label="Filtrar por audífonos in-ear">In-Ear</button>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <h3 class="font-medium mb-2">Marca</h3>
+          <div class="max-h-48 overflow-y-auto border rounded p-3 text-sm space-y-2" role="group" aria-label="Filtros por marca">
+            <label class="flex items-center"><input type="checkbox" class="mr-2 brand-filter" value="huawei" aria-label="Filtrar por Huawei">Huawei</label>
+            <label class="flex items-center"><input type="checkbox" class="mr-2 brand-filter" value="samsung" aria-label="Filtrar por Samsung">Samsung</label>
+            <label class="flex items-center"><input type="checkbox" class="mr-2 brand-filter" value="evl" aria-label="Filtrar por EVL">EVL</label>
+            <label class="flex items-center"><input type="checkbox" class="mr-2 brand-filter" value="jbl" aria-label="Filtrar por JBL">JBL</label>
+            <label class="flex items-center"><input type="checkbox" class="mr-2 brand-filter" value="sony" aria-label="Filtrar por Sony">Sony</label>
+            <label class="flex items-center"><input type="checkbox" class="mr-2 brand-filter" value="apple" aria-label="Filtrar por Apple">Apple</label>
+            <label class="flex items-center"><input type="checkbox" class="mr-2 brand-filter" value="bose" aria-label="Filtrar por Bose">Bose</label>
+            <label class="flex items-center"><input type="checkbox" class="mr-2 brand-filter" value="sennheiser" aria-label="Filtrar por Sennheiser">Sennheiser</label>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <h3 class="font-medium mb-2">Características</h3>
+          <div class="space-y-2" role="group" aria-label="Filtros por características">
+            <label class="flex items-center">
+              <input type="checkbox" class="mr-2 feature-filter" value="noise-cancelling" aria-label="Filtrar por cancelación de ruido">
+              <span class="text-sm">Cancelación de Ruido</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="mr-2 feature-filter" value="waterproof" aria-label="Filtrar por resistencia al agua">
+              <span class="text-sm">Resistente al Agua</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="mr-2 feature-filter" value="bluetooth" aria-label="Filtrar por Bluetooth 5.0+">
+              <span class="text-sm">Bluetooth 5.0+</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="mr-2 feature-filter" value="wireless-charging" aria-label="Filtrar por carga inalámbrica">
+              <span class="text-sm">Carga Inalámbrica</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="mr-2 feature-filter" value="touch-controls" aria-label="Filtrar por controles táctiles">
+              <span class="text-sm">Controles Táctiles</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <h3 class="font-medium mb-2">Rango de Precio</h3>
+          <div class="space-y-2" role="radiogroup" aria-label="Filtros por rango de precio">
+            <label class="flex items-center">
+              <input type="radio" name="priceRange" class="mr-2 price-range-filter" value="0-500" aria-label="Filtrar por precio hasta $500">
+              <span class="text-sm">Hasta $500</span>
+            </label>
+            <label class="flex items-center">
+              <input type="radio" name="priceRange" class="mr-2 price-range-filter" value="500-1000" aria-label="Filtrar por precio $500 - $1,000">
+              <span class="text-sm">$500 - $1,000</span>
+            </label>
+            <label class="flex items-center">
+              <input type="radio" name="priceRange" class="mr-2 price-range-filter" value="1000-2000" aria-label="Filtrar por precio $1,000 - $2,000">
+              <span class="text-sm">$1,000 - $2,000</span>
+            </label>
+            <label class="flex items-center">
+              <input type="radio" name="priceRange" class="mr-2 price-range-filter" value="2000-5000" aria-label="Filtrar por precio $2,000 - $5,000">
+              <span class="text-sm">$2,000 - $5,000</span>
+            </label>
+            <label class="flex items-center">
+              <input type="radio" name="priceRange" class="mr-2 price-range-filter" value="5000-999999" aria-label="Filtrar por precio más de $5,000">
+              <span class="text-sm">Más de $5,000</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <h3 class="font-medium mb-2">Ofertas</h3>
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-2" id="ofertasFilter" aria-label="Filtrar solo productos en oferta">
+            <span class="text-sm">Solo productos en oferta</span>
+          </label>
+        </div>
+
+        <div class="mb-6">
+          <h3 class="font-medium mb-2">Color</h3>
+          <div class="grid grid-cols-4 gap-2" role="group" aria-label="Filtros por color">
+            <button class="w-8 h-8 rounded-full bg-black border-2 border-gray-300 hover:border-blue-500 transition-colors" data-color="Negro" aria-label="Filtrar por color negro"></button>
+            <button class="w-8 h-8 rounded-full bg-white border-2 border-gray-300 hover:border-blue-500 transition-colors" data-color="Blanco" aria-label="Filtrar por color blanco"></button>
+            <button class="w-8 h-8 rounded-full bg-blue-500 border-2 border-gray-300 hover:border-blue-500 transition-colors" data-color="Azul" aria-label="Filtrar por color azul"></button>
+            <button class="w-8 h-8 rounded-full bg-green-500 border-2 border-gray-300 hover:border-blue-500 transition-colors" data-color="Verde" aria-label="Filtrar por color verde"></button>
+            <button class="w-8 h-8 rounded-full bg-purple-500 border-2 border-gray-300 hover:border-blue-500 transition-colors" data-color="Morado" aria-label="Filtrar por color morado"></button>
+            <button class="w-8 h-8 rounded-full bg-red-500 border-2 border-gray-300 hover:border-blue-500 transition-colors" data-color="Rojo" aria-label="Filtrar por color rojo"></button>
+            <button class="w-8 h-8 rounded-full bg-yellow-400 border-2 border-gray-300 hover:border-blue-500 transition-colors" data-color="Dorado" aria-label="Filtrar por color dorado"></button>
+            <button class="w-8 h-8 rounded-full bg-gray-400 border-2 border-gray-300 hover:border-blue-500 transition-colors" data-color="Gris" aria-label="Filtrar por color gris"></button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Productos -->
+      <main class="flex-1">
+        <!-- Toolbar -->
+        <div class="bg-white rounded-lg shadow p-4 mb-6">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div class="flex items-center space-x-4">
+              <span class="text-sm text-gray-600">Mostrando <span id="productCount">8</span> productos</span>
+              <div class="flex items-center space-x-2">
+                <button class="p-2 text-gray-600 hover:text-gray-800 active" id="gridView">
+                  <i class="fas fa-th"></i>
+                </button>
+                <button class="p-2 text-gray-400 hover:text-gray-600" id="listView">
+                  <i class="fas fa-list"></i>
+                </button>
+              </div>
+            </div>
+            <div class="flex items-center space-x-4">
+              <div class="flex items-center space-x-2">
+                <button id="selectAllBtn" class="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition">
+                  <i class="fas fa-check-square mr-1"></i>Seleccionar Todo
+                </button>
+                <button id="deselectAllBtn" class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition hidden">
+                  <i class="fas fa-square mr-1"></i>Deseleccionar Todo
+                </button>
+                <span id="selectedCount" class="text-sm text-blue-600 font-medium hidden">
+                  <i class="fas fa-check-circle mr-1"></i><span id="selectedNumber">0</span> seleccionados
+                </span>
+      </div>
+      <div class="flex items-center space-x-2">
+        <label class="text-sm text-gray-600">Ordenar por:</label>
+                <select class="border rounded p-2 text-sm" id="sortSelect">
+                  <option value="relevance">Relevancia</option>
+                  <option value="price-low">Precio: Menor a Mayor</option>
+                  <option value="price-high">Precio: Mayor a Menor</option>
+                  <option value="name">Nombre A-Z</option>
+        </select>
+              </div>
+      </div>
+    </div>
+  </div>
+
+        <!-- Grid de productos -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="productsGrid">
+          <!-- Producto 1 -->
+          <div class="product-card bg-white rounded-lg shadow p-4 relative" data-price="2799" data-brand="huawei" data-type="true-wireless" data-name="Audífonos True Wireless Huawei" data-color="Negro" data-features="noise-cancelling,bluetooth,touch-controls">
+            <input type="checkbox" class="select-checkbox" onchange="toggleProductSelection(this)">
+            <div class="price-badge">NUEVO</div>
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+              <i class="far fa-heart"></i>
+            </button>
+            <img src="Imagenes/atw.png" alt="Audífonos True Wireless Huawei" class="w-full h-48 object-contain rounded mb-4 cursor-pointer hover:opacity-90 transition-opacity" onclick="openProductDetails(1, 'Audífonos True Wireless Huawei con Control Táctil FreeClip', 2799, 'Imagenes/atw.png')">
+            <h4 class="text-sm font-semibold mb-2 line-clamp-2">Audífonos True Wireless Huawei con Control Táctil FreeClip</h4>
+            <p class="text-xs text-gray-600 mb-2 line-clamp-2">Desde $157 quincenales</p>
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-lg font-bold text-gray-800">$2,799</p>
+              </div>
+              <div class="flex items-center text-yellow-400 text-xs">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <span class="text-gray-500 ml-1">(128)</span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm font-medium" onclick="addToCart(this)">
+                <i class="fas fa-shopping-cart mr-1"></i>Agregar
+              </button>
+              <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <i class="fas fa-heart text-gray-400"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Producto 2 -->
+          <div class="product-card bg-white rounded-lg shadow p-4 relative" data-price="599" data-brand="huawei" data-type="true-wireless" data-name="Audífonos True Wireless Huawei SE 2" data-color="Azul" data-features="noise-cancelling,bluetooth">
+            <input type="checkbox" class="select-checkbox" onchange="toggleProductSelection(this)">
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+              <i class="far fa-heart"></i>
+            </button>
+            <img src="Imagenes/azul.png" alt="Audífonos True Wireless Huawei SE 2" class="w-full h-48 object-contain rounded mb-4 cursor-pointer hover:opacity-90 transition-opacity" onclick="openProductDetails(2, 'Audífonos True Wireless Huawei con Cancelación de Ruido Freebuds SE 2', 599, 'Imagenes/azul.png')">
+            <h4 class="text-sm font-semibold mb-2 line-clamp-2">Audífonos True Wireless Huawei con Cancelación de Ruido Freebuds SE 2</h4>
+            <p class="text-xs text-gray-600 mb-2 line-clamp-2">Desde $34 quincenales</p>
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-gray-500 text-xs"></p>
+                <p class="text-lg font-bold text-gray-800">$599</p>
+        </div>
+              <div class="flex items-center text-yellow-400 text-xs">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+                <span class="text-gray-500 ml-1">(95)</span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm font-medium" onclick="addToCart(this)">
+                <i class="fas fa-shopping-cart mr-1"></i>Agregar
+              </button>
+              <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <i class="fas fa-heart text-gray-400"></i>
+              </button>
+            </div>
+      </div>
+
+          <!-- Producto 3 -->
+          <div class="product-card bg-white rounded-lg shadow p-4 relative" data-price="3999" data-brand="samsung" data-type="true-wireless" data-name="Audífonos True Wireless Samsung Galaxy Buds 3 Pro" data-color="Blanco" data-features="noise-cancelling,bluetooth,wireless-charging,touch-controls" data-oferta="true">
+            <input type="checkbox" class="select-checkbox" onchange="toggleProductSelection(this)">
+            <div class="price-badge">-13%</div>
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+              <i class="far fa-heart"></i>
+            </button>
+            <img src="Imagenes/asuss.png" alt="Audífonos True Wireless Samsung Galaxy Buds 3 Pro" class="w-full h-48 object-contain rounded mb-4 cursor-pointer hover:opacity-90 transition-opacity" onclick="openProductDetails(3, 'Audífonos True Wireless Samsung con IA Galaxy Buds 3 Pro', 3999, 'Imagenes/asuss.png')">
+            <h4 class="text-sm font-semibold mb-2 line-clamp-2">Audífonos True Wireless Samsung con IA Galaxy Buds 3 Pro</h4>
+            <p class="text-xs text-gray-600 mb-2 line-clamp-2">Desde $224 quincenales</p>
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-lg font-bold text-gray-800">$3,999</p>
+                <p class="text-sm text-gray-400 line-through">$4,599</p>
+              </div>
+              <div class="flex items-center text-yellow-400 text-xs">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <span class="text-gray-500 ml-1">(203)</span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm font-medium" onclick="addToCart(this)">
+                <i class="fas fa-shopping-cart mr-1"></i>Agregar
+              </button>
+              <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <i class="fas fa-heart text-gray-400"></i>
+              </button>
+        </div>
+      </div>
+
+          <!-- Producto 4 -->
+          <div class="product-card bg-white rounded-lg shadow p-4 relative" data-price="459" data-brand="evl" data-type="true-wireless" data-name="Audífonos True Wireless EVL" data-color="Negro" data-features="waterproof,bluetooth">
+            <input type="checkbox" class="select-checkbox" onchange="toggleProductSelection(this)">
+            <div class="external-link-indicator" style="position: absolute; top: 10px; right: 80px; background: rgba(59, 130, 246, 0.9); color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 500; z-index: 15;">
+              <i class="fas fa-external-link-alt"></i>
+            </div>
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+              <i class="far fa-heart"></i>
+            </button>
+            <img src="Imagenes/auriculares.png" alt="Audífonos True Wireless EVL" class="w-full h-48 object-contain rounded mb-4 cursor-pointer hover:opacity-90 transition-opacity" onclick="openProductDetails(4, 'Audífonos True Wireless EVL Resistencia IPX4', 459, 'Imagenes/auriculares.png')">
+            <h4 class="text-sm font-semibold mb-2 line-clamp-2">Audífonos True Wireless EVL Resistencia IPX4</h4>
+            <p class="text-xs text-gray-600 mb-2 line-clamp-2">Desde $27 quincenales</p>
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-lg font-bold text-gray-800">$459</p>
+              </div>
+              <div class="flex items-center text-yellow-400 text-xs">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <span class="text-gray-500 ml-1">(156)</span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm font-medium" onclick="addToCart(this)">
+                <i class="fas fa-shopping-cart mr-1"></i>Agregar
+              </button>
+              <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <i class="fas fa-heart text-gray-400"></i>
+              </button>
+        </div>
+      </div>
+
+          <!-- Producto 5 -->
+          <div class="product-card bg-white rounded-lg shadow p-4 relative" data-price="1399" data-brand="huawei" data-type="true-wireless" data-name="Audífonos True Wireless Huawei FreeBuds 6i" data-color="Verde" data-features="noise-cancelling,bluetooth,touch-controls">
+            <input type="checkbox" class="select-checkbox" onchange="toggleProductSelection(this)">
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+              <i class="far fa-heart"></i>
+            </button>
+            <img src="Imagenes/mora.png" alt="Audífonos True Wireless Huawei FreeBuds 6i" class="w-full h-48 object-contain rounded mb-4 cursor-pointer hover:opacity-90 transition-opacity" onclick="openProductDetails(5, 'Audífonos True Wireless Huawei con Cancelación de Ruido FreeBuds 6i', 1399, 'Imagenes/mora.png')">
+            <h4 class="text-sm font-semibold mb-2 line-clamp-2">Audífonos True Wireless Huawei con Cancelación de Ruido FreeBuds 6i</h4>
+            <p class="text-xs text-gray-600 mb-2 line-clamp-2">Desde $79 quincenales</p>
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-lg font-bold text-gray-800">$1,399</p>
+              </div>
+              <div class="flex items-center text-yellow-400 text-xs">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+                <span class="text-gray-500 ml-1">(89)</span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm font-medium" onclick="addToCart(this)">
+                <i class="fas fa-shopping-cart mr-1"></i>Agregar
+              </button>
+              <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <i class="fas fa-heart text-gray-400"></i>
+              </button>
+            </div>
+          </div>
+
+                    <!-- Producto 6 -->
+          <div class="product-card bg-white rounded-lg shadow p-4 relative" data-price="3399" data-brand="jbl" data-type="true-wireless" data-name="Audífonos True Wireless JBL Tour Pro 2" data-color="Negro" data-features="noise-cancelling,bluetooth,wireless-charging,touch-controls" data-oferta="true">
+            <input type="checkbox" class="select-checkbox" onchange="toggleProductSelection(this)">
+            <div class="price-badge">-10%</div>
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+              <i class="far fa-heart"></i>
+            </button>
+            <img src="Imagenes/twjb.png" alt="Audífonos True Wireless JBL Tour Pro 2" class="w-full h-48 object-contain rounded mb-4 cursor-pointer hover:opacity-90 transition-opacity" onclick="openProductDetails(6, 'Audífonos True Wireless JBL con Adaptive Noise Cancelling Tour Pro 2', 3399, 'Imagenes/twjb.png')">
+            <h4 class="text-sm font-semibold mb-2 line-clamp-2">Audífonos True Wireless JBL con Adaptive Noise Cancelling Tour Pro 2</h4>
+            <p class="text-xs text-gray-600 mb-2 line-clamp-2">Desde $191 quincenales</p>
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-lg font-bold text-gray-800">$3,399</p>
+                <p class="text-sm text-gray-400 line-through">$3,799</p>
+              </div>
+              <div class="flex items-center text-yellow-400 text-xs">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+                <span class="text-gray-500 ml-1">(142)</span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm font-medium" onclick="addToCart(this)">
+                <i class="fas fa-shopping-cart mr-1"></i>Agregar
+              </button>
+              <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <i class="fas fa-heart text-gray-400"></i>
+              </button>
+        </div>
+      </div>
+
+          <!-- Producto 7 -->
+          <div class="product-card bg-white rounded-lg shadow p-4 relative" data-price="2499" data-brand="huawei" data-type="true-wireless" data-name="Audífonos True Wireless Huawei Freebuds Pro 3" data-color="Verde" data-features="noise-cancelling,bluetooth,wireless-charging,touch-controls">
+            <input type="checkbox" class="select-checkbox" onchange="toggleProductSelection(this)">
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+              <i class="far fa-heart"></i>
+            </button>
+            <img src="Imagenes/ver.png" alt="Audífonos True Wireless Huawei Freebuds Pro 3" class="w-full h-48 object-contain rounded mb-4 cursor-pointer hover:opacity-90 transition-opacity" onclick="openProductDetails(7, 'Audífonos True Wireless Huawei Cancelación de Ruido Inteligente Freebuds Pro 3 Verde', 2499, 'Imagenes/ver.png')">
+            <h4 class="text-sm font-semibold mb-2 line-clamp-2">Audífonos True Wireless Huawei Cancelación de Ruido Inteligente Freebuds Pro 3 Verde</h4>
+            <p class="text-xs text-gray-600 mb-2 line-clamp-2">Desde $141 quincenales</p>
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-lg font-bold text-gray-800">$2,499</p>
+      </div>
+              <div class="flex items-center text-yellow-400 text-xs">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <span class="text-gray-500 ml-1">(167)</span>
+      </div>
+      </div>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm font-medium" onclick="addToCart(this)">
+                <i class="fas fa-shopping-cart mr-1"></i>Agregar
+              </button>
+              <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <i class="fas fa-heart text-gray-400"></i>
+              </button>
+      </div>
+      </div>
+
+          <!-- Producto 8 -->
+          <div class="product-card bg-white rounded-lg shadow p-4 relative" data-price="1189" data-brand="jbl" data-type="true-wireless" data-name="Audífonos JBL Endurance Race TWS" data-color="Negro" data-features="waterproof,bluetooth,touch-controls">
+            <input type="checkbox" class="select-checkbox" onchange="toggleProductSelection(this)">
+            <div class="price-badge">NUEVO</div>
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+              <i class="far fa-heart"></i>
+            </button>
+            <img src="Imagenes/ass.png" alt="Audífonos JBL Endurance Race TWS" class="w-full h-48 object-contain rounded mb-4 cursor-pointer hover:opacity-90 transition-opacity" onclick="openProductDetails(8, 'Audífonos JBL Endurance Race Tws Negro', 1189, 'Imagenes/ass.png')">
+            <h4 class="text-sm font-semibold mb-2 line-clamp-2">Audífonos JBL Endurance Race Tws Negro</h4>
+            <p class="text-xs text-gray-600 mb-2 line-clamp-2">Desde $115 quincenales</p>
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                
+                <p class="text-lg font-bold text-gray-800">$1,189</p>
+              </div>
+              <div class="flex items-center text-yellow-400 text-xs">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <span class="text-gray-500 ml-1">(78)</span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm font-medium" onclick="addToCart(this)">
+                <i class="fas fa-shopping-cart mr-1"></i>Agregar
+              </button>
+              <button class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <i class="fas fa-heart text-gray-400"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+
+    </main>
+    </div>
+  </div>
+
+  <!-- Modal del Carrito -->
+  <div id="cartModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+    <div class="flex items-center justify-center min-h-screen p-4">
+      <div class="bg-white rounded-lg shadow-xl max-w-md w-full max-h-96 overflow-hidden">
+        <div class="flex items-center justify-between p-4 border-b">
+          <h3 class="text-lg font-semibold">Carrito de Compras</h3>
+          <button onclick="hideCart()" class="text-gray-500 hover:text-gray-700">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div id="cartItems" class="p-4 overflow-y-auto max-h-64">
+          <!-- Los items del carrito se cargarán aquí -->
+        </div>
+        <div class="p-4 border-t bg-gray-50">
+          <div class="flex justify-between items-center mb-3">
+            <span class="font-semibold">Total:</span>
+            <span id="cartTotal" class="font-bold text-lg">$0</span>
+          </div>
+          <button onclick="checkout()" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
+            <i class="fas fa-shopping-cart mr-2"></i>Proceder al Pago
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Favoritos -->
+  <div id="wishlistModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+    <div class="flex items-center justify-center min-h-screen p-4">
+      <div class="bg-white rounded-lg shadow-xl max-w-md w-full max-h-96 overflow-hidden">
+        <div class="flex items-center justify-between p-4 border-b">
+          <h3 class="text-lg font-semibold">Mis Favoritos</h3>
+          <button onclick="hideWishlist()" class="text-gray-500 hover:text-gray-700">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div id="wishlistItems" class="p-4 overflow-y-auto max-h-64">
+          <!-- Los items de favoritos se cargarán aquí -->
+        </div>
+        <div class="p-4 border-t bg-gray-50">
+          <button onclick="clearWishlist()" class="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700 transition">
+            <i class="fas fa-trash mr-2"></i>Limpiar Favoritos
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white mt-16">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Digital Swap</h3>
+          <p class="text-gray-300 text-sm">Tu tienda de confianza para consolas y videojuegos.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Productos</h4>
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li><a href="#" class="hover:text-white">Consolas</a></li>
+            <li><a href="#" class="hover:text-white">Videojuegos</a></li>
+            <li><a href="#" class="hover:text-white">Accesorios</a></li>
+            <li><a href="#" class="hover:text-white">Ofertas</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Soporte</h4>
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li><a href="#" class="hover:text-white">Contacto</a></li>
+            <li><a href="#" class="hover:text-white">Garantía</a></li>
+            <li><a href="#" class="hover:text-white">Devoluciones</a></li>
+            <li><a href="#" class="hover:text-white">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Síguenos</h4>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-300">
+        <p>&copy; 2024 Digital Swap. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Configuración global
+    const CONFIG = {
+      animationDuration: 300,
+      notificationDuration: 3000,
+      maxPrice: 15000,
+      minSearchLength: 2,
+      maxSearchLength: 100
+    };
+
+    // Clase para manejar el catálogo
+    class ProductCatalog {
+      constructor() {
+        this.initializeElements();
+        this.bindEvents();
+        this.applyFilters();
+        this.selectedProducts = new Set();
+      }
+
+      initializeElements() {
+        this.filterBtns = document.querySelectorAll('.filter-btn');
+        this.brandFilters = document.querySelectorAll('.brand-filter');
+        this.ofertasFilter = document.getElementById('ofertasFilter');
+        this.minPrice = document.getElementById('minPrice');
+        this.maxPrice = document.getElementById('maxPrice');
+        this.clearFilters = document.getElementById('clearFilters');
+        this.sortSelect = document.getElementById('sortSelect');
+        this.productsGrid = document.getElementById('productsGrid');
+        this.productCount = document.getElementById('productCount');
+        this.gridView = document.getElementById('gridView');
+        this.listView = document.getElementById('listView');
+        this.products = document.querySelectorAll('.product-card');
+        this.selectAllBtn = document.getElementById('selectAllBtn');
+        this.deselectAllBtn = document.getElementById('deselectAllBtn');
+        this.selectedCount = document.getElementById('selectedCount');
+        this.selectedNumber = document.getElementById('selectedNumber');
+      }
+
+      bindEvents() {
+        // Filtros de tipo
+        this.filterBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            btn.classList.toggle('filter-active');
+            this.applyFilters();
+          });
+        });
+
+        // Filtros de marca
+        this.brandFilters.forEach(filter => {
+          filter.addEventListener('change', () => this.applyFilters());
+        });
+
+        // Filtro de ofertas
+        if (this.ofertasFilter) {
+          this.ofertasFilter.addEventListener('change', () => this.applyFilters());
+        }
+
+        // Filtros de precio con debounce y validación
+        if (this.minPrice) {
+          this.minPrice.addEventListener('input', this.debounce(() => {
+            this.validatePriceInput(this.minPrice);
+            this.applyFilters();
+          }, 300));
+        }
+        if (this.maxPrice) {
+          this.maxPrice.addEventListener('input', this.debounce(() => {
+            this.validatePriceInput(this.maxPrice);
+            this.applyFilters();
+          }, 300));
+        }
+
+        // Limpiar filtros
+        if (this.clearFilters) {
+          this.clearFilters.addEventListener('click', () => this.clearAllFilters());
+        }
+
+        // Ordenamiento
+        if (this.sortSelect) {
+          this.sortSelect.addEventListener('change', () => this.applyFilters());
+        }
+
+        // Vista de productos
+        if (this.gridView) {
+          this.gridView.addEventListener('click', () => this.setGridView());
+        }
+        if (this.listView) {
+          this.listView.addEventListener('click', () => this.setListView());
+        }
+
+        // Animaciones de hover
+        this.products.forEach(card => {
+          card.addEventListener('mouseenter', () => this.handleCardHover(card, true));
+          card.addEventListener('mouseleave', () => this.handleCardHover(card, false));
+        });
+
+        // Agregar al carrito
+        document.querySelectorAll('.product-card button').forEach(btn => {
+          if (btn.textContent.includes('Agregar')) {
+            btn.addEventListener('click', (e) => {
+              e.preventDefault();
+              this.addToCart(e);
+            });
+          }
+        });
+
+        // Botones de selección
+        if (this.selectAllBtn) {
+          this.selectAllBtn.addEventListener('click', () => this.selectAllProducts());
+        }
+        if (this.deselectAllBtn) {
+          this.deselectAllBtn.addEventListener('click', () => this.deselectAllProducts());
+        }
+      }
+
+      applyFilters() {
+        let visibleCount = 0;
+        const visibleProducts = [];
+
+        this.products.forEach(product => {
+          let show = true;
+
+          // Filtro por tipo
+          const activeTypeFilters = document.querySelectorAll('.filter-btn.filter-active');
+          if (activeTypeFilters.length > 0) {
+            const productType = product.dataset.type;
+            const hasMatchingType = Array.from(activeTypeFilters).some(btn => 
+              btn.dataset.filter === productType
+            );
+            if (!hasMatchingType) show = false;
+          }
+
+          // Filtro por marca
+          const activeBrandFilters = document.querySelectorAll('.brand-filter:checked');
+          if (activeBrandFilters.length > 0) {
+            const productBrand = product.dataset.brand;
+            const hasMatchingBrand = Array.from(activeBrandFilters).some(filter => 
+              filter.value === productBrand
+            );
+            if (!hasMatchingBrand) show = false;
+          }
+
+          // Filtro por ofertas
+          if (this.ofertasFilter && this.ofertasFilter.checked && !product.dataset.oferta) {
+            show = false;
+          }
+
+          // Filtro por precio
+          const price = parseInt(product.dataset.price);
+          if (this.minPrice && this.minPrice.value && price < parseInt(this.minPrice.value)) show = false;
+          if (this.maxPrice && this.maxPrice.value && price > parseInt(this.maxPrice.value)) show = false;
+
+          product.style.display = show ? 'block' : 'none';
+          if (show) {
+            visibleCount++;
+            visibleProducts.push(product);
+          }
+        });
+
+        // Ordenamiento
+        if (this.sortSelect && this.sortSelect.value !== 'relevance') {
+          this.sortProducts(visibleProducts, this.sortSelect.value);
+        }
+
+        if (this.productCount) {
+          this.productCount.textContent = visibleCount;
+        }
+
+        // Actualizar UI de selección después de filtrar
+        this.updateSelectionUI();
+
+        // Mostrar mensaje si no hay productos
+        this.showNoProductsMessage(visibleCount);
+      }
+
+
+
+      sortProducts(products, sortType) {
+        const productsArray = Array.from(products);
+        
+        productsArray.sort((a, b) => {
+          switch(sortType) {
+            case 'price-low':
+              return parseInt(a.dataset.price) - parseInt(b.dataset.price);
+            case 'price-high':
+              return parseInt(b.dataset.price) - parseInt(a.dataset.price);
+            case 'name':
+              return a.dataset.name.localeCompare(b.dataset.name);
+          default:
+            return 0;
+        }
+      });
+      
+        // Reordenar en el DOM con animación
+        productsArray.forEach((product, index) => {
+          setTimeout(() => {
+            if (this.productsGrid) {
+              this.productsGrid.appendChild(product);
+            }
+          }, index * 50);
+        });
+      }
+
+      clearAllFilters() {
+        this.filterBtns.forEach(btn => btn.classList.remove('filter-active'));
+        this.brandFilters.forEach(filter => filter.checked = false);
+        if (this.ofertasFilter) this.ofertasFilter.checked = false;
+        if (this.minPrice) this.minPrice.value = '';
+        if (this.maxPrice) this.maxPrice.value = '';
+        if (this.sortSelect) this.sortSelect.value = 'relevance';
+        
+        // Limpiar también las selecciones de productos
+        this.deselectAllProducts();
+        
+        this.applyFilters();
+        showNotification('Filtros y selecciones limpiados', 'info');
+      }
+
+      setGridView() {
+        if (this.productsGrid) {
+          this.productsGrid.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6';
+        }
+        this.gridView.classList.add('text-gray-600');
+        this.listView.classList.remove('text-gray-600');
+      }
+
+      setListView() {
+        if (this.productsGrid) {
+          this.productsGrid.className = 'grid grid-cols-1 gap-6';
+        }
+        this.listView.classList.add('text-gray-600');
+        this.gridView.classList.remove('text-gray-600');
+      }
+
+      handleCardHover(card, isEntering) {
+        if (isEntering) {
+          card.style.transform = 'translateY(-5px)';
+          card.style.boxShadow = '0 10px 25px rgba(0,0,0,0.15)';
+        } else {
+          card.style.transform = 'translateY(0)';
+          card.style.boxShadow = '';
+        }
+      }
+
+      addToCart(event) {
+        try {
+          const productCard = event.target.closest('.product-card');
+          if (!productCard) {
+            showNotification('Error: No se pudo identificar el producto', 'error');
+            return;
+          }
+          
+          const productNameElement = productCard.querySelector('h4');
+          if (!productNameElement) {
+            showNotification('Error: No se pudo obtener el nombre del producto', 'error');
+            return;
+          }
+          
+          const productName = productNameElement.textContent;
+          showNotification(`${productName} agregado al carrito`, 'success');
+          
+          // Simular agregar al carrito
+          const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+          const productData = {
+            id: Date.now(),
+            name: productName,
+            price: productCard.dataset.price,
+            image: productCard.querySelector('img').src,
+            addedAt: new Date().toISOString()
+          };
+          cart.push(productData);
+          localStorage.setItem('cart', JSON.stringify(cart));
+          
+        } catch (error) {
+          console.error('Error al agregar al carrito:', error);
+          showNotification('Error al agregar el producto al carrito', 'error');
+        }
+      }
+
+      showNoProductsMessage(count) {
+        let noProductsMsg = document.getElementById('noProductsMessage');
+        
+        if (count === 0) {
+          if (!noProductsMsg) {
+            noProductsMsg = document.createElement('div');
+            noProductsMsg.id = 'noProductsMessage';
+            noProductsMsg.className = 'text-center py-12 text-gray-500';
+            noProductsMsg.innerHTML = `
+              <i class="fas fa-search text-4xl mb-4 text-gray-300"></i>
+              <h3 class="text-lg font-medium mb-2">No se encontraron productos</h3>
+              <p class="text-sm">Intenta ajustar los filtros de búsqueda</p>
+            `;
+            this.productsGrid.appendChild(noProductsMsg);
+          }
+        } else if (noProductsMsg) {
+          noProductsMsg.remove();
+        }
+      }
+
+      validatePriceInput(input) {
+        try {
+          if (!input || !input.value) return;
+          
+          const value = parseInt(input.value);
+          if (isNaN(value)) {
+            input.value = '';
+            showNotification('Por favor, ingresa un número válido', 'warning');
+          } else if (value < 0) {
+            input.value = 0;
+            showNotification('El precio no puede ser negativo', 'warning');
+          } else if (value > CONFIG.maxPrice) {
+            input.value = CONFIG.maxPrice;
+            showNotification(`El precio máximo es $${CONFIG.maxPrice.toLocaleString()}`, 'warning');
+          }
+        } catch (error) {
+          console.error('Error en validación de precio:', error);
+          showNotification('Error en la validación del precio', 'error');
+        }
+      }
+
+      debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+        };
+      }
+
+      selectAllProducts() {
+        let selectedCount = 0;
+        this.products.forEach(product => {
+          const checkbox = product.querySelector('.select-checkbox');
+          if (checkbox && product.style.display !== 'none') {
+            checkbox.checked = true;
+            product.classList.add('selected');
+            this.selectedProducts.add(product.dataset.name);
+            selectedCount++;
+          }
+        });
+        this.updateSelectionUI();
+        showNotification(`${selectedCount} productos seleccionados`, 'success');
+      }
+
+      deselectAllProducts() {
+        this.products.forEach(product => {
+          const checkbox = product.querySelector('.select-checkbox');
+          if (checkbox) {
+            checkbox.checked = false;
+            product.classList.remove('selected');
+            this.selectedProducts.delete(product.dataset.name);
+          }
+        });
+        this.updateSelectionUI();
+        showNotification('Todos los productos deseleccionados', 'info');
+      }
+
+      updateSelectionUI() {
+        const selectedCount = this.selectedProducts.size;
+        
+        if (selectedCount > 0) {
+          if (this.selectAllBtn) this.selectAllBtn.classList.add('hidden');
+          if (this.deselectAllBtn) this.deselectAllBtn.classList.remove('hidden');
+          if (this.selectedCount) this.selectedCount.classList.remove('hidden');
+          if (this.selectedNumber) this.selectedNumber.textContent = selectedCount;
+        } else {
+          if (this.selectAllBtn) this.selectAllBtn.classList.remove('hidden');
+          if (this.deselectAllBtn) this.deselectAllBtn.classList.add('hidden');
+          if (this.selectedCount) this.selectedCount.classList.add('hidden');
+        }
+      }
+    }
+
+    // Funcionalidad para filtros de audífonos
+    let selectedColors = [];
+    let selectedFeatures = [];
+    let selectedPriceRange = '';
+
+    // Filtro de colores
+    function toggleColorFilter(button) {
+      const color = button.getAttribute('data-color');
+      const isActive = button.classList.contains('border-blue-500');
+      
+      if (isActive) {
+        button.classList.remove('border-blue-500');
+        button.classList.add('border-gray-300');
+        selectedColors = selectedColors.filter(c => c !== color);
+      } else {
+        button.classList.remove('border-gray-300');
+        button.classList.add('border-blue-500');
+        selectedColors.push(color);
+      }
+      
+      applyAdvancedFilters();
+    }
+
+    // Filtro de características
+    function toggleFeatureFilter(checkbox) {
+      const feature = checkbox.value;
+      
+      if (checkbox.checked) {
+        selectedFeatures.push(feature);
+      } else {
+        selectedFeatures = selectedFeatures.filter(f => f !== feature);
+      }
+      
+      applyAdvancedFilters();
+    }
+
+    // Filtro de rango de precio
+    function togglePriceRangeFilter(radio) {
+      selectedPriceRange = radio.value;
+      applyAdvancedFilters();
+    }
+
+    // Aplicar filtros avanzados
+    function applyAdvancedFilters() {
+      const products = document.querySelectorAll('.product-card');
+      let visibleCount = 0;
+
+      products.forEach(product => {
+        let shouldShow = true;
+        
+        // Filtro por color
+        if (selectedColors.length > 0) {
+          const productColor = product.dataset.color || '';
+          if (!selectedColors.includes(productColor)) {
+            shouldShow = false;
+          }
+        }
+        
+        // Filtro por características
+        if (selectedFeatures.length > 0 && shouldShow) {
+          const productFeatures = product.dataset.features ? product.dataset.features.split(',') : [];
+          const hasFeature = selectedFeatures.some(feature => productFeatures.includes(feature));
+          if (!hasFeature) {
+            shouldShow = false;
+          }
+        }
+        
+        // Filtro por rango de precio
+        if (selectedPriceRange && shouldShow) {
+          const productPrice = parseInt(product.dataset.price) || 0;
+          const [min, max] = selectedPriceRange.split('-').map(Number);
+          
+          if (productPrice < min || productPrice > max) {
+            shouldShow = false;
+          }
+        }
+        
+        if (shouldShow) {
+          product.style.display = 'block';
+          visibleCount++;
+        } else {
+          product.style.display = 'none';
+        }
+      });
+      
+      // Actualizar contador de productos
+      const productCount = document.getElementById('productCount');
+      if (productCount) {
+        productCount.textContent = visibleCount;
+      }
+      
+      // Mostrar mensaje si no hay productos
+      if (visibleCount === 0) {
+        showNotification('No se encontraron productos con los filtros seleccionados', 'info');
+      }
+    }
+
+    // Limpiar filtros avanzados
+    function clearAdvancedFilters() {
+      // Limpiar colores
+      selectedColors = [];
+      document.querySelectorAll('[data-color]').forEach(btn => {
+        btn.classList.remove('border-blue-500');
+        btn.classList.add('border-gray-300');
+      });
+      
+      // Limpiar características
+      selectedFeatures = [];
+      document.querySelectorAll('.feature-filter').forEach(cb => {
+        cb.checked = false;
+      });
+      
+      // Limpiar rango de precio
+      selectedPriceRange = '';
+      document.querySelectorAll('.price-range-filter').forEach(radio => {
+        radio.checked = false;
+      });
+      
+      // Mostrar todos los productos
+      document.querySelectorAll('.product-card').forEach(product => {
+        product.style.display = 'block';
+      });
+      
+      // Actualizar contador
+      const productCount = document.getElementById('productCount');
+      if (productCount) {
+        productCount.textContent = document.querySelectorAll('.product-card').length;
+      }
+      
+      showNotification('Filtros avanzados limpiados', 'success');
+    }
+
+    // Funcionalidad de selección de productos
+    function toggleProductSelection(checkbox) {
+      try {
+        if (!checkbox) {
+          console.error('Checkbox no encontrado');
+          return;
+        }
+        
+        const productCard = checkbox.closest('.product-card');
+        if (!productCard) {
+          console.error('Producto no encontrado');
+          return;
+        }
+      
+        const productName = productCard.dataset.name;
+        if (!productName) {
+          console.error('Nombre del producto no encontrado');
+          return;
+        }
+        
+        if (checkbox.checked) {
+          productCard.classList.add('selected');
+          // Agregar al Set de productos seleccionados
+          if (window.productCatalog) {
+            window.productCatalog.selectedProducts.add(productName);
+            window.productCatalog.updateSelectionUI();
+          }
+          showNotification(`${productName} seleccionado`, 'success');
+        } else {
+          productCard.classList.remove('selected');
+          // Remover del Set de productos seleccionados
+          if (window.productCatalog) {
+            window.productCatalog.selectedProducts.delete(productName);
+            window.productCatalog.updateSelectionUI();
+          }
+          showNotification(`${productName} deseleccionado`, 'info');
+        }
+      } catch (error) {
+        console.error('Error en toggleProductSelection:', error);
+        showNotification('Error al seleccionar el producto', 'error');
+      }
+    }
+
+    // Funcionalidad de wishlist
+    function toggleWishlist(button) {
+      try {
+        if (!button) {
+          console.error('Botón de wishlist no encontrado');
+          return;
+        }
+        
+        const productCard = button.closest('.product-card');
+        if (!productCard) {
+          console.error('Producto no encontrado');
+          return;
+        }
+
+        const productName = productCard.dataset.name || 'Producto';
+        
+        button.classList.toggle('active');
+        const icon = button.querySelector('i');
+        if (icon) {
+          if (button.classList.contains('active')) {
+            icon.className = 'fas fa-heart';
+            showNotification(`${productName} agregado a favoritos`, 'success');
+            
+            // Guardar en localStorage
+            const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+            const productData = {
+              id: Date.now(),
+              name: productName,
+              price: productCard.dataset.price,
+              image: productCard.querySelector('img').src,
+              addedAt: new Date().toISOString()
+            };
+            wishlist.push(productData);
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+          } else {
+            icon.className = 'far fa-heart';
+            showNotification(`${productName} removido de favoritos`, 'info');
+            
+            // Remover de localStorage
+            const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+            const updatedWishlist = wishlist.filter(item => item.name !== productName);
+            localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+          }
+        }
+      } catch (error) {
+        console.error('Error en toggleWishlist:', error);
+        showNotification('Error al actualizar favoritos', 'error');
+      }
+    }
+
+    // Sistema de notificaciones mejorado
+    function showNotification(message, type = 'success') {
+      try {
+        // Limpiar notificaciones existentes
+        const existingNotifications = document.querySelectorAll('.notification');
+        existingNotifications.forEach(notification => {
+          notification.remove();
+        });
+
+        const colors = {
+          success: 'bg-green-500',
+          error: 'bg-red-500',
+          warning: 'bg-yellow-500',
+          info: 'bg-blue-500'
+        };
+
+        const icons = {
+          success: 'fas fa-check-circle',
+          error: 'fas fa-exclamation-circle',
+          warning: 'fas fa-exclamation-triangle',
+          info: 'fas fa-info-circle'
+        };
+
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 ${colors[type] || colors.info} text-white px-6 py-3 rounded shadow-lg z-50 notification flex items-center space-x-2`;
+        notification.setAttribute('role', 'alert');
+        notification.setAttribute('aria-live', 'polite');
+        notification.innerHTML = `
+          <i class="${icons[type] || icons.info}" aria-hidden="true"></i>
+          <span>${message}</span>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.style.transform = 'translateX(100%)';
+            notification.style.opacity = '0';
+            setTimeout(() => {
+              if (notification.parentNode) {
+                notification.remove();
+              }
+            }, 300);
+          }
+        }, CONFIG.notificationDuration);
+      } catch (error) {
+        console.error('Error al mostrar notificación:', error);
+      }
+    }
+
+    // Cargar estado de wishlist
+    function loadWishlistState() {
+      try {
+        const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+        const wishlistNames = wishlist.map(item => item.name);
+        
+        document.querySelectorAll('.product-card').forEach(card => {
+          const productName = card.dataset.name;
+          if (wishlistNames.includes(productName)) {
+            const wishlistBtn = card.querySelector('.wishlist-btn');
+            const icon = wishlistBtn.querySelector('i');
+            if (wishlistBtn && icon) {
+              wishlistBtn.classList.add('active');
+              icon.className = 'fas fa-heart';
+            }
+          }
+        });
+      } catch (error) {
+        console.error('Error al cargar estado de wishlist:', error);
+      }
+    }
+
+    // Funciones para el header y navegación
+    function showCart() {
+      const modal = document.getElementById('cartModal');
+      const cartItems = document.getElementById('cartItems');
+      const cartTotal = document.getElementById('cartTotal');
+      
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      
+      if (cart.length === 0) {
+        cartItems.innerHTML = '<p class="text-gray-500 text-center py-8">Tu carrito está vacío</p>';
+        cartTotal.textContent = '$0';
+      } else {
+        let total = 0;
+        cartItems.innerHTML = cart.map(item => {
+          total += parseInt(item.price);
+          return `
+            <div class="flex items-center space-x-3 mb-3 p-2 bg-gray-50 rounded">
+              <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-contain">
+              <div class="flex-1">
+                <h4 class="text-sm font-medium">${item.name}</h4>
+                <p class="text-xs text-gray-600">$${parseInt(item.price).toLocaleString()}</p>
+              </div>
+              <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          `;
+        }).join('');
+        cartTotal.textContent = `$${total.toLocaleString()}`;
+      }
+      
+      modal.classList.remove('hidden');
+      updateCartCount();
+    }
+
+    function hideCart() {
+      document.getElementById('cartModal').classList.add('hidden');
+    }
+
+    function showWishlist() {
+      const modal = document.getElementById('wishlistModal');
+      const wishlistItems = document.getElementById('wishlistItems');
+      
+      const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+      
+      if (wishlist.length === 0) {
+        wishlistItems.innerHTML = '<p class="text-gray-500 text-center py-8">No tienes favoritos</p>';
+      } else {
+        wishlistItems.innerHTML = wishlist.map(item => `
+          <div class="flex items-center space-x-3 mb-3 p-2 bg-gray-50 rounded">
+            <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-contain">
+            <div class="flex-1">
+              <h4 class="text-sm font-medium">${item.name}</h4>
+              <p class="text-xs text-gray-600">$${parseInt(item.price).toLocaleString()}</p>
+            </div>
+            <button onclick="removeFromWishlist('${item.name}')" class="text-red-500 hover:text-red-700">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        `).join('');
+      }
+      
+      modal.classList.remove('hidden');
+      updateWishlistCount();
+    }
+
+    function hideWishlist() {
+      document.getElementById('wishlistModal').classList.add('hidden');
+    }
+
+    function removeFromCart(itemId) {
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const updatedCart = cart.filter(item => item.id !== itemId);
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      showCart(); // Recargar el modal
+      updateCartCount();
+    }
+
+    function removeFromWishlist(productName) {
+      const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+      const updatedWishlist = wishlist.filter(item => item.name !== productName);
+      localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+      
+      // Actualizar el botón en la página
+      document.querySelectorAll('.product-card').forEach(card => {
+        if (card.dataset.name === productName) {
+          const wishlistBtn = card.querySelector('.wishlist-btn');
+          const icon = wishlistBtn.querySelector('i');
+          if (wishlistBtn && icon) {
+            wishlistBtn.classList.remove('active');
+            icon.className = 'far fa-heart';
+          }
+        }
+      });
+      
+      showWishlist(); // Recargar el modal
+      updateWishlistCount();
+    }
+
+    function clearWishlist() {
+      localStorage.removeItem('wishlist');
+      
+      // Actualizar todos los botones de wishlist
+      document.querySelectorAll('.wishlist-btn').forEach(btn => {
+        const icon = btn.querySelector('i');
+        if (btn && icon) {
+          btn.classList.remove('active');
+          icon.className = 'far fa-heart';
+        }
+      });
+      
+      showWishlist(); // Recargar el modal
+      updateWishlistCount();
+    }
+
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const cartCount = document.getElementById('cartCount');
+      
+      if (cart.length > 0) {
+        cartCount.textContent = cart.length;
+        cartCount.classList.remove('hidden');
+      } else {
+        cartCount.classList.add('hidden');
+      }
+    }
+
+    function updateWishlistCount() {
+      const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+      const wishlistCount = document.getElementById('wishlistCount');
+      
+      if (wishlist.length > 0) {
+        wishlistCount.textContent = wishlist.length;
+        wishlistCount.classList.remove('hidden');
+      } else {
+        wishlistCount.classList.add('hidden');
+      }
+    }
+
+    function checkout() {
+      showNotification('¡Gracias por tu compra! Redirigiendo al pago...', 'success');
+      setTimeout(() => {
+        hideCart();
+        // Aquí se redirigiría a la página de pago
+      }, 2000);
+    }
+
+    // Función para agregar al carrito
+    function addToCart(button) {
+      try {
+        const productCard = button.closest('.product-card');
+        if (!productCard) {
+          showNotification('Error: No se pudo identificar el producto', 'error');
+          return;
+        }
+        
+        const productNameElement = productCard.querySelector('h4');
+        if (!productNameElement) {
+          showNotification('Error: No se pudo obtener el nombre del producto', 'error');
+          return;
+        }
+        
+        const productName = productNameElement.textContent;
+        showNotification(`${productName} agregado al carrito`, 'success');
+        
+        // Agregar al carrito en localStorage
+        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const productData = {
+          id: Date.now(),
+          name: productName,
+          price: productCard.dataset.price,
+          image: productCard.querySelector('img').src,
+          addedAt: new Date().toISOString()
+        };
+        cart.push(productData);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        
+        // Actualizar contador del carrito
+        updateCartCount();
+        
+      } catch (error) {
+        console.error('Error al agregar al carrito:', error);
+        showNotification('Error al agregar el producto al carrito', 'error');
+      }
+    }
+
+    // Menú móvil
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', function() {
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+    });
+
+
+
+    // Función para abrir página de detalles de audífonos
+    function openProductDetails(productId, productName, productPrice, productImage) {
+        try {
+            // Redirect directly to the details page with the product ID
+            const detailUrl = `audifono-detalle.html?id=${productId}`;
+            // Redirect to the details page
+            window.location.href = detailUrl;
+        } catch (error) {
+            console.error('Error opening product details:', error);
+        }
+    }
+
+    // Inicializar cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+      try {
+        window.productCatalog = new ProductCatalog();
+        
+        // Inicializar estado de botones de vista
+        const gridView = document.getElementById('gridView');
+        const listView = document.getElementById('listView');
+        
+        if (gridView && listView) {
+          gridView.classList.add('text-gray-600');
+          listView.classList.remove('text-gray-600');
+        }
+        
+        // Event listeners para filtros avanzados
+        document.querySelectorAll('[data-color]').forEach(button => {
+          button.addEventListener('click', () => toggleColorFilter(button));
+        });
+        
+        document.querySelectorAll('.feature-filter').forEach(checkbox => {
+          checkbox.addEventListener('change', () => toggleFeatureFilter(checkbox));
+        });
+        
+        document.querySelectorAll('.price-range-filter').forEach(radio => {
+          radio.addEventListener('change', () => togglePriceRangeFilter(radio));
+        });
+        
+        // Actualizar botón de limpiar filtros
+        const clearFiltersBtn = document.getElementById('clearFilters');
+        if (clearFiltersBtn) {
+          clearFiltersBtn.addEventListener('click', clearAdvancedFilters);
+        }
+        
+        // Cargar estado de wishlist
+        loadWishlistState();
+        
+        // Actualizar contadores
+        updateCartCount();
+        updateWishlistCount();
+        
+        // Asegurar que todos los botones "Agregar" tengan la funcionalidad correcta
+        setTimeout(() => {
+          document.querySelectorAll('.product-card button').forEach(button => {
+            if (button.textContent.includes('Agregar') && !button.hasAttribute('onclick')) {
+              button.setAttribute('onclick', 'addToCart(this)');
+            }
+          });
+        }, 100);
+        
+        // Initialize page
+        initializeCarousel();
+        updateCartCount();
+        // Removed welcome message
+      } catch (error) {
+        console.error('Error en inicialización:', error);
+        showNotification('Error al cargar la página', 'error');
+      }
+    });
+
+
+  </script>
+</body>
+
+</html>

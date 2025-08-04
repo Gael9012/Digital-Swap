@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="Inicia sesión en Digital Swap - Tu tienda de confianza para consolas, videojuegos, teléfonos, audífonos y smartwatches.">
+  <meta name="keywords" content="login, iniciar sesión, digital swap, consolas, videojuegos, tecnología gaming">
+  <meta name="author" content="Digital Swap">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#3b82f6">
+  <meta property="og:title" content="Iniciar Sesión - Digital Swap">
+  <meta property="og:description" content="Inicia sesión en Digital Swap - Tu tienda de confianza para tecnología gaming.">
+  <meta property="og:type" content="website">
+  <title>Iniciar Sesión - Digital Swap</title>
+  <link rel="icon" type="image/x-icon" href="logo.png">
+  <link rel="apple-touch-icon" href="logo.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      background-image: url('https://img.freepik.com/vector-premium/fondo-vector-monocromo-blanco-abstracto-folleto-diseno-folleto-sitio-web-fondo-pantalla-blanco-geometrico-pagina-inicio-presentacion-certificado_249611-5879.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .login-container {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .input-group {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .input-group:focus-within {
+      transform: translateY(-2px);
+    }
+
+    .input-field {
+      transition: all 0.3s ease;
+    }
+
+    .input-field:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .password-toggle {
+      transition: all 0.2s ease;
+    }
+
+    .password-toggle:hover {
+      color: #3b82f6;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(240, 147, 251, 0.3);
+    }
+
+    .btn-tertiary {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      transition: all 0.3s ease;
+    }
+
+    .btn-tertiary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(79, 172, 254, 0.3);
+    }
+
+    .social-btn {
+      transition: all 0.3s ease;
+    }
+
+    .social-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .notification {
+      animation: slideInRight 0.3s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .loading {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .error-field {
+      border-color: #ef4444 !important;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+    }
+
+    .success-field {
+      border-color: #10b981 !important;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <!-- Contenedor principal del login -->
+  <div class="login-container max-w-md w-full space-y-8 bg-white rounded-2xl shadow-xl p-8">
+    <!-- Logo y título -->
+    <div class="text-center">
+      <img class="mx-auto h-12 w-auto" src="logo.png" alt="Digital Swap Logo" onerror="this.style.display='none'">
+      <h2 class="mt-6 text-3xl font-bold text-gray-900">
+        Iniciar Sesión
+      </h2>
+      <p class="mt-2 text-sm text-gray-600">
+        Accede a tu cuenta de Digital Swap
+      </p>
+    </div>
+
+    <form id="loginForm" class="space-y-6" novalidate>
+      <!-- Email -->
+      <div class="input-group">
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+          <i class="fas fa-envelope mr-2 text-blue-500" aria-hidden="true"></i>Correo Electrónico
+        </label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          placeholder="ejemplo@correo.com"
+          required
+          autocomplete="email"
+          aria-describedby="emailError"
+          aria-required="true"
+        >
+        <div id="emailError" class="text-red-500 text-sm mt-1 hidden" role="alert" aria-live="polite"></div>
+      </div>
+
+      <!-- Contraseña -->
+      <div class="input-group">
+        <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+          <i class="fas fa-lock mr-2 text-blue-500" aria-hidden="true"></i>Contraseña
+        </label>
+        <div class="relative">
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            class="input-field w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Contraseña"
+            required
+            autocomplete="current-password"
+            aria-describedby="passwordError"
+            aria-required="true"
+            minlength="6"
+          >
+          <button 
+            type="button" 
+            id="togglePassword" 
+            class="password-toggle absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            aria-label="Mostrar u ocultar contraseña"
+          >
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+        <div id="passwordError" class="text-red-500 text-sm mt-1 hidden" role="alert" aria-live="polite"></div>
+      </div>
+
+      <!-- Opciones adicionales -->
+      <div class="flex items-center justify-between">
+        <label class="flex items-center">
+          <input type="checkbox" id="rememberMe" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+          <span class="ml-2 text-sm text-gray-600">Recordar sesión</span>
+        </label>
+        <button type="button" id="forgotPassword" class="text-sm text-blue-600 hover:text-blue-800 transition">
+          ¿Olvidaste tu contraseña?
+        </button>
+      </div>
+
+      <!-- Botón de Login -->
+      <button 
+        type="submit" 
+        id="loginBtn"
+        class="btn-primary w-full py-3 px-4 text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <span id="loginText">
+          <i class="fas fa-sign-in-alt mr-2" aria-hidden="true"></i>Acceder
+        </span>
+        <span id="loginLoading" class="hidden">
+          <i class="fas fa-spinner loading mr-2" aria-hidden="true"></i>Accediendo...
+        </span>
+      </button>
+
+      <!-- Separador -->
+      <div class="relative my-6">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-gray-300"></div>
+        </div>
+        <div class="relative flex justify-center text-sm">
+          <span class="px-2 bg-white text-gray-500">O continúa con</span>
+        </div>
+      </div>
+
+      <!-- Botones sociales -->
+      <div class="grid grid-cols-2 gap-4">
+        <button type="button" class="social-btn flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition" aria-label="Iniciar sesión con Google">
+          <i class="fab fa-google text-red-500 mr-2" aria-hidden="true"></i>
+          <span class="text-sm font-medium text-gray-700">Google</span>
+        </button>
+        <button type="button" class="social-btn flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition" aria-label="Iniciar sesión con Facebook">
+          <i class="fab fa-facebook text-blue-600 mr-2" aria-hidden="true"></i>
+          <span class="text-sm font-medium text-gray-700">Facebook</span>
+        </button>
+      </div>
+
+      <!-- Enlace de registro -->
+      <div class="text-center">
+        <p class="text-sm text-gray-600">
+          ¿Quieres crear un perfil? 
+          <a href="crear_cuenta.html" class="text-blue-600 hover:text-blue-800 font-medium transition">
+            Crear perfil aquí
+          </a>
+        </p>
+      </div>
+    </form>
+  </div>
+
+  <!-- Modal de Registro -->
+  <div id="registerModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full mx-4">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-gray-800">Crear Cuenta</h2>
+        <button id="closeRegister" class="text-gray-400 hover:text-gray-600" aria-label="Cerrar modal de registro">
+          <i class="fas fa-times text-xl" aria-hidden="true"></i>
+        </button>
+      </div>
+      
+      <p class="text-gray-600 mb-4">¿Prefieres crear tu cuenta en una página dedicada?</p>
+      
+      <div class="flex space-x-4">
+        <a href="crear_cuenta.html" class="btn-secondary flex-1 py-3 px-4 text-white font-semibold rounded-lg text-center">
+          <i class="fas fa-external-link-alt mr-2" aria-hidden="true"></i>Ir a registro
+        </a>
+        <button id="closeRegisterBtn" class="btn-tertiary flex-1 py-3 px-4 text-white font-semibold rounded-lg">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Recuperar Contraseña -->
+  <div id="forgotModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full mx-4">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-gray-800">Recuperar Contraseña</h2>
+        <button id="closeForgot" class="text-gray-400 hover:text-gray-600" aria-label="Cerrar modal de recuperación">
+          <i class="fas fa-times text-xl" aria-hidden="true"></i>
+        </button>
+      </div>
+      
+      <p class="text-gray-600 mb-4">Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.</p>
+      
+      <form id="forgotForm" class="space-y-4" novalidate>
+        <div>
+          <label for="forgotEmail" class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico</label>
+          <input 
+            type="email" 
+            id="forgotEmail" 
+            class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+            placeholder="ejemplo@correo.com"
+            required 
+            autocomplete="email" 
+            aria-describedby="forgotEmailError"
+            aria-required="true"
+          >
+          <div id="forgotEmailError" class="text-red-500 text-sm mt-1 hidden" role="alert" aria-live="polite"></div>
+        </div>
+        <button type="submit" id="forgotBtn" class="btn-primary w-full py-3 px-4 text-white font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed">
+          <span id="forgotText">
+            <i class="fas fa-paper-plane mr-2" aria-hidden="true"></i>Enviar Enlace
+          </span>
+          <span id="forgotLoading" class="hidden">
+            <i class="fas fa-spinner loading mr-2" aria-hidden="true"></i>Enviando...
+          </span>
+        </button>
+      </form>
+      
+      <div class="mt-4 text-center">
+        <button id="closeForgotBtn" class="text-sm text-gray-600 hover:text-gray-800 transition">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ========================================
+    // SEGURIDAD: Este archivo es para demostración
+    // En producción, las credenciales deben validarse
+    // contra un servidor seguro con HTTPS
+    // ========================================
+    
+    // Configuración
+    const CONFIG = {
+      notificationDuration: 3000,
+      loginDelay: 2000,
+      minPasswordLength: 6,
+      maxNameLength: 50
+    };
+
+    // Función para manejo seguro de elementos del DOM
+    function safeQuerySelector(selector) {
+      try {
+        return document.querySelector(selector);
+      } catch (error) {
+        console.warn(`Error al buscar elemento: ${selector}`, error);
+        return null;
+      }
+    }
+
+    // Elementos del DOM
+    const loginForm = safeQuerySelector('#loginForm');
+    const emailInput = safeQuerySelector('#email');
+    const passwordInput = safeQuerySelector('#password');
+    const togglePassword = safeQuerySelector('#togglePassword');
+    const loginBtn = safeQuerySelector('#loginBtn');
+    const loginText = safeQuerySelector('#loginText');
+    const loginLoading = safeQuerySelector('#loginLoading');
+    const registerModal = safeQuerySelector('#registerModal');
+    const closeRegister = safeQuerySelector('#closeRegister');
+    const closeRegisterBtn = safeQuerySelector('#closeRegisterBtn');
+    const forgotPassword = safeQuerySelector('#forgotPassword');
+    const forgotModal = safeQuerySelector('#forgotModal');
+    const closeForgot = safeQuerySelector('#closeForgot');
+    const forgotForm = safeQuerySelector('#forgotForm');
+    const forgotEmailInput = safeQuerySelector('#forgotEmail');
+    const forgotBtn = safeQuerySelector('#forgotBtn');
+    const forgotText = safeQuerySelector('#forgotText');
+    const forgotLoading = safeQuerySelector('#forgotLoading');
+    const closeForgotBtn = safeQuerySelector('#closeForgotBtn');
+    const rememberMe = safeQuerySelector('#rememberMe');
+
+    // Validación en tiempo real
+    if (emailInput) {
+      emailInput.addEventListener('input', () => validateEmail());
+      emailInput.addEventListener('blur', () => validateEmail());
+    }
+    if (passwordInput) {
+      passwordInput.addEventListener('blur', () => validatePassword());
+    }
+
+    // Validación en tiempo real para recuperación
+    if (forgotEmailInput) {
+      forgotEmailInput.addEventListener('input', () => {
+        validateEmail(forgotEmailInput.value, safeQuerySelector('#forgotEmailError'));
+      });
+      forgotEmailInput.addEventListener('blur', () => {
+        validateEmail(forgotEmailInput.value, safeQuerySelector('#forgotEmailError'));
+      });
+    }
+
+    // Toggle password visibility
+    if (togglePassword && passwordInput) {
+      togglePassword.addEventListener('click', () => {
+        const type = passwordInput.type === 'password' ? 'text' : 'password';
+        passwordInput.type = type;
+        const icon = togglePassword.querySelector('i');
+        if (icon) {
+          icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+        }
+        togglePassword.setAttribute('aria-label', 
+          type === 'password' ? 'Mostrar contraseña' : 'Ocultar contraseña'
+        );
+      });
+    }
+
+    // Validación de email
+    function validateEmail(email = emailInput?.value, errorElement = safeQuerySelector('#emailError')) {
+      try {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (!email || !email.trim()) {
+          showError(errorElement, 'El correo electrónico es requerido');
+          if (emailInput) {
+            emailInput.classList.add('error-field');
+            emailInput.classList.remove('success-field');
+          }
+          return false;
+        } else if (!email.includes('@') || email.length < 5) {
+          showError(errorElement, 'Ingresa un correo electrónico válido');
+          if (emailInput) {
+            emailInput.classList.add('error-field');
+            emailInput.classList.remove('success-field');
+          }
+          return false;
+        } else {
+          hideError(errorElement);
+          if (emailInput) {
+            emailInput.classList.remove('error-field');
+            emailInput.classList.add('success-field');
+          }
+          return true;
+        }
+      } catch (error) {
+        console.error('Error en validación de email:', error);
+        showError(errorElement, 'Error en la validación');
+        return false;
+      }
+    }
+
+    // Validación de contraseña
+    function validatePassword(password = passwordInput?.value, errorElement = safeQuerySelector('#passwordError')) {
+      try {
+        if (!password || !password.trim()) {
+          showError(errorElement, 'La contraseña es requerida');
+          if (passwordInput) {
+            passwordInput.classList.add('error-field');
+            passwordInput.classList.remove('success-field');
+          }
+          return false;
+        } else if (password.length < CONFIG.minPasswordLength) {
+          showError(errorElement, `La contraseña debe tener al menos ${CONFIG.minPasswordLength} caracteres`);
+          if (passwordInput) {
+            passwordInput.classList.add('error-field');
+            passwordInput.classList.remove('success-field');
+          }
+          return false;
+        } else {
+          hideError(errorElement);
+          if (passwordInput) {
+            passwordInput.classList.remove('error-field');
+            passwordInput.classList.add('success-field');
+          }
+          return true;
+        }
+      } catch (error) {
+        console.error('Error en validación de contraseña:', error);
+        showError(errorElement, 'Error en la validación');
+        return false;
+      }
+    }
+
+    // Mostrar error
+    function showError(element, message) {
+      if (element) {
+        element.textContent = message;
+        element.classList.remove('hidden');
+        element.setAttribute('aria-live', 'polite');
+      }
+    }
+
+    // Ocultar error
+    function hideError(element) {
+      if (element) {
+        element.classList.add('hidden');
+        element.removeAttribute('aria-live');
+      }
+    }
+
+    // Mostrar notificación
+    function showNotification(message, type = 'success') {
+      // Limpiar notificaciones existentes
+      const existingNotifications = document.querySelectorAll('.notification');
+      existingNotifications.forEach(notification => {
+        notification.remove();
+      });
+
+      const colors = {
+        success: 'bg-green-500',
+        error: 'bg-red-500',
+        warning: 'bg-yellow-500',
+        info: 'bg-blue-500'
+      };
+
+      const icons = {
+        success: 'fas fa-check-circle',
+        error: 'fas fa-exclamation-circle',
+        warning: 'fas fa-exclamation-triangle',
+        info: 'fas fa-info-circle'
+      };
+
+      const notification = document.createElement('div');
+      notification.className = `fixed top-4 right-4 ${colors[type]} text-white px-6 py-3 rounded-lg shadow-lg z-50 notification flex items-center space-x-2`;
+      notification.setAttribute('role', 'alert');
+      notification.setAttribute('aria-live', 'polite');
+      notification.innerHTML = `
+        <i class="${icons[type]}" aria-hidden="true"></i>
+        <span>${message}</span>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.style.transform = 'translateX(100%)';
+          notification.style.opacity = '0';
+          setTimeout(() => notification.remove(), 300);
+        }
+      }, CONFIG.notificationDuration);
+    }
+
+    // Limpiar formulario
+    function clearForm(form) {
+      if (form) {
+        form.reset();
+        // Limpiar errores
+        form.querySelectorAll('.text-red-500').forEach(error => {
+          error.classList.add('hidden');
+        });
+        // Limpiar clases de validación
+        form.querySelectorAll('.input-field').forEach(field => {
+          field.classList.remove('error-field', 'success-field');
+        });
+      }
+    }
+
+    // Acceso directo sin credenciales
+    function simulateLogin(email, password) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (email && password && email.includes('@') && password.length >= CONFIG.minPasswordLength) {
+            // Acceso directo sin verificación
+            const user = {
+              email: email,
+              name: email.split('@')[0],
+              id: Date.now(),
+              sessionId: 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
+            };
+            
+            // Guardar sesión actual
+            sessionStorage.setItem('currentUser', JSON.stringify(user));
+            
+            resolve({ 
+              success: true, 
+              user: user
+            });
+          } else {
+            reject(new Error('Por favor completa todos los campos'));
+          }
+        }, CONFIG.loginDelay);
+      });
+    }
+
+    // Manejar login
+    if (loginForm) {
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        try {
+          if (!emailInput || !passwordInput) {
+            showNotification('Error: Campos de entrada no encontrados', 'error');
+            return;
+          }
+          
+          const email = emailInput.value.trim();
+          const password = passwordInput.value;
+          
+          // Validar campos
+          if (!validateEmail(email) || !validatePassword(password)) {
+            showNotification('Por favor, corrige los errores en el formulario', 'error');
+            return;
+          }
+
+          // Mostrar loading
+          if (loginBtn && loginText && loginLoading) {
+            loginBtn.disabled = true;
+            loginText.classList.add('hidden');
+            loginLoading.classList.remove('hidden');
+          }
+
+          // En producción, usar authenticateUser() en lugar de simulateLogin()
+          const result = await simulateLogin(email, password);
+          
+          showNotification(`¡Bienvenido, ${result.user.name}!`, 'success');
+          
+          // Guardar datos de sesión
+          if (rememberMe && rememberMe.checked) {
+            // Guardar en localStorage para persistencia
+            localStorage.setItem('userSession', JSON.stringify(result.user));
+          } else {
+            // Guardar en sessionStorage para la sesión actual
+            sessionStorage.setItem('userSession', JSON.stringify(result.user));
+          }
+          
+          // Redirigir al catálogo
+          setTimeout(() => {
+            window.location.href = 'productos.html';
+          }, 1500);
+          
+        } catch (error) {
+          console.error('Error en login:', error);
+          showNotification('Credenciales incorrectas. Intenta de nuevo.', 'error');
+        } finally {
+          if (loginBtn && loginText && loginLoading) {
+            loginBtn.disabled = false;
+            loginText.classList.remove('hidden');
+            loginLoading.classList.add('hidden');
+          }
+        }
+      });
+    }
+
+    // Modal de recuperar contraseña
+    if (forgotPassword && forgotModal) {
+      forgotPassword.addEventListener('click', () => {
+        forgotModal.classList.remove('hidden');
+        forgotModal.classList.add('flex');
+        // Enfocar el campo de email
+        setTimeout(() => {
+          if (forgotEmailInput) {
+            forgotEmailInput.focus();
+          }
+        }, 100);
+      });
+    }
+
+    if (closeForgot && forgotForm) {
+      closeForgot.addEventListener('click', () => {
+        clearForm(forgotForm);
+        forgotModal.classList.add('hidden');
+        forgotModal.classList.remove('flex');
+      });
+    }
+
+    if (closeForgotBtn) {
+      closeForgotBtn.addEventListener('click', () => {
+        clearForm(forgotForm);
+        forgotModal.classList.add('hidden');
+        forgotModal.classList.remove('flex');
+      });
+    }
+
+    // Cerrar modales con Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (registerModal) {
+          registerModal.classList.add('hidden');
+          registerModal.classList.remove('flex');
+        }
+        if (forgotForm && forgotModal) {
+          clearForm(forgotForm);
+          forgotModal.classList.add('hidden');
+          forgotModal.classList.remove('flex');
+        }
+      }
+    });
+
+    // Cerrar modales al hacer clic fuera
+    if (registerModal) {
+      registerModal.addEventListener('click', (e) => {
+        if (e.target === registerModal) {
+          registerModal.classList.add('hidden');
+          registerModal.classList.remove('flex');
+        }
+      });
+    }
+    
+    if (forgotModal && forgotForm) {
+      forgotModal.addEventListener('click', (e) => {
+        if (e.target === forgotModal) {
+          clearForm(forgotForm);
+          forgotModal.classList.add('hidden');
+          forgotModal.classList.remove('flex');
+        }
+      });
+    }
+
+    // Formulario de recuperar contraseña
+    if (forgotForm) {
+      forgotForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const email = forgotEmailInput ? forgotEmailInput.value : '';
+        
+        // Validar email
+        if (!validateEmail(email, safeQuerySelector('#forgotEmailError'))) {
+          showNotification('Por favor, ingresa un correo electrónico válido', 'error');
+          return;
+        }
+
+        // Mostrar loading
+        if (forgotBtn && forgotText && forgotLoading) {
+          forgotBtn.disabled = true;
+          forgotText.classList.add('hidden');
+          forgotLoading.classList.remove('hidden');
+        }
+
+        try {
+          // Simular envío de email
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          
+          showNotification('Se ha enviado un enlace de recuperación a tu correo.', 'success');
+          clearForm(forgotForm);
+          if (forgotModal) {
+            forgotModal.classList.add('hidden');
+            forgotModal.classList.remove('flex');
+          }
+          
+        } catch (error) {
+          showNotification('Error al enviar el enlace. Intenta de nuevo.', 'error');
+        } finally {
+          if (forgotBtn && forgotText && forgotLoading) {
+            forgotBtn.disabled = false;
+            forgotText.classList.remove('hidden');
+            forgotLoading.classList.add('hidden');
+          }
+        }
+      });
+    }
+
+    // Botones sociales
+    document.querySelectorAll('.social-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        showNotification('Funcionalidad de redes sociales próximamente', 'info');
+      });
+    });
+
+    // Limpiar datos sensibles (para desarrollo)
+    function clearSensitiveData() {
+      // Limpiar datos de sesión al cerrar
+      window.addEventListener('beforeunload', () => {
+        // Solo limpiar sessionStorage, mantener localStorage para "recordar sesión"
+        sessionStorage.removeItem('userSession');
+        sessionStorage.removeItem('currentUser');
+      });
+    }
+
+    // Verificar si ya hay una sesión activa
+    window.addEventListener('load', () => {
+      try {
+        const userSession = localStorage.getItem('userSession') || sessionStorage.getItem('userSession');
+        if (userSession) {
+          const user = JSON.parse(userSession);
+          if (user && user.name) {
+            showNotification(`Ya tienes una sesión activa como ${user.name}`, 'info');
+            setTimeout(() => {
+              window.location.href = 'productos.html';
+            }, 2000);
+          }
+        }
+        
+        // Inicializar limpieza de datos sensibles
+        clearSensitiveData();
+      } catch (error) {
+        console.error('Error al verificar sesión:', error);
+        // Limpiar datos corruptos
+        localStorage.removeItem('userSession');
+        sessionStorage.removeItem('userSession');
+      }
+    });
+
+    // Manejo de errores global
+    window.addEventListener('error', (e) => {
+      console.error('Error global:', e.error);
+      showNotification('Ha ocurrido un error inesperado', 'error');
+    });
+
+    // Manejo de errores de recursos
+    window.addEventListener('load', () => {
+      const images = document.querySelectorAll('img');
+      images.forEach(img => {
+        img.addEventListener('error', () => {
+          console.warn(`Error al cargar imagen: ${img.src}`);
+          img.style.display = 'none';
+        });
+      });
+    });
+  </script>
+  <!-- Sistema de corrección de errores -->
+  <script src="error-fixes.js"></script>
+</body>
+</html>

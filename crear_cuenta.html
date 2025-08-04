@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="Crea tu cuenta en Digital Swap - Tu tienda de confianza para consolas, videojuegos, teléfonos, audífonos y smartwatches.">
+  <meta name="keywords" content="registro, crear cuenta, digital swap, consolas, videojuegos, tecnología gaming">
+  <meta name="author" content="Digital Swap">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#3b82f6">
+  <meta property="og:title" content="Crear Cuenta - Digital Swap">
+  <meta property="og:description" content="Crea tu cuenta en Digital Swap - Tu tienda de confianza para tecnología gaming.">
+  <meta property="og:type" content="website">
+  <title>Crear Cuenta - Digital Swap</title>
+  <link rel="icon" type="image/x-icon" href="logo.png">
+  <link rel="apple-touch-icon" href="logo.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      background-image: url('https://img.freepik.com/vector-premium/fondo-vector-monocromo-blanco-abstracto-folleto-diseno-folleto-sitio-web-fondo-pantalla-blanco-geometrico-pagina-inicio-presentacion-certificado_249611-5879.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .register-container {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .input-group {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .input-group:focus-within {
+      transform: translateY(-2px);
+    }
+
+    .input-field {
+      transition: all 0.3s ease;
+    }
+
+    .input-field:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .password-toggle {
+      transition: all 0.2s ease;
+    }
+
+    .password-toggle:hover {
+      color: #3b82f6;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(240, 147, 251, 0.3);
+    }
+
+    .notification {
+      animation: slideInRight 0.3s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .loading {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .error-field {
+      border-color: #ef4444 !important;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+    }
+
+    .success-field {
+      border-color: #10b981 !important;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+    }
+
+    .strength-meter {
+      height: 4px;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .strength-weak { background: linear-gradient(90deg, #ef4444 0%, #f97316 100%); }
+    .strength-medium { background: linear-gradient(90deg, #f97316 0%, #eab308 100%); }
+    .strength-strong { background: linear-gradient(90deg, #eab308 0%, #10b981 100%); }
+    .strength-very-strong { background: linear-gradient(90deg, #10b981 0%, #059669 100%); }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <!-- Contenedor principal del registro -->
+  <div class="register-container max-w-md w-full space-y-8 bg-white rounded-2xl shadow-xl p-8">
+    <!-- Logo y título -->
+    <div class="text-center">
+      <img class="mx-auto h-12 w-auto" src="logo.png" alt="Digital Swap Logo" onerror="this.style.display='none'">
+      <h2 class="mt-6 text-3xl font-bold text-gray-900">
+        Crear Cuenta
+      </h2>
+      <p class="mt-2 text-sm text-gray-600">
+        Únete a Digital Swap y descubre el mundo gaming
+      </p>
+    </div>
+
+    <form id="registerForm" class="space-y-6" novalidate>
+      <!-- Nombre de Usuario -->
+      <div class="input-group">
+        <label for="username" class="block text-sm font-medium text-gray-700 mb-2">
+          <i class="fas fa-user mr-2 text-blue-500" aria-hidden="true"></i>Nombre de Usuario
+        </label>
+        <input 
+          type="text" 
+          id="username" 
+          name="username" 
+          class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          placeholder="ejemplo@correo.com"
+          required
+          autocomplete="username"
+          aria-describedby="usernameError"
+          aria-required="true"
+          minlength="3"
+          maxlength="50"
+        >
+        <div id="usernameError" class="text-red-500 text-sm mt-1 hidden" role="alert" aria-live="polite"></div>
+      </div>
+
+      <!-- Email -->
+      <div class="input-group">
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+          <i class="fas fa-envelope mr-2 text-blue-500" aria-hidden="true"></i>Correo Electrónico
+        </label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          placeholder="ejemplo@correo.com"
+          required
+          autocomplete="email"
+          aria-describedby="emailError"
+          aria-required="true"
+        >
+        <div id="emailError" class="text-red-500 text-sm mt-1 hidden" role="alert" aria-live="polite"></div>
+      </div>
+
+      <!-- Contraseña -->
+      <div class="input-group">
+        <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+          <i class="fas fa-lock mr-2 text-blue-500" aria-hidden="true"></i>Contraseña
+        </label>
+        <div class="relative">
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            class="input-field w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Contraseña"
+            required
+            autocomplete="new-password"
+            aria-describedby="passwordError"
+            aria-required="true"
+            minlength="6"
+          >
+          <button 
+            type="button" 
+            id="togglePassword" 
+            class="password-toggle absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            aria-label="Mostrar u ocultar contraseña"
+          >
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+        <div id="passwordError" class="text-red-500 text-sm mt-1 hidden" role="alert" aria-live="polite"></div>
+        
+        <!-- Medidor de fortaleza de contraseña -->
+        <div class="mt-2">
+          <div class="strength-meter" id="strengthMeter"></div>
+          <p class="text-xs text-gray-500 mt-1" id="strengthText">Fortaleza de la contraseña</p>
+        </div>
+      </div>
+
+      <!-- Confirmar Contraseña -->
+      <div class="input-group">
+        <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-2">
+          <i class="fas fa-lock mr-2 text-blue-500" aria-hidden="true"></i>Confirmar Contraseña
+        </label>
+        <div class="relative">
+          <input 
+            type="password" 
+            id="confirmPassword" 
+            name="confirmPassword" 
+            class="input-field w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Confirmar contraseña"
+            required
+            autocomplete="new-password"
+            aria-describedby="confirmPasswordError"
+            aria-required="true"
+          >
+          <button 
+            type="button" 
+            id="toggleConfirmPassword" 
+            class="password-toggle absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            aria-label="Mostrar u ocultar confirmación de contraseña"
+          >
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+        <div id="confirmPasswordError" class="text-red-500 text-sm mt-1 hidden" role="alert" aria-live="polite"></div>
+      </div>
+
+      <!-- Términos y Condiciones -->
+      <div class="flex items-start">
+        <div class="flex items-center h-5">
+          <input 
+            id="terms" 
+            name="terms" 
+            type="checkbox" 
+            class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            required
+            aria-describedby="termsError"
+            aria-required="true"
+          >
+        </div>
+        <div class="ml-3 text-sm">
+          <label for="terms" class="text-gray-700">
+            Acepto los 
+            <a href="#" class="text-blue-600 hover:text-blue-800 font-medium transition">Términos y Condiciones</a>
+            y la 
+            <a href="#" class="text-blue-600 hover:text-blue-800 font-medium transition">Política de Privacidad</a>
+          </label>
+          <div id="termsError" class="text-red-500 text-sm mt-1 hidden" role="alert" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <!-- Botón de Registro -->
+      <button 
+        type="submit" 
+        id="registerBtn"
+        class="btn-primary w-full py-3 px-4 text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <span id="registerText">
+          <i class="fas fa-user-plus mr-2" aria-hidden="true"></i>Crear Perfil
+        </span>
+        <span id="registerLoading" class="hidden">
+          <i class="fas fa-spinner loading mr-2" aria-hidden="true"></i>Creando perfil...
+        </span>
+      </button>
+
+      <!-- Enlace de login -->
+      <div class="text-center">
+        <p class="text-sm text-gray-600">
+          ¿Ya tienes un perfil? 
+          <a href="login.html" class="text-blue-600 hover:text-blue-800 font-medium transition">
+            Accede aquí
+          </a>
+        </p>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // ========================================
+    // SEGURIDAD: Este archivo es para demostración
+    // En producción, las credenciales deben validarse
+    // contra un servidor seguro con HTTPS
+    // ========================================
+    
+    // Configuración
+    const CONFIG = {
+      notificationDuration: 3000,
+      registerDelay: 2000,
+      minPasswordLength: 6,
+      maxNameLength: 50
+    };
+
+    // Función para manejo seguro de elementos del DOM
+    function safeQuerySelector(selector) {
+      try {
+        return document.querySelector(selector);
+      } catch (error) {
+        console.warn(`Error al buscar elemento: ${selector}`, error);
+        return null;
+      }
+    }
+
+    // Elementos del DOM
+    const registerForm = safeQuerySelector('#registerForm');
+    const usernameInput = safeQuerySelector('#username');
+    const emailInput = safeQuerySelector('#email');
+    const passwordInput = safeQuerySelector('#password');
+    const confirmPasswordInput = safeQuerySelector('#confirmPassword');
+    const togglePassword = safeQuerySelector('#togglePassword');
+    const toggleConfirmPassword = safeQuerySelector('#toggleConfirmPassword');
+    const registerBtn = safeQuerySelector('#registerBtn');
+    const registerText = safeQuerySelector('#registerText');
+    const registerLoading = safeQuerySelector('#registerLoading');
+    const strengthMeter = safeQuerySelector('#strengthMeter');
+    const strengthText = safeQuerySelector('#strengthText');
+    const termsCheckbox = safeQuerySelector('#terms');
+
+    // Validación en tiempo real
+    if (usernameInput) {
+      usernameInput.addEventListener('input', () => validateUsername());
+      usernameInput.addEventListener('blur', () => validateUsername());
+    }
+    if (emailInput) {
+      emailInput.addEventListener('input', () => validateEmail());
+      emailInput.addEventListener('blur', () => validateEmail());
+    }
+    if (passwordInput) {
+      passwordInput.addEventListener('input', () => {
+        validatePassword();
+        updatePasswordStrength();
+      });
+      passwordInput.addEventListener('blur', () => validatePassword());
+    }
+    if (confirmPasswordInput) {
+      confirmPasswordInput.addEventListener('input', () => validateConfirmPassword());
+      confirmPasswordInput.addEventListener('blur', () => validateConfirmPassword());
+    }
+
+    // Toggle password visibility
+    if (togglePassword && passwordInput) {
+      togglePassword.addEventListener('click', () => {
+        const type = passwordInput.type === 'password' ? 'text' : 'password';
+        passwordInput.type = type;
+        const icon = togglePassword.querySelector('i');
+        if (icon) {
+          icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+        }
+        togglePassword.setAttribute('aria-label', 
+          type === 'password' ? 'Mostrar contraseña' : 'Ocultar contraseña'
+        );
+      });
+    }
+
+    if (toggleConfirmPassword && confirmPasswordInput) {
+      toggleConfirmPassword.addEventListener('click', () => {
+        const type = confirmPasswordInput.type === 'password' ? 'text' : 'password';
+        confirmPasswordInput.type = type;
+        const icon = toggleConfirmPassword.querySelector('i');
+        if (icon) {
+          icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+        }
+        toggleConfirmPassword.setAttribute('aria-label', 
+          type === 'password' ? 'Mostrar confirmación de contraseña' : 'Ocultar confirmación de contraseña'
+        );
+      });
+    }
+
+    // Validación de username
+    function validateUsername(username = usernameInput?.value, errorElement = safeQuerySelector('#usernameError')) {
+      try {
+        if (!username || !username.trim()) {
+          showError(errorElement, 'El nombre de usuario es requerido');
+          if (usernameInput) {
+            usernameInput.classList.add('error-field');
+            usernameInput.classList.remove('success-field');
+          }
+          return false;
+        } else if (username.length < 3) {
+          showError(errorElement, 'El nombre de usuario debe tener al menos 3 caracteres');
+          if (usernameInput) {
+            usernameInput.classList.add('error-field');
+            usernameInput.classList.remove('success-field');
+          }
+          return false;
+        } else if (username.length > CONFIG.maxNameLength) {
+          showError(errorElement, `El nombre de usuario no puede tener más de ${CONFIG.maxNameLength} caracteres`);
+          if (usernameInput) {
+            usernameInput.classList.add('error-field');
+            usernameInput.classList.remove('success-field');
+          }
+          return false;
+        } else {
+          hideError(errorElement);
+          if (usernameInput) {
+            usernameInput.classList.remove('error-field');
+            usernameInput.classList.add('success-field');
+          }
+          return true;
+        }
+      } catch (error) {
+        console.error('Error en validación de username:', error);
+        showError(errorElement, 'Error en la validación');
+        return false;
+      }
+    }
+
+    // Validación de email
+    function validateEmail(email = emailInput?.value, errorElement = safeQuerySelector('#emailError')) {
+      try {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (!email || !email.trim()) {
+          showError(errorElement, 'El correo electrónico es requerido');
+          if (emailInput) {
+            emailInput.classList.add('error-field');
+            emailInput.classList.remove('success-field');
+          }
+          return false;
+        } else if (!email.includes('@') || email.length < 5) {
+          showError(errorElement, 'Ingresa un email válido');
+          if (emailInput) {
+            emailInput.classList.add('error-field');
+            emailInput.classList.remove('success-field');
+          }
+          return false;
+        } else {
+          hideError(errorElement);
+          if (emailInput) {
+            emailInput.classList.remove('error-field');
+            emailInput.classList.add('success-field');
+          }
+          return true;
+        }
+      } catch (error) {
+        console.error('Error en validación de email:', error);
+        showError(errorElement, 'Error en la validación');
+        return false;
+      }
+    }
+
+    // Validación de contraseña
+    function validatePassword(password = passwordInput?.value, errorElement = safeQuerySelector('#passwordError')) {
+      try {
+        if (!password || !password.trim()) {
+          showError(errorElement, 'La contraseña es requerida');
+          if (passwordInput) {
+            passwordInput.classList.add('error-field');
+            passwordInput.classList.remove('success-field');
+          }
+          return false;
+        } else if (password.length < CONFIG.minPasswordLength) {
+          showError(errorElement, `La contraseña debe tener al menos ${CONFIG.minPasswordLength} caracteres`);
+          if (passwordInput) {
+            passwordInput.classList.add('error-field');
+            passwordInput.classList.remove('success-field');
+          }
+          return false;
+        } else {
+          hideError(errorElement);
+          if (passwordInput) {
+            passwordInput.classList.remove('error-field');
+            passwordInput.classList.add('success-field');
+          }
+          return true;
+        }
+      } catch (error) {
+        console.error('Error en validación de contraseña:', error);
+        showError(errorElement, 'Error en la validación');
+        return false;
+      }
+    }
+
+    // Validación de confirmación de contraseña
+    function validateConfirmPassword(confirmPassword = confirmPasswordInput?.value, errorElement = safeQuerySelector('#confirmPasswordError')) {
+      try {
+        const password = passwordInput?.value;
+        
+        if (!confirmPassword || !confirmPassword.trim()) {
+          showError(errorElement, 'Confirma tu contraseña');
+          if (confirmPasswordInput) {
+            confirmPasswordInput.classList.add('error-field');
+            confirmPasswordInput.classList.remove('success-field');
+          }
+          return false;
+        } else if (confirmPassword !== password) {
+          showError(errorElement, 'Las contraseñas no coinciden');
+          if (confirmPasswordInput) {
+            confirmPasswordInput.classList.add('error-field');
+            confirmPasswordInput.classList.remove('success-field');
+          }
+          return false;
+        } else {
+          hideError(errorElement);
+          if (confirmPasswordInput) {
+            confirmPasswordInput.classList.remove('error-field');
+            confirmPasswordInput.classList.add('success-field');
+          }
+          return true;
+        }
+      } catch (error) {
+        console.error('Error en validación de confirmación de contraseña:', error);
+        showError(errorElement, 'Error en la validación');
+        return false;
+      }
+    }
+
+    // Actualizar fortaleza de contraseña
+    function updatePasswordStrength() {
+      const password = passwordInput?.value || '';
+      let strength = 0;
+      let strengthClass = '';
+      let strengthMessage = '';
+
+      if (password.length >= 6) strength++;
+      if (password.length >= 8) strength++;
+      if (/[a-z]/.test(password)) strength++;
+      if (/[A-Z]/.test(password)) strength++;
+      if (/[0-9]/.test(password)) strength++;
+      if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+      switch (strength) {
+        case 0:
+        case 1:
+          strengthClass = 'strength-weak';
+          strengthMessage = 'Muy débil';
+          break;
+        case 2:
+        case 3:
+          strengthClass = 'strength-medium';
+          strengthMessage = 'Débil';
+          break;
+        case 4:
+        case 5:
+          strengthClass = 'strength-strong';
+          strengthMessage = 'Fuerte';
+          break;
+        case 6:
+          strengthClass = 'strength-very-strong';
+          strengthMessage = 'Muy fuerte';
+          break;
+      }
+
+      if (strengthMeter && strengthText) {
+        strengthMeter.className = `strength-meter ${strengthClass}`;
+        strengthText.textContent = `Fortaleza: ${strengthMessage}`;
+      }
+    }
+
+    // Mostrar error
+    function showError(element, message) {
+      if (element) {
+        element.textContent = message;
+        element.classList.remove('hidden');
+        element.setAttribute('aria-live', 'polite');
+      }
+    }
+
+    // Ocultar error
+    function hideError(element) {
+      if (element) {
+        element.classList.add('hidden');
+        element.removeAttribute('aria-live');
+      }
+    }
+
+    // Mostrar notificación
+    function showNotification(message, type = 'success') {
+      // Limpiar notificaciones existentes
+      const existingNotifications = document.querySelectorAll('.notification');
+      existingNotifications.forEach(notification => {
+        notification.remove();
+      });
+
+      const colors = {
+        success: 'bg-green-500',
+        error: 'bg-red-500',
+        warning: 'bg-yellow-500',
+        info: 'bg-blue-500'
+      };
+
+      const icons = {
+        success: 'fas fa-check-circle',
+        error: 'fas fa-exclamation-circle',
+        warning: 'fas fa-exclamation-triangle',
+        info: 'fas fa-info-circle'
+      };
+
+      const notification = document.createElement('div');
+      notification.className = `fixed top-4 right-4 ${colors[type]} text-white px-6 py-3 rounded-lg shadow-lg z-50 notification flex items-center space-x-2`;
+      notification.setAttribute('role', 'alert');
+      notification.setAttribute('aria-live', 'polite');
+      notification.innerHTML = `
+        <i class="${icons[type]}" aria-hidden="true"></i>
+        <span>${message}</span>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.style.transform = 'translateX(100%)';
+          notification.style.opacity = '0';
+          setTimeout(() => notification.remove(), 300);
+        }
+      }, CONFIG.notificationDuration);
+    }
+
+    // Limpiar formulario
+    function clearForm(form) {
+      if (form) {
+        form.reset();
+        // Limpiar errores
+        form.querySelectorAll('.text-red-500').forEach(error => {
+          error.classList.add('hidden');
+        });
+        // Limpiar clases de validación
+        form.querySelectorAll('.input-field').forEach(field => {
+          field.classList.remove('error-field', 'success-field');
+        });
+        // Limpiar medidor de fortaleza
+        if (strengthMeter && strengthText) {
+          strengthMeter.className = 'strength-meter';
+          strengthText.textContent = 'Fortaleza de la contraseña';
+        }
+      }
+    }
+
+    // Guardar datos del usuario
+    function saveUserData(formData) {
+      const userData = {
+        username: formData.get('username'),
+        email: formData.get('email'),
+        password: formData.get('password'),
+        createdAt: new Date().toISOString(),
+        id: Date.now()
+      };
+
+      // Guardar en sessionStorage para la sesión actual
+      sessionStorage.setItem('currentUser', JSON.stringify(userData));
+      
+      console.log('Perfil creado exitosamente');
+    }
+
+    // Manejar registro
+    if (registerForm) {
+      registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        try {
+          if (!usernameInput || !emailInput || !passwordInput || !confirmPasswordInput) {
+            showNotification('Error: Campos de entrada no encontrados', 'error');
+            return;
+          }
+          
+          const username = usernameInput.value.trim();
+          const email = emailInput.value.trim();
+          const password = passwordInput.value;
+          const confirmPassword = confirmPasswordInput.value;
+          const termsAccepted = termsCheckbox?.checked;
+          
+          // Validar campos
+          if (!validateUsername(username) || 
+              !validateEmail(email) || 
+              !validatePassword(password) || 
+              !validateConfirmPassword(confirmPassword)) {
+            showNotification('Por favor, corrige los errores en el formulario', 'error');
+            return;
+          }
+
+          // Validar términos y condiciones
+          if (!termsAccepted) {
+            showNotification('Debes aceptar los términos y condiciones', 'error');
+            if (termsCheckbox) {
+              termsCheckbox.focus();
+            }
+            return;
+          }
+
+          // Mostrar loading
+          if (registerBtn && registerText && registerLoading) {
+            registerBtn.disabled = true;
+            registerText.classList.add('hidden');
+            registerLoading.classList.remove('hidden');
+          }
+
+          // Simular proceso de registro
+          await new Promise(resolve => setTimeout(resolve, CONFIG.registerDelay));
+          
+          // Guardar datos del usuario
+          const formData = new FormData(registerForm);
+          saveUserData(formData);
+          
+          showNotification(`¡Bienvenido, ${username}! Tu perfil ha sido creado exitosamente.`, 'success');
+          
+          // Redirigir al catálogo
+          setTimeout(() => {
+            window.location.href = 'productos.html';
+          }, 1500);
+          
+        } catch (error) {
+          console.error('Error en registro:', error);
+          showNotification('Error al crear el perfil. Intenta de nuevo.', 'error');
+        } finally {
+          if (registerBtn && registerText && registerLoading) {
+            registerBtn.disabled = false;
+            registerText.classList.remove('hidden');
+            registerLoading.classList.add('hidden');
+          }
+        }
+      });
+    }
+
+    // Manejo de errores global
+    window.addEventListener('error', (e) => {
+      console.error('Error global:', e.error);
+      showNotification('Ha ocurrido un error inesperado', 'error');
+    });
+
+    // Manejo de errores de recursos
+    window.addEventListener('load', () => {
+      const images = document.querySelectorAll('img');
+      images.forEach(img => {
+        img.addEventListener('error', () => {
+          console.warn(`Error al cargar imagen: ${img.src}`);
+          img.style.display = 'none';
+        });
+      });
+    });
+  </script>
+  <!-- Sistema de corrección de errores -->
+  <script src="error-fixes.js"></script>
+</body>
+</html>
